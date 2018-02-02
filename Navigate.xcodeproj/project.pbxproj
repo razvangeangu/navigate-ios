@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
 		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
-		182519011FAF454A0005F5F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519001FAF454A0005F5F6 /* ViewController.swift */; };
+		182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519001FAF454A0005F5F6 /* ARViewController.swift */; };
 		182519041FAF454A0005F5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519021FAF454A0005F5F6 /* Main.storyboard */; };
 		182519061FAF454A0005F5F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 182519051FAF454A0005F5F6 /* Assets.xcassets */; };
 		182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */; };
 		182519141FAF454A0005F5F6 /* NavigateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519131FAF454A0005F5F6 /* NavigateTests.swift */; };
 		1825191F1FAF454A0005F5F6 /* NavigateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */; };
+		1825192F1FAF45750005F5F6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */; };
+		1882F28720235857009AD747 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882F28620235857009AD747 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +40,7 @@
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		182518FE1FAF454A0005F5F6 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		182519001FAF454A0005F5F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		182519001FAF454A0005F5F6 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		182519031FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		182519051FAF454A0005F5F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		182519081FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +51,9 @@
 		1825191A1FAF454A0005F5F6 /* NavigateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateUITests.swift; sourceTree = "<group>"; };
 		182519201FAF454A0005F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		182519301FAF45750005F5F6 /* Navigate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Navigate.entitlements; sourceTree = "<group>"; };
+		1882F28620235857009AD747 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1825192F1FAF45750005F5F6 /* ExternalAccessory.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +89,7 @@
 				182519121FAF454A0005F5F6 /* NavigateTests */,
 				1825191D1FAF454A0005F5F6 /* NavigateUITests */,
 				182518FA1FAF454A0005F5F6 /* Products */,
+				1825192D1FAF45750005F5F6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,9 +106,13 @@
 		182518FB1FAF454A0005F5F6 /* Navigate */ = {
 			isa = PBXGroup;
 			children = (
+				182519301FAF45750005F5F6 /* Navigate.entitlements */,
+				1825192C1FAF45650005F5F6 /* Model */,
+				185936721FBD9DA60016BF66 /* View */,
 				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
 				182518FE1FAF454A0005F5F6 /* art.scnassets */,
-				182519001FAF454A0005F5F6 /* ViewController.swift */,
+				182519001FAF454A0005F5F6 /* ARViewController.swift */,
+				1882F28620235857009AD747 /* ViewController.swift */,
 				182519021FAF454A0005F5F6 /* Main.storyboard */,
 				182519051FAF454A0005F5F6 /* Assets.xcassets */,
 				182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */,
@@ -126,6 +137,28 @@
 				182519201FAF454A0005F5F6 /* Info.plist */,
 			);
 			path = NavigateUITests;
+			sourceTree = "<group>";
+		};
+		1825192C1FAF45650005F5F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1825192D1FAF45750005F5F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		185936721FBD9DA60016BF66 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,12 +224,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Răzvan-Gabriel Geangu";
 				TargetAttributes = {
 					182518F81FAF454A0005F5F6 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.NetworkExtensions.iOS = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
+							com.apple.WAC = {
+								enabled = 1;
+							};
+						};
 					};
 					1825190E1FAF454A0005F5F6 = {
 						CreatedOnToolsVersion = 9.2;
@@ -263,7 +310,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				182519011FAF454A0005F5F6 /* ViewController.swift in Sources */,
+				1882F28720235857009AD747 /* ViewController.swift in Sources */,
+				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,6 +381,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -340,6 +389,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -390,6 +440,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -397,6 +448,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -421,6 +473,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -430,6 +483,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = Navigate/Navigate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
@@ -445,6 +500,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = Navigate/Navigate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
@@ -461,6 +518,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = NavigateTests/Info.plist;
@@ -478,6 +536,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = NavigateTests/Info.plist;
@@ -494,6 +553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = NavigateUITests/Info.plist;
@@ -510,6 +570,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = NavigateUITests/Info.plist;
