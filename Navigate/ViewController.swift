@@ -14,10 +14,11 @@ class ViewController: UIViewController {
     var piPeripheral: CBPeripheral!
     let piServiceCBUUID = CBUUID(string: "0x12AB")
     let wifiCharacteristicCBUUID = CBUUID(string: "34CD")
+    var writeCharacteristic: CBCharacteristic!
     var data: String = ""
     var json: Any! {
         didSet {
-            // print(json)
+//             print(json)
         }
     }
     
@@ -33,7 +34,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 
@@ -43,6 +43,12 @@ class ViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let command = "cd /usr/local/bin/server/ && git pull && forever restartall"
+        piPeripheral.writeValue(command.data(using: .utf8)!, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
+        print("Writing command: \(command)")
+    }
 }
 
 extension ViewController: CBCentralManagerDelegate {
@@ -67,6 +73,10 @@ extension ViewController: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected")
+        if central.state == .poweredOn {
+            print("Scanning for peripherals")
+            centralManager.scanForPeripherals(withServices: [piServiceCBUUID])
+        }
     }
 }
 
@@ -84,7 +94,10 @@ extension ViewController: CBPeripheralDelegate {
         
         for characteristic in characteristics {
             if characteristic.properties.contains(.notify) {
-                peripheral.setNotifyValue(true, for: characteristic)
+//                peripheral.setNotifyValue(true, for: characteristic)
+            }
+            if characteristic.properties.contains(.write) {
+                self.writeCharacteristic = characteristic
             }
         }
     }
@@ -93,8 +106,9 @@ extension ViewController: CBPeripheralDelegate {
         switch characteristic.uuid {
         case wifiCharacteristicCBUUID:
             let chunkData = String(bytes: characteristic.value!, encoding: String.Encoding.utf8)!
-            if (chunkData.contains("#done")) {
-                data.append(String(chunkData.dropLast("#done".count)))
+            if (chunkData.contains("#")) {
+                data.append(chunkData)
+                data = String(data.dropLast("#".count))
                 do {
                     json = try JSONSerialization.jsonObject(with: data.data(using: .utf8)!)
                 } catch {
