@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import CoreData
 
 class ViewController: UIViewController {
     var centralManager: CBCentralManager!
@@ -26,7 +27,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+//        centralManager = CBCentralManager(delegate: self, queue: nil)
+        
+//        let floor = Floor(context: PersistenceService.context)
+//        floor.level = 6
+//        PersistenceService.saveContext()
+        
+        let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
+        do {
+            let floors = try PersistenceService.context.fetch(fetchRequest)
+            for floor in floors {
+                print(floor.level)
+            }
+        } catch {
+            print("Error in Floor fetchRequest")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,9 +60,9 @@ class ViewController: UIViewController {
     */
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let command = "cd /usr/local/bin/server/ && git pull && forever restartall"
-        piPeripheral.writeValue(command.data(using: .utf8)!, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
-        print("Writing command: \(command)")
+//        let command = "cd /usr/local/bin/server/ && git pull && forever restartall"
+//        piPeripheral.writeValue(command.data(using: .utf8)!, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
+//        print("Writing command: \(command)")
     }
 }
 

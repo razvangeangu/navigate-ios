@@ -3,29 +3,21 @@
     <entity name="AccessPoint" representedClassName="AccessPoint" syncable="YES">
         <attribute name="strength" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="accessPoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="accessPointsList" inverseEntity="Tile" syncable="YES"/>
+        <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="accessPoints" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Floor" representedClassName="Floor" syncable="YES">
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="tiles" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="tilesRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tile" inverseName="newRelationship" inverseEntity="Tile" syncable="YES"/>
-    </entity>
-    <entity name="Location" representedClassName="Location" syncable="YES">
-        <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="locationRelation" inverseEntity="Tile" syncable="YES"/>
+        <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="floor" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Tile" representedClassName="Tile" syncable="YES">
-        <attribute name="accessPoints" optional="YES" attributeType="Transformable" customClassName="AccessPoint" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="Transformable" customClassName="Location" syncable="YES"/>
-        <relationship name="accessPointsList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccessPoint" inverseName="accessPoints" inverseEntity="AccessPoint" syncable="YES"/>
-        <relationship name="locationRelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="locations" inverseEntity="Location" syncable="YES"/>
-        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Floor" inverseName="tilesRelation" inverseEntity="Floor" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="accessPoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccessPoint" inverseName="tiles" inverseEntity="AccessPoint" syncable="YES"/>
+        <relationship name="floor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Floor" inverseName="tiles" inverseEntity="Floor" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AccessPoint" positionX="-10854" positionY="-4201" width="99" height="88"/>
-        <element name="Floor" positionX="-10782" positionY="-4399" width="128" height="88"/>
-        <element name="Location" positionX="-10782" positionY="-4000" width="128" height="88"/>
-        <element name="Tile" positionX="-10649" positionY="-4203" width="128" height="118"/>
+        <element name="AccessPoint" positionX="-10800" positionY="-4048" width="99" height="88"/>
+        <element name="Tile" positionX="-10827" positionY="-4203" width="128" height="103"/>
+        <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="73"/>
     </elements>
 </model>

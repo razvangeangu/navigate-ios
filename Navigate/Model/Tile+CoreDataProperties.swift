@@ -17,27 +17,26 @@ extension Tile {
         return NSFetchRequest<Tile>(entityName: "Tile")
     }
 
-    @NSManaged public var accessPoints: AccessPoint?
-    @NSManaged public var location: Location?
-    @NSManaged public var accessPointsList: NSSet?
-    @NSManaged public var locationRelation: Location?
-    @NSManaged public var newRelationship: Floor?
+    @NSManaged public var x: Int16
+    @NSManaged public var y: Int16
+    @NSManaged public var floor: Floor?
+    @NSManaged public var accessPoints: NSSet?
 
 }
 
-// MARK: Generated accessors for accessPointsList
+// MARK: Generated accessors for accessPoints
 extension Tile {
 
-    @objc(addAccessPointsListObject:)
-    @NSManaged public func addToAccessPointsList(_ value: AccessPoint)
+    @objc(addAccessPointsObject:)
+    @NSManaged public func addToAccessPoints(_ value: AccessPoint)
 
-    @objc(removeAccessPointsListObject:)
-    @NSManaged public func removeFromAccessPointsList(_ value: AccessPoint)
+    @objc(removeAccessPointsObject:)
+    @NSManaged public func removeFromAccessPoints(_ value: AccessPoint)
 
-    @objc(addAccessPointsList:)
-    @NSManaged public func addToAccessPointsList(_ values: NSSet)
+    @objc(addAccessPoints:)
+    @NSManaged public func addToAccessPoints(_ values: NSSet)
 
-    @objc(removeAccessPointsList:)
-    @NSManaged public func removeFromAccessPointsList(_ values: NSSet)
+    @objc(removeAccessPoints:)
+    @NSManaged public func removeFromAccessPoints(_ values: NSSet)
 
 }

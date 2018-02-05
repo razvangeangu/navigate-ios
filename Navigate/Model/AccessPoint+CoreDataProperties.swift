@@ -19,23 +19,23 @@ extension AccessPoint {
 
     @NSManaged public var strength: Int64
     @NSManaged public var uuid: UUID?
-    @NSManaged public var accessPoints: NSSet?
+    @NSManaged public var tiles: NSSet?
 
 }
 
-// MARK: Generated accessors for accessPoints
+// MARK: Generated accessors for tiles
 extension AccessPoint {
 
-    @objc(addAccessPointsObject:)
-    @NSManaged public func addToAccessPoints(_ value: Tile)
+    @objc(addTilesObject:)
+    @NSManaged public func addToTiles(_ value: Tile)
 
-    @objc(removeAccessPointsObject:)
-    @NSManaged public func removeFromAccessPoints(_ value: Tile)
+    @objc(removeTilesObject:)
+    @NSManaged public func removeFromTiles(_ value: Tile)
 
-    @objc(addAccessPoints:)
-    @NSManaged public func addToAccessPoints(_ values: NSSet)
+    @objc(addTiles:)
+    @NSManaged public func addToTiles(_ values: NSSet)
 
-    @objc(removeAccessPoints:)
-    @NSManaged public func removeFromAccessPoints(_ values: NSSet)
+    @objc(removeTiles:)
+    @NSManaged public func removeFromTiles(_ values: NSSet)
 
 }
