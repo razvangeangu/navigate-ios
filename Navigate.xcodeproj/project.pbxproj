@@ -16,9 +16,11 @@
 		182519141FAF454A0005F5F6 /* NavigateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519131FAF454A0005F5F6 /* NavigateTests.swift */; };
 		1825191F1FAF454A0005F5F6 /* NavigateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */; };
 		1825192F1FAF45750005F5F6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */; };
+		18309F5A202918BE009F5CDD /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F59202918BE009F5CDD /* BLEService.swift */; };
+		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
+		18309F6320291F30009F5CDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* ViewController.swift */; };
 		187E32982024940C0053853D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
-		1882F28720235857009AD747 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882F28620235857009AD747 /* ViewController.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18C00228202912FD007CB515 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */; };
 		18C00229202912FD007CB515 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */; };
@@ -62,9 +64,11 @@
 		182519201FAF454A0005F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		182519301FAF45750005F5F6 /* Navigate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Navigate.entitlements; sourceTree = "<group>"; };
+		18309F59202918BE009F5CDD /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
+		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
+		18309F6220291F30009F5CDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
-		1882F28620235857009AD747 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -128,12 +132,8 @@
 				182519301FAF45750005F5F6 /* Navigate.entitlements */,
 				1825192C1FAF45650005F5F6 /* Model */,
 				185936721FBD9DA60016BF66 /* View */,
-				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
 				182518FE1FAF454A0005F5F6 /* art.scnassets */,
-				1882F28620235857009AD747 /* ViewController.swift */,
-				182519021FAF454A0005F5F6 /* Main.storyboard */,
 				182519051FAF454A0005F5F6 /* Assets.xcassets */,
-				182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */,
 				1825190A1FAF454A0005F5F6 /* Info.plist */,
 			);
 			path = Navigate;
@@ -160,14 +160,9 @@
 		1825192C1FAF45650005F5F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */,
-				18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */,
-				18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */,
-				18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */,
-				18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */,
-				18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */,
-				189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */,
-				187E32992024953D0053853D /* PersistenceService.swift */,
+				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
+				18309F6120291EF8009F5CDD /* PiConnection */,
+				18309F5D20291EC2009F5CDD /* Database */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,10 +176,69 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		18309F5D20291EC2009F5CDD /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				187E32992024953D0053853D /* PersistenceService.swift */,
+				18309F6020291EE7009F5CDD /* Models */,
+				18309F5F20291EDC009F5CDD /* Classes */,
+				18309F5E20291ED1009F5CDD /* Properties */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		18309F5E20291ED1009F5CDD /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */,
+				18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */,
+				18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */,
+			);
+			path = Properties;
+			sourceTree = "<group>";
+		};
+		18309F5F20291EDC009F5CDD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */,
+				18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */,
+				18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		18309F6020291EE7009F5CDD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		18309F6120291EF8009F5CDD /* PiConnection */ = {
+			isa = PBXGroup;
+			children = (
+				18309F59202918BE009F5CDD /* BLEService.swift */,
+				18309F5B20291983009F5CDD /* BLEServiceProperties.swift */,
+			);
+			path = PiConnection;
+			sourceTree = "<group>";
+		};
+		18309F6420291F43009F5CDD /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				182519021FAF454A0005F5F6 /* Main.storyboard */,
+				182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		185936721FBD9DA60016BF66 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
+				18309F6220291F30009F5CDD /* ViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -340,11 +394,13 @@
 			files = (
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
 				18C0022B202912FD007CB515 /* Tile+CoreDataProperties.swift in Sources */,
-				1882F28720235857009AD747 /* ViewController.swift in Sources */,
+				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18C00228202912FD007CB515 /* Floor+CoreDataClass.swift in Sources */,
+				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18C00229202912FD007CB515 /* Floor+CoreDataProperties.swift in Sources */,
 				18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */,
+				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
 				18C0022A202912FD007CB515 /* Tile+CoreDataClass.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,

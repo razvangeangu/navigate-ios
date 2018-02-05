@@ -1,76 +1,20 @@
 //
-//  ViewController.swift
+//  BLEServiceProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 01/02/2018.
+//  Created by Răzvan-Gabriel Geangu on 05/02/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 
-import UIKit
 import CoreBluetooth
-import CoreData
 
-class ViewController: UIViewController {
-    var centralManager: CBCentralManager!
-    var piPeripheral: CBPeripheral!
-    let piServiceCBUUID = CBUUID(string: "0x12AB")
-    let wifiCharacteristicCBUUID = CBUUID(string: "34CD")
-    var writeCharacteristic: CBCharacteristic!
-    var data: String = ""
-    var json: Any! {
-        didSet {
-//             print(json)
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-//        centralManager = CBCentralManager(delegate: self, queue: nil)
-        
-//        let floor = Floor(context: PersistenceService.context)
-//        floor.level = 6
-//        PersistenceService.saveContext()
-        
-        let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
-        do {
-            let floors = try PersistenceService.context.fetch(fetchRequest)
-            for floor in floors {
-                print(floor.level)
-            }
-        } catch {
-            print("Error in Floor fetchRequest")
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let command = "cd /usr/local/bin/server/ && git pull && forever restartall"
-//        piPeripheral.writeValue(command.data(using: .utf8)!, for: writeCharacteristic, type: CBCharacteristicWriteType.withResponse)
-//        print("Writing command: \(command)")
-    }
-}
-
-extension ViewController: CBCentralManagerDelegate {
+extension BLEService: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             print("central.state is .poweredOn")
-            centralManager.scanForPeripherals(withServices: [piServiceCBUUID])
+            if serviceCBUUID != nil {
+                centralManager.scanForPeripherals(withServices: [serviceCBUUID])
+            }
         }
     }
     
@@ -90,12 +34,12 @@ extension ViewController: CBCentralManagerDelegate {
         print("Disconnected")
         if central.state == .poweredOn {
             print("Scanning for peripherals")
-            centralManager.scanForPeripherals(withServices: [piServiceCBUUID])
+            centralManager.scanForPeripherals(withServices: [serviceCBUUID])
         }
     }
 }
 
-extension ViewController: CBPeripheralDelegate {
+extension BLEService: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         
@@ -109,10 +53,10 @@ extension ViewController: CBPeripheralDelegate {
         
         for characteristic in characteristics {
             if characteristic.properties.contains(.notify) {
-//                peripheral.setNotifyValue(true, for: characteristic)
+//                piPeripheral.setNotifyValue(true, for: characteristic)
             }
             if characteristic.properties.contains(.write) {
-                self.writeCharacteristic = characteristic
+//                self.writeCharacteristic = characteristic
             }
         }
     }
