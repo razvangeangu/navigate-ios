@@ -14,10 +14,11 @@ class BLEService: NSObject {
     var serviceCBUUID: CBUUID!
     let wifiCharacteristicCBUUID = CBUUID(string: "34CD")
     var writeCharacteristic: CBCharacteristic!
+    var readCharacteristic: CBCharacteristic!
     var data: String = ""
     var json: Any! {
         didSet {
-            // print(json)
+            print(json)
         }
     }
     
@@ -28,7 +29,6 @@ class BLEService: NSObject {
     }
     
     func connect(to piService: String) {
-        // 0x12AB
         serviceCBUUID = CBUUID(string: piService)
     }
     
@@ -36,5 +36,25 @@ class BLEService: NSObject {
         if piPeripheral != nil {
             centralManager.cancelPeripheralConnection(piPeripheral)
         }
+    }
+    
+    func write(command: String) {
+        if writeCharacteristic != nil {
+            piPeripheral.writeValue(command.data(using: .utf8)!, for: writeCharacteristic, type: .withResponse)
+        }
+    }
+    
+    func stopPi() {
+        write(command: "sudo shutdown now")
+    }
+    
+    func read() {
+        if readCharacteristic != nil {
+            piPeripheral.readValue(for: readCharacteristic)
+        }
+    }
+    
+    func getWiFiList() -> Any {
+        return self.json
     }
 }

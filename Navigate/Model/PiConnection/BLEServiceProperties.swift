@@ -13,6 +13,7 @@ extension BLEService: CBCentralManagerDelegate {
         if central.state == .poweredOn {
             print("central.state is .poweredOn")
             if serviceCBUUID != nil {
+                print("Scanning for peripherals")
                 centralManager.scanForPeripherals(withServices: [serviceCBUUID])
             }
         }
@@ -53,11 +54,14 @@ extension BLEService: CBPeripheralDelegate {
         
         for characteristic in characteristics {
             if characteristic.properties.contains(.notify) {
-//                piPeripheral.setNotifyValue(true, for: characteristic)
+                piPeripheral.setNotifyValue(true, for: characteristic)
             }
             if characteristic.properties.contains(.write) {
-//                self.writeCharacteristic = characteristic
+                self.writeCharacteristic = characteristic
             }
+//            if characteristic.properties.contains(.read) {
+//                self.readCharacteristic = characteristic
+//            }
         }
     }
     

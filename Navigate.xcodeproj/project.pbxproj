@@ -15,19 +15,22 @@
 		182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */; };
 		182519141FAF454A0005F5F6 /* NavigateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519131FAF454A0005F5F6 /* NavigateTests.swift */; };
 		1825191F1FAF454A0005F5F6 /* NavigateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */; };
-		1825192F1FAF45750005F5F6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */; };
 		18309F5A202918BE009F5CDD /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F59202918BE009F5CDD /* BLEService.swift */; };
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* ViewController.swift */; };
-		187E32982024940C0053853D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
+		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
+		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
+		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
+		18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B93D992052C3F600AD8B31 /* Extensions.swift */; };
 		18C00228202912FD007CB515 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */; };
 		18C00229202912FD007CB515 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */; };
 		18C0022A202912FD007CB515 /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */; };
 		18C0022B202912FD007CB515 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */; };
 		18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */; };
 		18C0022D202912FD007CB515 /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */; };
+		18E597212052F14C00BD48B6 /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18E597202052F14C00BD48B6 /* MapTilemapScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +65,6 @@
 		1825191A1FAF454A0005F5F6 /* NavigateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateUITests.swift; sourceTree = "<group>"; };
 		182519201FAF454A0005F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		182519301FAF45750005F5F6 /* Navigate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Navigate.entitlements; sourceTree = "<group>"; };
 		18309F59202918BE009F5CDD /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
@@ -70,12 +72,16 @@
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
+		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
+		18B93D992052C3F600AD8B31 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18E597202052F14C00BD48B6 /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MapTilemapScene.sks; path = ../../../../../../.Trash/MapTilemapScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187E32982024940C0053853D /* CoreData.framework in Frameworks */,
-				1825192F1FAF45750005F5F6 /* ExternalAccessory.framework in Frameworks */,
+				184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,9 +165,11 @@
 		1825192C1FAF45650005F5F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
 				18309F6120291EF8009F5CDD /* PiConnection */,
 				18309F5D20291EC2009F5CDD /* Database */,
+				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
+				18A2642B202B544E002EE7E9 /* Util.swift */,
+				18B93D992052C3F600AD8B31 /* Extensions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				187E32972024940C0053853D /* CoreData.framework */,
-				1825192E1FAF45750005F5F6 /* ExternalAccessory.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -239,6 +245,8 @@
 				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
 				18309F6220291F30009F5CDD /* ViewController.swift */,
+				18E597202052F14C00BD48B6 /* MapTilemapScene.sks */,
+				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -313,17 +321,20 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.NetworkExtensions.iOS = {
 								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Siri = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.WAC = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -367,6 +378,8 @@
 				182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */,
 				182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */,
 				182519061FAF454A0005F5F6 /* Assets.xcassets in Resources */,
+				18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */,
+				18E597212052F14C00BD48B6 /* MapTilemapScene.sks in Resources */,
 				182519041FAF454A0005F5F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,7 +415,9 @@
 				18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */,
 				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
 				18C0022A202912FD007CB515 /* Tile+CoreDataClass.swift in Sources */,
+				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
+				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				18C0022D202912FD007CB515 /* AccessPoint+CoreDataProperties.swift in Sources */,
 			);
@@ -575,13 +590,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = Navigate/Navigate.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razvangeangu.Navigate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -592,13 +608,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = Navigate/Navigate.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razvangeangu.Navigate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
