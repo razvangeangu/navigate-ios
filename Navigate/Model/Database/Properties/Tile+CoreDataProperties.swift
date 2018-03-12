@@ -2,7 +2,7 @@
 //  Tile+CoreDataProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 05/02/2018.
+//  Created by Răzvan-Gabriel Geangu on 12/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
@@ -19,8 +19,8 @@ extension Tile {
 
     @NSManaged public var x: Int16
     @NSManaged public var y: Int16
-    @NSManaged public var floor: Floor?
     @NSManaged public var accessPoints: NSSet?
+    @NSManaged public var floor: Floor?
 
 }
 

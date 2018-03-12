@@ -18,19 +18,21 @@
 		18309F5A202918BE009F5CDD /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F59202918BE009F5CDD /* BLEService.swift */; };
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* ViewController.swift */; };
+		1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */; };
+		1830E3F62057202F00F39ABA /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */; };
+		1830E3F72057202F00F39ABA /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */; };
+		1830E3F82057202F00F39ABA /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */; };
+		1830E3F92057202F00F39ABA /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */; };
+		1830E3FA2057202F00F39ABA /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */; };
+		1830E3FB2057202F00F39ABA /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
 		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
 		18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B93D992052C3F600AD8B31 /* Extensions.swift */; };
-		18C00228202912FD007CB515 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */; };
-		18C00229202912FD007CB515 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */; };
-		18C0022A202912FD007CB515 /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */; };
-		18C0022B202912FD007CB515 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */; };
-		18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */; };
-		18C0022D202912FD007CB515 /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */; };
 		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
+		18C735672057164200B292B1 /* RGData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,19 +71,21 @@
 		18309F59202918BE009F5CDD /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
 		18309F6220291F30009F5CDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
+		1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
 		18B93D992052C3F600AD8B31 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
-		18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
-		18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		18C735662057164200B292B1 /* RGData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
 				18A2642B202B544E002EE7E9 /* Util.swift */,
 				18B93D992052C3F600AD8B31 /* Extensions.swift */,
+				18C735662057164200B292B1 /* RGData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -196,9 +201,9 @@
 		18309F5E20291ED1009F5CDD /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				18C00223202912FD007CB515 /* Floor+CoreDataProperties.swift */,
-				18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */,
-				18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */,
+				1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */,
+				1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */,
+				1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -206,9 +211,9 @@
 		18309F5F20291EDC009F5CDD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				18C00222202912FD007CB515 /* Floor+CoreDataClass.swift */,
-				18C00224202912FD007CB515 /* Tile+CoreDataClass.swift */,
-				18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */,
+				1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */,
+				1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */,
+				1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
 				18309F6220291F30009F5CDD /* ViewController.swift */,
+				1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */,
 				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
 				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
 			);
@@ -406,20 +412,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
-				18C0022B202912FD007CB515 /* Tile+CoreDataProperties.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
-				18C00228202912FD007CB515 /* Floor+CoreDataClass.swift in Sources */,
+				1830E3F62057202F00F39ABA /* Floor+CoreDataClass.swift in Sources */,
+				1830E3FB2057202F00F39ABA /* AccessPoint+CoreDataProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
+				1830E3F92057202F00F39ABA /* Tile+CoreDataProperties.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
-				18C00229202912FD007CB515 /* Floor+CoreDataProperties.swift in Sources */,
-				18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */,
 				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
-				18C0022A202912FD007CB515 /* Tile+CoreDataClass.swift in Sources */,
+				18C735672057164200B292B1 /* RGData.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
+				1830E3FA2057202F00F39ABA /* AccessPoint+CoreDataClass.swift in Sources */,
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
+				1830E3F72057202F00F39ABA /* Floor+CoreDataProperties.swift in Sources */,
+				1830E3F82057202F00F39ABA /* Tile+CoreDataClass.swift in Sources */,
+				1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
-				18C0022D202912FD007CB515 /* AccessPoint+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
