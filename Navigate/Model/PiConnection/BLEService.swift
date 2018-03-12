@@ -16,9 +16,10 @@ class BLEService: NSObject {
     var writeCharacteristic: CBCharacteristic!
     var readCharacteristic: CBCharacteristic!
     var data: String = ""
+    var shouldReturnData = false
     var json: Any! {
         didSet {
-            print(json)
+            print("Data Received..")
         }
     }
     
@@ -55,6 +56,10 @@ class BLEService: NSObject {
     }
     
     func getWiFiList() -> Any {
-        return self.json
+        if self.json != nil {
+            return self.json
+        }
+        
+        return {}
     }
 }

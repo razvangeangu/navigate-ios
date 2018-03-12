@@ -16,3 +16,8 @@ enum Commands: String {
     case stopPi = "sudo shutdown now"
     case updateServer = "cd /root/navigate-server && git pull && forever restartall"
 }
+
+enum RGColor: String {
+    case cyan = "cyan"
+    case purple = "purple"
+}

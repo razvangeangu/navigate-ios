@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 181D01002053EB13001CB8BD /* MapTilemapScene.sks */; };
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
 		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
 		182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519001FAF454A0005F5F6 /* ARViewController.swift */; };
 		182519041FAF454A0005F5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519021FAF454A0005F5F6 /* Main.storyboard */; };
-		182519061FAF454A0005F5F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 182519051FAF454A0005F5F6 /* Assets.xcassets */; };
 		182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */; };
 		182519141FAF454A0005F5F6 /* NavigateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519131FAF454A0005F5F6 /* NavigateTests.swift */; };
 		1825191F1FAF454A0005F5F6 /* NavigateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */; };
@@ -30,7 +30,7 @@
 		18C0022B202912FD007CB515 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */; };
 		18C0022C202912FD007CB515 /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */; };
 		18C0022D202912FD007CB515 /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */; };
-		18E597212052F14C00BD48B6 /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18E597202052F14C00BD48B6 /* MapTilemapScene.sks */; };
+		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,12 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		181D01002053EB13001CB8BD /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTilemapScene.sks; sourceTree = "<group>"; };
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		182518FE1FAF454A0005F5F6 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		182519001FAF454A0005F5F6 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		182519031FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		182519051FAF454A0005F5F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		182519081FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1825190A1FAF454A0005F5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1825190F1FAF454A0005F5F6 /* NavigateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NavigateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +81,7 @@
 		18C00225202912FD007CB515 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C00226202912FD007CB515 /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C00227202912FD007CB515 /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		18E597202052F14C00BD48B6 /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MapTilemapScene.sks; path = ../../../../../../.Trash/MapTilemapScene.sks; sourceTree = "<group>"; };
+		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +138,7 @@
 				1825192C1FAF45650005F5F6 /* Model */,
 				185936721FBD9DA60016BF66 /* View */,
 				182518FE1FAF454A0005F5F6 /* art.scnassets */,
-				182519051FAF454A0005F5F6 /* Assets.xcassets */,
+				18C735622056F06500B292B1 /* Assets.xcassets */,
 				1825190A1FAF454A0005F5F6 /* Info.plist */,
 			);
 			path = Navigate;
@@ -245,8 +245,8 @@
 				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
 				18309F6220291F30009F5CDD /* ViewController.swift */,
-				18E597202052F14C00BD48B6 /* MapTilemapScene.sks */,
 				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
+				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,9 +377,9 @@
 			files = (
 				182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */,
 				182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */,
-				182519061FAF454A0005F5F6 /* Assets.xcassets in Resources */,
 				18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */,
-				18E597212052F14C00BD48B6 /* MapTilemapScene.sks in Resources */,
+				181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */,
+				18C735632056F06500B292B1 /* Assets.xcassets in Resources */,
 				182519041FAF454A0005F5F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

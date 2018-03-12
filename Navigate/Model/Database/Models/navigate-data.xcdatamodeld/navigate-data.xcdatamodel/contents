@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14094.4" systemVersion="17D47" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14094.4" systemVersion="17D102" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AccessPoint" representedClassName="AccessPoint" syncable="YES">
         <attribute name="strength" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
@@ -17,7 +17,7 @@
     </entity>
     <elements>
         <element name="AccessPoint" positionX="-10800" positionY="-4048" width="99" height="88"/>
-        <element name="Tile" positionX="-10827" positionY="-4203" width="128" height="103"/>
         <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="73"/>
+        <element name="Tile" positionX="-10827" positionY="-4203" width="128" height="103"/>
     </elements>
 </model>
