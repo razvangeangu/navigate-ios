@@ -44,7 +44,7 @@ extension ViewController {
         let _ = map.tileDefinition(atColumn: column, row: row)
         
         // Dev data
-        devLabel.text = "Touched Tile(\(column),\(row))"
+        ViewController.devLog(data: "Touched Tile(\(column),\(row))")
         
         // If the model has been able to save data for the specific column and row
         if model.saveDataToTile(column: column, row: row) {

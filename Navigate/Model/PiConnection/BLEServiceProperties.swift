@@ -9,46 +9,69 @@
 import CoreBluetooth
 
 extension BLEService: CBCentralManagerDelegate {
+    
+    // Power on the Bluetooth Low Energy Service
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             print("central.state is .poweredOn")
             if serviceCBUUID != nil {
+                
+                // Search for peripherals
                 print("Scanning for peripherals")
+                ViewController.devLog(data: "Scanning for peripherals")
                 centralManager.scanForPeripherals(withServices: [serviceCBUUID])
             }
         }
     }
     
+    // If peripheral was discovered
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        // Set the peripheral to the piService
         piPeripheral = peripheral
         piPeripheral.delegate = self
+        
+        // Stop the scanning
         centralManager.stopScan()
+        
+        // Connect to the service
         centralManager.connect(peripheral, options: nil)
     }
     
+    // If connected to peripheral
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected")
+        ViewController.devLog(data: "Connected")
+        
+        // Get the services from the peripheral
         piPeripheral.discoverServices(nil)
     }
     
+    // If the peripheral disconnected
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected")
+        ViewController.devLog(data: "Disconnected")
         if central.state == .poweredOn {
             print("Scanning for peripherals")
+            ViewController.devLog(data: "Scanning for peripherals")
             centralManager.scanForPeripherals(withServices: [serviceCBUUID])
         }
     }
 }
 
 extension BLEService: CBPeripheralDelegate {
+    
+    // Did discover services
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         
         for service in services {
+            // Find characteristics
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
     
+    // Get .notify and .write characteristics
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         
@@ -59,12 +82,10 @@ extension BLEService: CBPeripheralDelegate {
             if characteristic.properties.contains(.write) {
                 self.writeCharacteristic = characteristic
             }
-//            if characteristic.properties.contains(.read) {
-//                self.readCharacteristic = characteristic
-//            }
         }
     }
     
+    // Get the WiFi data from the .notify characteristic
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         switch characteristic.uuid {
         case wifiCharacteristicCBUUID:

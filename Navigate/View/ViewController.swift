@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     var scene: SKScene!
     
     // Developer label to display information
-    var devLabel: UILabel!
+    fileprivate static var devLabel: UILabel!
     
     // Reference to the data model
     let model = RGData()
@@ -95,13 +95,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      Construct and add development label to the view.
      */
     fileprivate func addDevLabel() {
-        devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
-        devLabel.backgroundColor = .black
-        devLabel.text = "#"
-        devLabel.numberOfLines = 4
-        devLabel.textColor = .white
-        devLabel.textAlignment = .center
-        view.addSubview(devLabel)
+        ViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
+        ViewController.devLabel.backgroundColor = .black
+        ViewController.devLabel.text = "#"
+        ViewController.devLabel.numberOfLines = 4
+        ViewController.devLabel.textColor = .white
+        ViewController.devLabel.textAlignment = .center
+        view.addSubview(ViewController.devLabel)
     }
     
     /**
@@ -157,6 +157,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    static func devLog(data: String) {
+        
     }
 }
 
