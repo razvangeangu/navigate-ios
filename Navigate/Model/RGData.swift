@@ -49,10 +49,11 @@ class RGData: NSObject {
     }
     
     func getAccessPoints() -> NSSet? {
-        let jsonObject = ble.getWiFiList()
         let accessPoints = NSMutableSet()
         
-        for accessPoint in jsonObject as! [[Any]] {
+        guard let jsonObject = ble.getWiFiList() as? [[Any]] else { return accessPoints }
+        
+        for accessPoint in jsonObject {
             let address = String.init(describing: accessPoint[0])
             let strength = Int64.init(exactly: accessPoint[1] as! NSNumber)!
             let ap = AccessPoint(context: PersistenceService.context)
@@ -67,6 +68,10 @@ class RGData: NSObject {
     func saveDataToTile(column: Int, row: Int) -> Bool {
         var saved = false
         let accessPoints = getAccessPoints()
+        
+        if accessPoints?.count == 0 {
+            return saved
+        }
         
         //        for tileAny in floor.tiles! {
         //            if let tile = tileAny as? Tile {
@@ -102,6 +107,8 @@ class RGData: NSObject {
             
             saved = true
         }
+        
+        PersistenceService.saveContext()
         
         return saved
     }

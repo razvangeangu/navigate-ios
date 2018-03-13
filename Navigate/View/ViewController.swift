@@ -127,7 +127,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-//            ble.stopPi()
+            model.ble.stopPi()
         }
     }
 

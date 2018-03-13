@@ -55,7 +55,7 @@ class BLEService: NSObject {
         }
     }
     
-    func getWiFiList() -> Any {
+    func getWiFiList() -> Any? {
         if self.json != nil {
             return self.json
         }
