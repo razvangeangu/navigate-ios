@@ -45,12 +45,18 @@ extension ViewController {
         
         // Dev data
         ViewController.devLog(data: "Touched Tile(\(column),\(row))")
-        
-        // If the model has been able to save data for the specific column and row
-        if model.saveDataToTile(column: column, row: row) {
+    
+        // If the model has not got any data for the specified location proceed
+        if !model.accessPointHasData(column: column, row: row) {
             
-            // Set the tile to cyan color
-            setBlueTile(column: column, row: row, color: .cyan)
+            // If the model has been able to save data for the specific column and row
+            if model.saveDataToTile(column: column, row: row) {
+                
+                // Set the tile to cyan color
+                setBlueTile(column: column, row: row, color: .cyan)
+            }
+        } else {
+            ViewController.devLog(data: "AccessPoint already has data")
         }
     }
     

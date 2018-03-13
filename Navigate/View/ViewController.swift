@@ -138,7 +138,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         for row in 0...map.numberOfRows {
             for column in 0...map.numberOfColumns {
                 if model.accessPointHasData(column: column, row: row) {
-                    print("YES! \(column), \(row)")
                     setBlueTile(column: column, row: row, color: .cyan)
                 }
             }
@@ -160,7 +159,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     static func devLog(data: String) {
-        
+        devLabel.text = data
     }
 }
 
