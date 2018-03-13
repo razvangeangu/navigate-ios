@@ -53,7 +53,7 @@ extension ViewController {
             if model.saveDataToTile(column: column, row: row) {
                 
                 // Set the tile to cyan color
-                setBlueTile(column: column, row: row, color: .cyan)
+                setTileColor(column: column, row: row, color: .cyan)
             }
         } else {
             ViewController.devLog(data: "AccessPoint already has data")

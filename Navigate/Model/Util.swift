@@ -20,4 +20,6 @@ enum Commands: String {
 enum RGColor: String {
     case cyan = "cyan"
     case purple = "purple"
+    case green = "green"
+    case grey = "grey"
 }

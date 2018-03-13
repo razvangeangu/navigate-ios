@@ -112,7 +112,7 @@ class RGData: NSObject {
         }
         
         // Save the context for CoreData
-        PersistenceService.saveContext()
+        // PersistenceService.saveContext()
         
         return accessPoints
     }

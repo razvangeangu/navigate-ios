@@ -111,7 +111,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter row: The row of the tile.
      - parameter color: The color that can be .cyan or .purple
      */
-    func setBlueTile(column: Int, row: Int, color: RGColor) {
+    func setTileColor(column: Int, row: Int, color: RGColor) {
         guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
         var tileGroup: SKTileGroup!
         
@@ -126,6 +126,16 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 tileGroup = map.tileSet.tileGroups.first(
                     where: {$0.name == "purple_box"})
             }
+        case .green:
+            do {
+                tileGroup = map.tileSet.tileGroups.first(
+                    where: {$0.name == "green_box"})
+            }
+        case .grey:
+            do {
+                tileGroup = map.tileSet.tileGroups.first(
+                    where: {$0.name == "grey_box"})
+            }
         }
         map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
@@ -138,7 +148,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         for row in 0...map.numberOfRows {
             for column in 0...map.numberOfColumns {
                 if model.accessPointHasData(column: column, row: row) {
-                    setBlueTile(column: column, row: row, color: .cyan)
+                    setTileColor(column: column, row: row, color: .cyan)
                 }
             }
         }
@@ -149,7 +159,38 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            model.disconnect()
+            // model.disconnect()
+            let currentAccessPoints = model.getAccessPoints()!
+            
+            guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
+            var matrix = [[Int]](repeating: [Int](repeating: 0, count: map.numberOfColumns), count: map.numberOfRows)
+            
+            for case let tile as Tile in model.floor.tiles! {
+                for case let accessPoint as AccessPoint in tile.accessPoints! {
+                    for case let currentAccessPoint as AccessPoint in currentAccessPoints {
+                        if accessPoint.uuid == currentAccessPoint.uuid {
+                            if accessPoint.strength > currentAccessPoint.strength - 10 {
+                                if accessPoint.strength < currentAccessPoint.strength + 10 {
+                                    matrix[Int(tile.x)][Int(tile.y)] += 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            var currentPosition = (0, 0)
+            var max = -1
+            for i in 0...map.numberOfRows - 1 {
+                for j in 0...map.numberOfColumns - 1 {
+                    if matrix[i][j] > max {
+                        currentPosition = (i, j)
+                        max = matrix[i][j]
+                    }
+                }
+            }
+            
+            setTileColor(column: currentPosition.1, row: currentPosition.0, color: .purple)
         }
     }
 
