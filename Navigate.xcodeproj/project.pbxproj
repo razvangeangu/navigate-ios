@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B582057F46800BBF6C8 /* RGLocalisation.swift */; };
+		18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B5A2057F47000BBF6C8 /* RGNavigation.swift */; };
 		181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 181D01002053EB13001CB8BD /* MapTilemapScene.sks */; };
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
 		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
@@ -53,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18120B582057F46800BBF6C8 /* RGLocalisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGLocalisation.swift; sourceTree = "<group>"; };
+		18120B5A2057F47000BBF6C8 /* RGNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGNavigation.swift; sourceTree = "<group>"; };
 		181D01002053EB13001CB8BD /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTilemapScene.sks; sourceTree = "<group>"; };
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				18A2642B202B544E002EE7E9 /* Util.swift */,
 				18B93D992052C3F600AD8B31 /* Extensions.swift */,
 				18C735662057164200B292B1 /* RGData.swift */,
+				18120B582057F46800BBF6C8 /* RGLocalisation.swift */,
+				18120B5A2057F47000BBF6C8 /* RGNavigation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -426,7 +432,9 @@
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
 				1830E3F72057202F00F39ABA /* Floor+CoreDataProperties.swift in Sources */,
 				1830E3F82057202F00F39ABA /* Tile+CoreDataClass.swift in Sources */,
+				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */,
+				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

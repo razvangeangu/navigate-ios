@@ -13,7 +13,7 @@ class RGData: NSObject {
     var floorLevel = 6
     var floor: Floor!
     
-    let ble = BLEService()
+    fileprivate let ble = BLEService()
     
     override init() {
         super.init()
@@ -21,6 +21,10 @@ class RGData: NSObject {
     
     func connect(to: String) {
         ble.connect(to: to)
+    }
+    
+    func disconnect() {
+        ble.stopPi()
     }
     
     func setFloor(level: Int) {

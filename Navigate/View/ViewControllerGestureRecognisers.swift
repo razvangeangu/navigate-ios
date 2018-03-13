@@ -28,8 +28,6 @@ extension ViewController {
         // Dev data
         devLabel.text = "Touched Tile(\(column),\(row))"
         
-//        print(model.getAccessPoints())
-        
         if model.saveDataToTile(column: column, row: row) {
             setBlueTile(column: column, row: row, color: .cyan)
         }

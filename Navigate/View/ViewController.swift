@@ -8,7 +8,6 @@
 
 import UIKit
 import SpriteKit
-import CoreData
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -55,13 +54,21 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
+        // Add the developer label to show different events
         addDevLabel()
         
+        // Activate the tiles that have access points stored in core data
         activateTiles()
     }
     
+    /**
+     Initialise the model.
+     */
     fileprivate func initModel() {
+        // Connect to device that scans for Wi-Fi APs
         model.connect(to: "0x12AB")
+        
+        // Set the floor level
         model.setFloor(level: 6)
     }
     
@@ -84,16 +91,26 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         tapGesture.delegate = self
     }
     
+    /**
+     Construct and add development label to the view.
+     */
     fileprivate func addDevLabel() {
         devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
         devLabel.backgroundColor = .black
-        devLabel.text = "dev log"
+        devLabel.text = "#"
         devLabel.numberOfLines = 4
         devLabel.textColor = .white
         devLabel.textAlignment = .center
         view.addSubview(devLabel)
     }
     
+    /**
+     Set tile blue as "active"
+     
+     - parameter column: The column of the tile.
+     - parameter row: The row of the tile.
+     - parameter color: The color that can be .cyan or .purple
+     */
     func setBlueTile(column: Int, row: Int, color: RGColor) {
         guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
         var tileGroup: SKTileGroup!
@@ -113,6 +130,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
+    /**
+     Display blue tile if it contains data.
+     */
     func activateTiles() {
         guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
         for row in 0...map.numberOfRows {
@@ -125,9 +145,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     Disconnect the bluetooth device and stop it on shaking device.
+     */
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            model.ble.stopPi()
+            model.disconnect()
         }
     }
 

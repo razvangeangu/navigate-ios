@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // Copyright https://www.raywenderlich.com/80818/operator-overloading-in-swift-tutorial
 extension CGPoint {
     public static func + (left: CGPoint, right: CGPoint) -> CGPoint {
