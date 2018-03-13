@@ -34,7 +34,7 @@
 		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
 		18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B93D992052C3F600AD8B31 /* Extensions.swift */; };
 		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
-		18C735672057164200B292B1 /* RGData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGData.swift */; };
+		18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGSharedDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +89,7 @@
 		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
 		18B93D992052C3F600AD8B31 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		18C735662057164200B292B1 /* RGData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGData.swift; sourceTree = "<group>"; };
+		18C735662057164200B292B1 /* RGSharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +178,7 @@
 				182518FC1FAF454A0005F5F6 /* AppDelegate.swift */,
 				18A2642B202B544E002EE7E9 /* Util.swift */,
 				18B93D992052C3F600AD8B31 /* Extensions.swift */,
-				18C735662057164200B292B1 /* RGData.swift */,
+				18C735662057164200B292B1 /* RGSharedDataManager.swift */,
 				18120B582057F46800BBF6C8 /* RGLocalisation.swift */,
 				18120B5A2057F47000BBF6C8 /* RGNavigation.swift */,
 			);
@@ -425,7 +425,7 @@
 				1830E3F92057202F00F39ABA /* Tile+CoreDataProperties.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
-				18C735672057164200B292B1 /* RGData.swift in Sources */,
+				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				1830E3FA2057202F00F39ABA /* AccessPoint+CoreDataClass.swift in Sources */,

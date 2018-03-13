@@ -18,11 +18,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     fileprivate static var devLabel: UILabel!
     
     // Reference to the data model
-    let model = RGData()
+    let model = RGSharedDataManager()
     
     // Vars for gesture recognisers
     var lastScale: CGFloat = 0.0
     var previousLocation = CGPoint.zero
+    
+    static var map: SKTileMapNode!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
                 self.scene = scene
+                
+                ViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
                 
                 // Set the scale mode to scale to fit the window
                 self.scene.scaleMode = .aspectFill
@@ -58,7 +62,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         addDevLabel()
         
         // Activate the tiles that have access points stored in core data
-        activateTiles()
+        ViewController.activateTiles()
     }
     
     /**
@@ -66,10 +70,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func initModel() {
         // Connect to device that scans for Wi-Fi APs
-        model.connect(to: "0x12AB")
+        RGSharedDataManager.connect(to: "0x12AB")
         
         // Set the floor level
-        model.setFloor(level: 6)
+        RGSharedDataManager.setFloor(level: 6)
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -111,44 +115,44 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter row: The row of the tile.
      - parameter color: The color that can be .cyan or .purple
      */
-    func setTileColor(column: Int, row: Int, color: RGColor) {
-        guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
+    static func setTileColor(column: Int, row: Int, color: RGColor) {
         var tileGroup: SKTileGroup!
         
         switch color {
         case .cyan:
             do {
-                tileGroup = map.tileSet.tileGroups.first(
+                tileGroup = ViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "cyan_box"})
             }
         case .purple:
             do {
-                tileGroup = map.tileSet.tileGroups.first(
+                tileGroup = ViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "purple_box"})
             }
         case .green:
             do {
-                tileGroup = map.tileSet.tileGroups.first(
+                tileGroup = ViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "green_box"})
             }
         case .grey:
             do {
-                tileGroup = map.tileSet.tileGroups.first(
+                tileGroup = ViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "grey_box"})
             }
         }
-        map.setTileGroup(tileGroup, forColumn: column, row: row)
+        ViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
     /**
      Display blue tile if it contains data.
      */
-    func activateTiles() {
-        guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
-        for row in 0...map.numberOfRows {
-            for column in 0...map.numberOfColumns {
-                if model.accessPointHasData(column: column, row: row) {
-                    setTileColor(column: column, row: row, color: .cyan)
+    static func activateTiles() {
+        for row in 0...ViewController.map.numberOfRows {
+            for column in 0...ViewController.map.numberOfColumns {
+                if RGSharedDataManager.accessPointHasData(column: column, row: row) {
+                    ViewController.setTileColor(column: column, row: row, color: .cyan)
+                } else {
+                    ViewController.setTileColor(column: column, row: row, color: .grey)
                 }
             }
         }
@@ -159,38 +163,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            // model.disconnect()
-            let currentAccessPoints = model.getAccessPoints()!
-            
-            guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
-            var matrix = [[Int]](repeating: [Int](repeating: 0, count: map.numberOfColumns), count: map.numberOfRows)
-            
-            for case let tile as Tile in model.floor.tiles! {
-                for case let accessPoint as AccessPoint in tile.accessPoints! {
-                    for case let currentAccessPoint as AccessPoint in currentAccessPoints {
-                        if accessPoint.uuid == currentAccessPoint.uuid {
-                            if accessPoint.strength > currentAccessPoint.strength - 10 {
-                                if accessPoint.strength < currentAccessPoint.strength + 10 {
-                                    matrix[Int(tile.x)][Int(tile.y)] += 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            var currentPosition = (0, 0)
-            var max = -1
-            for i in 0...map.numberOfRows - 1 {
-                for j in 0...map.numberOfColumns - 1 {
-                    if matrix[i][j] > max {
-                        currentPosition = (i, j)
-                        max = matrix[i][j]
-                    }
-                }
-            }
-            
-            setTileColor(column: currentPosition.1, row: currentPosition.0, color: .purple)
+            RGSharedDataManager.disconnect()
         }
     }
 

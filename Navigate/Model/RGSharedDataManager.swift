@@ -1,5 +1,5 @@
 //
-//  RGData.swift
+//  RGSharedDataManager.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 12/03/2018.
@@ -8,14 +8,25 @@
 
 import CoreData
 
-class RGData: NSObject {
+class RGSharedDataManager: NSObject {
     
     // Floor information
-    var floorLevel = 6
-    var floor: Floor!
+    static var floorLevel = 6
+    static var floor: Floor!
+    
+    // Map sizes
+    static let numberOfRows = 35
+    static let numberOfColumns = 12
     
     // Bluetooth Low Energy service
-    fileprivate let ble = BLEService()
+    fileprivate static let ble = BLEService()
+    
+    // Detect location on changing value of the json
+    static var jsonData: Any! {
+        didSet {
+            RGLocalisation.detectLocation()
+        }
+    }
     
     override init() {
         super.init()
@@ -26,15 +37,15 @@ class RGData: NSObject {
      
      - parameter to: UUID as string
      */
-    func connect(to: String) {
+    static func connect(to: String) {
         ble.connect(to: to)
     }
     
     /**
      Shutdown external device.
      */
-    func disconnect() {
-        ble.stopPi()
+    static func disconnect() {
+        RGSharedDataManager.ble.stopPi()
     }
     
     /**
@@ -43,17 +54,17 @@ class RGData: NSObject {
      
      - parameter level: The floor level.
      */
-    func setFloor(level: Int) {
-        floor = getFloor(level: floorLevel)
+    static func setFloor(level: Int) {
+        RGSharedDataManager.floor = getFloor(level: RGSharedDataManager.floorLevel)
         
         // If could not find a floor for the specified level
-        if floor == nil {
+        if RGSharedDataManager.floor == nil {
             
             // Create new floor
-            floor = Floor(context: PersistenceService.context)
+            RGSharedDataManager.floor = Floor(context: PersistenceService.context)
             
             // Set the level
-            floor.level = Int16(level)
+            RGSharedDataManager.floor.level = Int16(level)
             
             // Save the context for CoreData
             PersistenceService.saveContext()
@@ -67,7 +78,7 @@ class RGData: NSObject {
      
      - Returns: A **Floor?** object for the specified level.
      */
-    func getFloor(level: Int) -> Floor? {
+    static func getFloor(level: Int) -> Floor? {
         let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
         do {
             // Get all the floors from CoreData
@@ -91,11 +102,11 @@ class RGData: NSObject {
      
      - Returns: An **NSSet?** containing the APs
      */
-    func getAccessPoints() -> NSSet? {
+    static func getAccessPoints() -> NSSet? {
         let accessPoints = NSMutableSet()
         
         // Get the APs from the external device as an Array of Any
-        guard let jsonObject = ble.getWiFiList() as? [[Any]] else { return accessPoints }
+        guard let jsonObject = jsonData as? [[Any]] else { return accessPoints }
         
         // Get every AP from the Array
         for accessPoint in jsonObject {
@@ -125,7 +136,7 @@ class RGData: NSObject {
      
      - Returns: **true** if the data has been saved successfuly or **false** if could not find APs
      */
-    func saveDataToTile(column: Int, row: Int) -> Bool {
+    static func saveDataToTile(column: Int, row: Int) -> Bool {
         guard let accessPoints = getAccessPoints() else { return false }
         
         // Create a new tile
@@ -163,9 +174,9 @@ class RGData: NSObject {
      
      - Returns: **true** data has been found or **false** if could not find APs
     */
-    func accessPointHasData(column: Int, row: Int) -> Bool {
+    static func accessPointHasData(column: Int, row: Int) -> Bool {
         // Get all the tiles
-        for tile in floor.tiles! {
+        for tile in RGSharedDataManager.floor.tiles! {
             
             // If the tile matches
             if (tile as! Tile).x == Int16(row) && (tile as! Tile).y == Int16(column) {

@@ -18,7 +18,7 @@ class BLEService: NSObject {
     var shouldReturnData = false
     var json: Any! {
         didSet {
-            print("Data Received..")
+            RGSharedDataManager.jsonData = json
         }
     }
     

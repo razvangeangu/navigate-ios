@@ -33,27 +33,24 @@ extension ViewController {
         // Detect the location from the view in the scene
         let location = scene.convertPoint(fromView: tapLocation)
         
-        // get the parent child that holds the entire map
-        guard let map = scene.childNode(withName: "tileMap") as? SKTileMapNode else { return }
-        
         // Row and Column for the tapped location
-        let column = map.tileColumnIndex(fromPosition: location)
-        let row = map.tileRowIndex(fromPosition: location)
+        let column = ViewController.map.tileColumnIndex(fromPosition: location)
+        let row = ViewController.map.tileRowIndex(fromPosition: location)
         
         // The tile definition for more access
-        let _ = map.tileDefinition(atColumn: column, row: row)
+        let _ = ViewController.map.tileDefinition(atColumn: column, row: row)
         
         // Dev data
         ViewController.devLog(data: "Touched Tile(\(column),\(row))")
     
         // If the model has not got any data for the specified location proceed
-        if !model.accessPointHasData(column: column, row: row) {
+        if !RGSharedDataManager.accessPointHasData(column: column, row: row) {
             
             // If the model has been able to save data for the specific column and row
-            if model.saveDataToTile(column: column, row: row) {
+            if RGSharedDataManager.saveDataToTile(column: column, row: row) {
                 
                 // Set the tile to cyan color
-                setTileColor(column: column, row: row, color: .cyan)
+                ViewController.setTileColor(column: column, row: row, color: .cyan)
             }
         } else {
             ViewController.devLog(data: "AccessPoint already has data")
