@@ -75,7 +75,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         RGSharedDataManager.setFloor(level: 6)
         
         // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .dev
+        RGSharedDataManager.appMode = .prod
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -102,7 +102,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addDevLabel() {
         if RGSharedDataManager.appMode == .dev {
-            MapViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
+            MapViewController.devLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
             MapViewController.devLabel.backgroundColor = .black
             MapViewController.devLabel.text = "#"
             MapViewController.devLabel.numberOfLines = 4

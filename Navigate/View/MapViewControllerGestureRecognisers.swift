@@ -15,7 +15,12 @@ extension MapViewController {
      Enable simultaneous recongition of multiple gestures.
     */
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+        
+        if gestureRecognizer.view != otherGestureRecognizer.view {
+            return false
+        } else {
+            return true
+        }
     }
     
     /**

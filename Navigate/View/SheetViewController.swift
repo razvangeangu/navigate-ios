@@ -8,7 +8,12 @@
 
 import UIKit
 
-class SheetViewController: UIViewController, UIGestureRecognizerDelegate {
+class SheetViewController: UITableViewController, UIGestureRecognizerDelegate {
+    
+    let lowerBound: CGFloat = UIScreen.main.bounds.height - 150
+    let upperBound: CGFloat = 300
+    
+    private var data = NSMutableArray(capacity: 100)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +21,15 @@ class SheetViewController: UIViewController, UIGestureRecognizerDelegate {
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(SheetViewController.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
+        
+        for i in 0...99 {
+            data.add(i)
+        }
+        
+        tableView.isScrollEnabled = false
+        
+        self.tableView.register(RGTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.register(RGSearchTableViewCell.self, forCellReuseIdentifier: "searchCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,41 +42,48 @@ class SheetViewController: UIViewController, UIGestureRecognizerDelegate {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             let frame = self?.view.frame
-            let yComponent = UIScreen.main.bounds.height - 200
-            self?.view.frame = CGRect(x: 0, y: yComponent, width: frame!.width, height: frame!.height)
+            let yComponent = self?.lowerBound
+            self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height)
         }
     }
     
     func prepareBackgroundView(){
-        let blurEffect = UIBlurEffect.init(style: .dark)
-        let visualEffect = UIVisualEffectView.init(effect: blurEffect)
-        let bluredView = UIVisualEffectView.init(effect: blurEffect)
-        bluredView.contentView.addSubview(visualEffect)
+        let blur = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.frame = UIScreen.main.bounds
         
-        visualEffect.frame = UIScreen.main.bounds
-        bluredView.frame = UIScreen.main.bounds
-        
-        view.insertSubview(bluredView, at: 0)
+        tableView.backgroundColor = .clear
+        tableView.backgroundView = blurView
     }
     
-    @objc func panGesture(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        let y = self.view.frame.minY
-        self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
-        recognizer.setTranslation(CGPoint.zero, in: self.view)
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
-        let direction = gesture.velocity(in: view).y
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 50
+        }
         
-        let y = view.frame.minY
-//        if (y == fullView && tableView.contentOffset.y == 0 && direction > 0) || (y == partialView) {
-//            tableView.isScrollEnabled = false
-//        } else {
-//            tableView.isScrollEnabled = true
-//        }
+        return 40
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        cell.backgroundColor = .clear
         
-        return false
+        if indexPath.row == 0 {
+            let searchCell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
+            
+            return searchCell
+        } else {
+            cell.textLabel?.text = "\(data[indexPath.row])"
+        }
+        
+        return cell
     }
 }

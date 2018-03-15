@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B582057F46800BBF6C8 /* RGLocalisation.swift */; };
 		18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B5A2057F47000BBF6C8 /* RGNavigation.swift */; };
+		18128D77205ADABF0046EC01 /* RGTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18128D75205ADABF0046EC01 /* RGTableViewCell.swift */; };
+		18128D78205ADABF0046EC01 /* RGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18128D76205ADABF0046EC01 /* RGTableViewCell.xib */; };
+		18128D7A205AE64A0046EC01 /* SheetViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18128D79205AE64A0046EC01 /* SheetViewControllerExtensions.swift */; };
+		18128D7F205AE83A0046EC01 /* RGSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18128D7D205AE83A0046EC01 /* RGSearchTableViewCell.swift */; };
+		18128D80205AE83A0046EC01 /* RGSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18128D7E205AE83A0046EC01 /* RGSearchTableViewCell.xib */; };
 		181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 181D01002053EB13001CB8BD /* MapTilemapScene.sks */; };
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
 		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
@@ -58,6 +63,11 @@
 /* Begin PBXFileReference section */
 		18120B582057F46800BBF6C8 /* RGLocalisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGLocalisation.swift; sourceTree = "<group>"; };
 		18120B5A2057F47000BBF6C8 /* RGNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGNavigation.swift; sourceTree = "<group>"; };
+		18128D75205ADABF0046EC01 /* RGTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGTableViewCell.swift; sourceTree = "<group>"; };
+		18128D76205ADABF0046EC01 /* RGTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RGTableViewCell.xib; sourceTree = "<group>"; };
+		18128D79205AE64A0046EC01 /* SheetViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewControllerExtensions.swift; sourceTree = "<group>"; };
+		18128D7D205AE83A0046EC01 /* RGSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSearchTableViewCell.swift; sourceTree = "<group>"; };
+		18128D7E205AE83A0046EC01 /* RGSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RGSearchTableViewCell.xib; sourceTree = "<group>"; };
 		181D01002053EB13001CB8BD /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTilemapScene.sks; sourceTree = "<group>"; };
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -258,6 +268,11 @@
 				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
 				183C322B205A7A2F0098235A /* SheetViewController.swift */,
+				18128D79205AE64A0046EC01 /* SheetViewControllerExtensions.swift */,
+				18128D75205ADABF0046EC01 /* RGTableViewCell.swift */,
+				18128D76205ADABF0046EC01 /* RGTableViewCell.xib */,
+				18128D7D205AE83A0046EC01 /* RGSearchTableViewCell.swift */,
+				18128D7E205AE83A0046EC01 /* RGSearchTableViewCell.xib */,
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
 				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
 				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
@@ -394,8 +409,10 @@
 				182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */,
 				18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */,
 				181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */,
+				18128D80205AE83A0046EC01 /* RGSearchTableViewCell.xib in Resources */,
 				18C735632056F06500B292B1 /* Assets.xcassets in Resources */,
 				182519041FAF454A0005F5F6 /* Main.storyboard in Resources */,
+				18128D78205ADABF0046EC01 /* RGTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +439,10 @@
 			files = (
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
+				18128D7A205AE64A0046EC01 /* SheetViewControllerExtensions.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
+				18128D77205ADABF0046EC01 /* RGTableViewCell.swift in Sources */,
 				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
 				183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
@@ -440,6 +459,7 @@
 				183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */,
+				18128D7F205AE83A0046EC01 /* RGSearchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
