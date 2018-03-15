@@ -19,14 +19,15 @@
 		1825191F1FAF454A0005F5F6 /* NavigateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825191E1FAF454A0005F5F6 /* NavigateUITests.swift */; };
 		18309F5A202918BE009F5CDD /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F59202918BE009F5CDD /* BLEService.swift */; };
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
-		18309F6320291F30009F5CDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* ViewController.swift */; };
-		1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */; };
+		18309F6320291F30009F5CDD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* MapViewController.swift */; };
+		1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */; };
 		183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */; };
 		183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */; };
 		183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */; };
 		183C3226205A71DA0098235A /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */; };
 		183C3227205A71DA0098235A /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */; };
 		183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */; };
+		183C322C205A7A2F0098235A /* SheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C322B205A7A2F0098235A /* SheetViewController.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
@@ -74,14 +75,15 @@
 		182519301FAF45750005F5F6 /* Navigate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Navigate.entitlements; sourceTree = "<group>"; };
 		18309F59202918BE009F5CDD /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
-		18309F6220291F30009F5CDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
+		18309F6220291F30009F5CDD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
 		183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		183C322B205A7A2F0098235A /* SheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
@@ -255,8 +257,9 @@
 			children = (
 				18309F6420291F43009F5CDD /* Storyboards */,
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
-				18309F6220291F30009F5CDD /* ViewController.swift */,
-				1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */,
+				183C322B205A7A2F0098235A /* SheetViewController.swift */,
+				18309F6220291F30009F5CDD /* MapViewController.swift */,
+				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
 				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
 				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
 			);
@@ -421,7 +424,7 @@
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
-				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
+				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
 				183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
@@ -431,8 +434,9 @@
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
 				183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
-				1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */,
+				1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */,
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
+				183C322C205A7A2F0098235A /* SheetViewController.swift in Sources */,
 				183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */,

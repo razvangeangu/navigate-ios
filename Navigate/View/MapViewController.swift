@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MapViewController
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 01/02/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // The scene that holds the map nodes
     var scene: SKScene!
@@ -36,7 +36,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
                 self.scene = scene
                 
-                ViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
+                MapViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
                 
                 // Set the scale mode to scale to fit the window
                 self.scene.scaleMode = .aspectFill
@@ -59,7 +59,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         addDevLabel()
         
         // Activate the tiles that have access points stored in core data
-        ViewController.activateTiles()
+        MapViewController.activateTiles()
+        
+        addBottomSheetView()
     }
     
     /**
@@ -78,17 +80,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func addGesturesRecognisers() {
         // Add pinch gesture for zoom
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(ViewController.handlePinch))
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.handlePinch))
         view.addGestureRecognizer(pinchGesture)
         pinchGesture.delegate = self
         
         // Add pan gesture for movement
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.handlePan))
         view.addGestureRecognizer(panGesture)
         panGesture.delegate = self
         
         // Add tap gesture for dev/client
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleTapFrom))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.handleTapFrom))
         tapGesture.numberOfTapsRequired = 2
         tapGesture.numberOfTouchesRequired = 1
         view.addGestureRecognizer(tapGesture)
@@ -100,13 +102,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addDevLabel() {
         if RGSharedDataManager.appMode == .dev {
-            ViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
-            ViewController.devLabel.backgroundColor = .black
-            ViewController.devLabel.text = "#"
-            ViewController.devLabel.numberOfLines = 4
-            ViewController.devLabel.textColor = .white
-            ViewController.devLabel.textAlignment = .center
-            view.addSubview(ViewController.devLabel)
+            MapViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
+            MapViewController.devLabel.backgroundColor = .black
+            MapViewController.devLabel.text = "#"
+            MapViewController.devLabel.numberOfLines = 4
+            MapViewController.devLabel.textColor = .white
+            MapViewController.devLabel.textAlignment = .center
+            view.addSubview(MapViewController.devLabel)
         }
     }
     
@@ -123,38 +125,38 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         switch color {
         case .cyan:
             do {
-                tileGroup = ViewController.map.tileSet.tileGroups.first(
+                tileGroup = MapViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "cyan_box"})
             }
         case .purple:
             do {
-                tileGroup = ViewController.map.tileSet.tileGroups.first(
+                tileGroup = MapViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "purple_box"})
             }
         case .green:
             do {
-                tileGroup = ViewController.map.tileSet.tileGroups.first(
+                tileGroup = MapViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "green_box"})
             }
         case .grey:
             do {
-                tileGroup = ViewController.map.tileSet.tileGroups.first(
+                tileGroup = MapViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "grey_box"})
             }
         }
-        ViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
+        MapViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
     /**
      Display blue tile if it contains data.
      */
     static func activateTiles() {
-        for row in 0...ViewController.map.numberOfRows {
-            for column in 0...ViewController.map.numberOfColumns {
+        for row in 0...MapViewController.map.numberOfRows {
+            for column in 0...MapViewController.map.numberOfColumns {
                 if RGSharedDataManager.accessPointHasData(column: column, row: row) {
-                    ViewController.setTileColor(column: column, row: row, color: .cyan)
+                    MapViewController.setTileColor(column: column, row: row, color: .cyan)
                 } else {
-                    ViewController.setTileColor(column: column, row: row, color: .grey)
+                    MapViewController.setTileColor(column: column, row: row, color: .grey)
                 }
             }
         }
@@ -168,17 +170,28 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             RGSharedDataManager.disconnect()
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     static func devLog(data: String) {
         if RGSharedDataManager.appMode == .dev {
             debugPrint(data)
             devLabel.text = data
         }
+    }
+    
+    // https://stackoverflow.com/questions/37967555/how-to-mimic-ios-10-maps-bottom-sheet
+    fileprivate func addBottomSheetView() {
+        // 1 - Init bottomSheetVC
+        let bottomSheetVC = SheetViewController()
+        
+        // 2 - Add bottomSheetVC as a child view
+        self.addChildViewController(bottomSheetVC)
+        self.view.addSubview(bottomSheetVC.view)
+        bottomSheetVC.didMove(toParentViewController: self)
+        
+        // 3 - Adjust bottomSheet frame and initial position.
+        let height = view.frame.height
+        let width  = view.frame.width
+        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
     }
 }
 

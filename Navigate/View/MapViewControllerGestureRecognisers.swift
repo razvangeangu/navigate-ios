@@ -1,5 +1,5 @@
 //
-//  ViewControllerGestureRecognisers.swift
+//  MapViewControllerGestureRecognisers.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 12/03/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-extension ViewController {
+extension MapViewController {
     
     /**
      Enable simultaneous recongition of multiple gestures.
@@ -34,14 +34,14 @@ extension ViewController {
         let location = scene.convertPoint(fromView: tapLocation)
         
         // Row and Column for the tapped location
-        let column = ViewController.map.tileColumnIndex(fromPosition: location)
-        let row = ViewController.map.tileRowIndex(fromPosition: location)
+        let column = MapViewController.map.tileColumnIndex(fromPosition: location)
+        let row = MapViewController.map.tileRowIndex(fromPosition: location)
         
         // The tile definition for more access
-        let _ = ViewController.map.tileDefinition(atColumn: column, row: row)
+        let _ = MapViewController.map.tileDefinition(atColumn: column, row: row)
         
         // Dev data
-        ViewController.devLog(data: "Touched Tile(\(column),\(row))")
+        MapViewController.devLog(data: "Touched Tile(\(column),\(row))")
     
         // If the model has not got any data for the specified location proceed
         if !RGSharedDataManager.accessPointHasData(column: column, row: row) {
@@ -50,10 +50,10 @@ extension ViewController {
             if RGSharedDataManager.saveDataToTile(column: column, row: row) {
                 
                 // Set the tile to cyan color
-                ViewController.setTileColor(column: column, row: row, color: .cyan)
+                MapViewController.setTileColor(column: column, row: row, color: .cyan)
             }
         } else {
-            ViewController.devLog(data: "AccessPoint already has data")
+            MapViewController.devLog(data: "AccessPoint already has data")
         }
     }
     

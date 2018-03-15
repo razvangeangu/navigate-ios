@@ -93,7 +93,7 @@ class RGSharedDataManager: NSObject {
                 }
             }
         } catch {
-            ViewController.devLog(data: "Error in Floor fetchRequest")
+            MapViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return nil

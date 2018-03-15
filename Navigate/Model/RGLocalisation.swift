@@ -69,13 +69,13 @@ class RGLocalisation: NSObject {
         if currentLocation != (-1, -1) {
             
             // Show debugging log
-            ViewController.devLog(data: "Found: \(currentLocation)")
+            MapViewController.devLog(data: "Found: \(currentLocation)")
             
             // Reset the map
-            ViewController.activateTiles()
+            MapViewController.activateTiles()
             
             // Show the current location
-            ViewController.setTileColor(column: currentLocation.1, row: currentLocation.0, color: .purple)
+            MapViewController.setTileColor(column: currentLocation.1, row: currentLocation.0, color: .purple)
             
             // Save the current location
             self.currentLocation = currentLocation
