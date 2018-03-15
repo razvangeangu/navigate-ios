@@ -8,20 +8,34 @@
 
 import Foundation
 
+/**
+ Commands available for the external bluetooth device.
+ */
 enum Commands: String {
     case stopPi = "sudo shutdown now"
     case updateServer = "cd /root/navigate-server && git pull && forever restartall"
 }
 
-enum RGColor: String {
+/**
+ RGColor is a enum used for tile colors.
+ */
+enum TileColor: String {
     case cyan = "cyan"
     case purple = "purple"
     case green = "green"
     case grey = "grey"
 }
 
-enum AccessPointType: String {
+/**
+ TileType is an enum for tile types.
+ */
+enum TileType: String {
     case free = "free"
     case wall = "wall"
     case door = "door"
+}
+
+enum AppMode {
+    case dev
+    case prod
 }

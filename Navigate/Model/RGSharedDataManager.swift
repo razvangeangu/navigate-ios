@@ -10,6 +10,8 @@ import CoreData
 
 class RGSharedDataManager: NSObject {
     
+    static var appMode: AppMode = .prod
+    
     // Floor information
     static var floorLevel = 6
     static var floor: Floor!
@@ -91,7 +93,7 @@ class RGSharedDataManager: NSObject {
                 }
             }
         } catch {
-            print("Error in Floor fetchRequest")
+            ViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return nil

@@ -17,9 +17,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     // Developer label to display information
     fileprivate static var devLabel: UILabel!
     
-    // Reference to the data model
-    let model = RGSharedDataManager()
-    
     // Vars for gesture recognisers
     var lastScale: CGFloat = 0.0
     var previousLocation = CGPoint.zero
@@ -74,6 +71,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Set the floor level
         RGSharedDataManager.setFloor(level: 6)
+        
+        // Set the app mode to dev to display log
+        RGSharedDataManager.appMode = .dev
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -99,13 +99,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      Construct and add development label to the view.
      */
     fileprivate func addDevLabel() {
-        ViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
-        ViewController.devLabel.backgroundColor = .black
-        ViewController.devLabel.text = "#"
-        ViewController.devLabel.numberOfLines = 4
-        ViewController.devLabel.textColor = .white
-        ViewController.devLabel.textAlignment = .center
-        view.addSubview(ViewController.devLabel)
+        if RGSharedDataManager.appMode == .dev {
+            ViewController.devLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 100, width: view.frame.width, height: 100))
+            ViewController.devLabel.backgroundColor = .black
+            ViewController.devLabel.text = "#"
+            ViewController.devLabel.numberOfLines = 4
+            ViewController.devLabel.textColor = .white
+            ViewController.devLabel.textAlignment = .center
+            view.addSubview(ViewController.devLabel)
+        }
     }
     
     /**
@@ -115,7 +117,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter row: The row of the tile.
      - parameter color: The color that can be .cyan or .purple
      */
-    static func setTileColor(column: Int, row: Int, color: RGColor) {
+    static func setTileColor(column: Int, row: Int, color: TileColor) {
         var tileGroup: SKTileGroup!
         
         switch color {
@@ -173,7 +175,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     static func devLog(data: String) {
-        devLabel.text = data
+        if RGSharedDataManager.appMode == .dev {
+            debugPrint(data)
+            devLabel.text = data
+        }
     }
 }
 

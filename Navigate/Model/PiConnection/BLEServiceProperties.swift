@@ -13,12 +13,13 @@ extension BLEService: CBCentralManagerDelegate {
     // Power on the Bluetooth Low Energy Service
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
-            print("central.state is .poweredOn")
+            ViewController.devLog(data: "central.state is .poweredOn")
+            
             if serviceCBUUID != nil {
                 
-                // Search for peripherals
-                print("Scanning for peripherals")
                 ViewController.devLog(data: "Scanning for peripherals")
+                
+                // Search for peripherals
                 centralManager.scanForPeripherals(withServices: [serviceCBUUID])
             }
         }
@@ -40,7 +41,6 @@ extension BLEService: CBCentralManagerDelegate {
     
     // If connected to peripheral
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected")
         ViewController.devLog(data: "Connected")
         
         // Get the services from the peripheral
@@ -49,10 +49,9 @@ extension BLEService: CBCentralManagerDelegate {
     
     // If the peripheral disconnected
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        print("Disconnected")
         ViewController.devLog(data: "Disconnected")
+        
         if central.state == .poweredOn {
-            print("Scanning for peripherals")
             ViewController.devLog(data: "Scanning for peripherals")
             centralManager.scanForPeripherals(withServices: [serviceCBUUID])
         }
