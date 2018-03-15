@@ -21,12 +21,12 @@
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* ViewController.swift */; };
 		1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */; };
-		1830E3F62057202F00F39ABA /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */; };
-		1830E3F72057202F00F39ABA /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */; };
-		1830E3F82057202F00F39ABA /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */; };
-		1830E3F92057202F00F39ABA /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */; };
-		1830E3FA2057202F00F39ABA /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */; };
-		1830E3FB2057202F00F39ABA /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */; };
+		183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */; };
+		183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */; };
+		183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */; };
+		183C3226205A71DA0098235A /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */; };
+		183C3227205A71DA0098235A /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */; };
+		183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
@@ -76,12 +76,12 @@
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
 		18309F6220291F30009F5CDD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1830E3EE205717DE00F39ABA /* ViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
-		1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
+		183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
@@ -207,9 +207,9 @@
 		18309F5E20291ED1009F5CDD /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				1830E3F12057202F00F39ABA /* Floor+CoreDataProperties.swift */,
-				1830E3F32057202F00F39ABA /* Tile+CoreDataProperties.swift */,
-				1830E3F52057202F00F39ABA /* AccessPoint+CoreDataProperties.swift */,
+				183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */,
+				183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */,
+				183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -217,9 +217,9 @@
 		18309F5F20291EDC009F5CDD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1830E3F02057202F00F39ABA /* Floor+CoreDataClass.swift */,
-				1830E3F22057202F00F39ABA /* Tile+CoreDataClass.swift */,
-				1830E3F42057202F00F39ABA /* AccessPoint+CoreDataClass.swift */,
+				183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */,
+				183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */,
+				183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -419,23 +419,23 @@
 			files = (
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
-				1830E3F62057202F00F39ABA /* Floor+CoreDataClass.swift in Sources */,
-				1830E3FB2057202F00F39ABA /* AccessPoint+CoreDataProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
-				1830E3F92057202F00F39ABA /* Tile+CoreDataProperties.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18309F6320291F30009F5CDD /* ViewController.swift in Sources */,
+				183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
+				183C3227205A71DA0098235A /* AccessPoint+CoreDataClass.swift in Sources */,
+				183C3226205A71DA0098235A /* Tile+CoreDataProperties.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
-				1830E3FA2057202F00F39ABA /* AccessPoint+CoreDataClass.swift in Sources */,
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
-				1830E3F72057202F00F39ABA /* Floor+CoreDataProperties.swift in Sources */,
-				1830E3F82057202F00F39ABA /* Tile+CoreDataClass.swift in Sources */,
+				183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* ViewControllerGestureRecognisers.swift in Sources */,
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
+				183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
+				183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,6 @@
 
 import Foundation
 
-class Util: NSObject {
-    
-}
-
 enum Commands: String {
     case stopPi = "sudo shutdown now"
     case updateServer = "cd /root/navigate-server && git pull && forever restartall"
@@ -22,4 +18,10 @@ enum RGColor: String {
     case purple = "purple"
     case green = "green"
     case grey = "grey"
+}
+
+enum AccessPointType: String {
+    case free = "free"
+    case wall = "wall"
+    case door = "door"
 }

@@ -16,7 +16,7 @@ class RGSharedDataManager: NSObject {
     
     // Map sizes
     static let numberOfRows = 35
-    static let numberOfColumns = 12
+    static let numberOfColumns = 12                                                    
     
     // Bluetooth Low Energy service
     fileprivate static let ble = BLEService()

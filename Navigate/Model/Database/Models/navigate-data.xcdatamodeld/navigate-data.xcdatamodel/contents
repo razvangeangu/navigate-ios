@@ -10,6 +10,7 @@
         <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="floor" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Tile" representedClassName="Tile" syncable="YES">
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="accessPoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccessPoint" inverseName="tiles" inverseEntity="AccessPoint" syncable="YES"/>
@@ -18,6 +19,6 @@
     <elements>
         <element name="AccessPoint" positionX="-10800" positionY="-4048" width="99" height="88"/>
         <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="73"/>
-        <element name="Tile" positionX="-10827" positionY="-4203" width="128" height="103"/>
+        <element name="Tile" positionX="-10827" positionY="-4203" width="128" height="118"/>
     </elements>
 </model>
