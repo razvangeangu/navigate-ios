@@ -21,6 +21,7 @@
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* MapViewController.swift */; };
 		1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */; };
+		18363B6F205C383700FC17F4 /* MapButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtons.swift */; };
 		183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */; };
 		183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */; };
 		183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */; };
@@ -81,6 +82,7 @@
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
 		18309F6220291F30009F5CDD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
+		18363B6E205C383700FC17F4 /* MapButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtons.swift; sourceTree = "<group>"; };
 		183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				18309F6420291F43009F5CDD /* Storyboards */,
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
 				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
+				18363B6E205C383700FC17F4 /* MapButtons.swift */,
 				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
 				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
 			);
@@ -471,6 +474,7 @@
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
 				183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
+				18363B6F205C383700FC17F4 /* MapButtons.swift in Sources */,
 				183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

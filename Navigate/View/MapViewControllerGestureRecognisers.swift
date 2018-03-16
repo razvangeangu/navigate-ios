@@ -34,6 +34,9 @@ extension MapViewController {
         
         // Get the row and column of the taped square/tile
         let tapLocation = tap.location(in: view)
+        if tapLocation.y > bottomSheetVC.view.frame.minY {
+            return
+        }
         
         // Detect the location from the view in the scene
         let location = scene.convertPoint(fromView: tapLocation)
@@ -68,6 +71,11 @@ extension MapViewController {
      - parameter pan: The pan gesture that has been recognised.
      */
     @objc func handlePan(pan: UIPanGestureRecognizer) {
+        let panLocation = pan.location(in: self.view)
+        if panLocation.y > bottomSheetVC.view.frame.minY {
+            return
+        }
+        
         switch pan.state {
         case .began:
             do {
@@ -96,6 +104,12 @@ extension MapViewController {
      - parameter pinch: The pinch gesture that has been recognised.
      */
     @objc func handlePinch(pinch: UIPinchGestureRecognizer) {
+        
+        let pinchLocation = pinch.location(in: self.view)
+        if pinchLocation.y > bottomSheetVC.view.frame.minY {
+            return
+        }
+        
         switch pinch.state {
         case .began:
             do {

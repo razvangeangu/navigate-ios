@@ -46,5 +46,4 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
         
         return false
     }
-    
 }

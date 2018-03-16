@@ -25,6 +25,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     static var map: SKTileMapNode!
     
+    let bottomSheetVC = ScrollableBottomSheetViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,7 +65,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Activate the tiles that have access points stored in core data
         MapViewController.activateTiles()
         
-        addTopButtons()
+        let mapButtons = MapButtons(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 82))
+        mapButtons.backgroundColor = .clear
+        self.view.addSubview(mapButtons)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -186,40 +190,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    fileprivate func addTopButtons() {
-        let baseView = UIView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 82))
-        baseView.backgroundColor = UIColor.clear
-        baseView.layer.shadowColor = UIColor.black.cgColor
-        baseView.layer.shadowOffset = CGSize(width: 0.5, height: 2)
-        baseView.layer.shadowOpacity = 0.2
-        baseView.layer.shadowRadius = 5.0
-
-        let buttonsView = UIView(frame: baseView.bounds)
-        buttonsView.layer.cornerRadius = 10
-        buttonsView.layer.masksToBounds = true
-        
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blur.frame = buttonsView.bounds
-        blur.isUserInteractionEnabled = false
-        buttonsView.insertSubview(blur, at: 0)
-        
-        let cameraButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        cameraButton.setTitleColor(.black, for: .normal)
-        cameraButton.setImage(UIImage(named: "ar"), for: .normal)
-        buttonsView.addSubview(cameraButton)
-        
-        let locationButton = UIButton(frame: CGRect(x: 0, y: cameraButton.frame.height + 2, width: 40, height: 40))
-        locationButton.setTitleColor(.black, for: .normal)
-        locationButton.setImage(UIImage(named: "location"), for: .normal)
-        buttonsView.addSubview(locationButton)
-
-        baseView.addSubview(buttonsView)
-        self.view.addSubview(baseView)
-    }
-    
     fileprivate func addBottomSheetView() {
-        let bottomSheetVC = ScrollableBottomSheetViewController()
-
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
