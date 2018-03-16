@@ -11,6 +11,8 @@ import SpriteKit
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var containerView: UIView!
+    
     // The scene that holds the map nodes
     var scene: SKScene!
     
@@ -60,6 +62,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Activate the tiles that have access points stored in core data
         MapViewController.activateTiles()
+        
+        addTopButtons()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         addBottomSheetView()
     }
@@ -178,21 +186,49 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    // https://stackoverflow.com/questions/37967555/how-to-mimic-ios-10-maps-bottom-sheet
-    fileprivate func addBottomSheetView() {
-        // 1 - Init bottomSheetVC
-        let bottomSheetVC = SheetViewController()
+    fileprivate func addTopButtons() {
+        let baseView = UIView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 82))
+        baseView.backgroundColor = UIColor.clear
+        baseView.layer.shadowColor = UIColor.black.cgColor
+        baseView.layer.shadowOffset = CGSize(width: 0.5, height: 2)
+        baseView.layer.shadowOpacity = 0.2
+        baseView.layer.shadowRadius = 5.0
+
+        let buttonsView = UIView(frame: baseView.bounds)
+        buttonsView.layer.cornerRadius = 10
+        buttonsView.layer.masksToBounds = true
         
-        // 2 - Add bottomSheetVC as a child view
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blur.frame = buttonsView.bounds
+        blur.isUserInteractionEnabled = false
+        buttonsView.insertSubview(blur, at: 0)
+        
+        let cameraButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        cameraButton.setTitleColor(.black, for: .normal)
+        cameraButton.setImage(UIImage(named: "ar"), for: .normal)
+        buttonsView.addSubview(cameraButton)
+        
+        let locationButton = UIButton(frame: CGRect(x: 0, y: cameraButton.frame.height + 2, width: 40, height: 40))
+        locationButton.setTitleColor(.black, for: .normal)
+        locationButton.setImage(UIImage(named: "location"), for: .normal)
+        buttonsView.addSubview(locationButton)
+
+        baseView.addSubview(buttonsView)
+        self.view.addSubview(baseView)
+    }
+    
+    fileprivate func addBottomSheetView() {
+        let bottomSheetVC = ScrollableBottomSheetViewController()
+
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
-        
-        // 3 - Adjust bottomSheet frame and initial position.
-        let height = view.frame.height
-        let width  = view.frame.width
-        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+
+        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
+    }
+    
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
     }
 }
-
 

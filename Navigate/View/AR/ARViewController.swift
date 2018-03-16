@@ -9,7 +9,6 @@
 import UIKit
 import SceneKit
 import ARKit
-import NetworkExtension
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
 

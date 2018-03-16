@@ -1,18 +1,20 @@
 //
-//  RGTableViewCell.swift
-//  Navigate
+//  DefaultTableViewCell.swift
+//  BottomSheet
 //
-//  Created by Răzvan-Gabriel Geangu on 15/03/2018.
-//  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
+//  Created by Ahmed Elassuty on 10/15/16.
+//  Copyright © 2016 Ahmed Elassuty. All rights reserved.
 //
 
 import UIKit
 
-class RGTableViewCell: UITableViewCell {
+class DefaultTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        backgroundColor = .clear
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
