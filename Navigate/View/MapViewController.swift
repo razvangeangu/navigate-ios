@@ -23,6 +23,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     var lastScale: CGFloat = 0.0
     var previousLocation = CGPoint.zero
     
+    // Limits for the map
+    let minWidth: CGFloat = 300
+    let minHeight: CGFloat = 533
+    let maxWidth: CGFloat = 1400
+    let maxHeight: CGFloat = 4000
+    
     static var map: SKTileMapNode!
     
     let bottomSheetVC = ScrollableBottomSheetViewController()

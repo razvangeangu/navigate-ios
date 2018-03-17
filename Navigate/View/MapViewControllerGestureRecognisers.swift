@@ -34,6 +34,8 @@ extension MapViewController {
         
         // Get the row and column of the taped square/tile
         let tapLocation = tap.location(in: view)
+        
+        // Only activate gesture if bottomSheetVC is closed
         if tapLocation.y > bottomSheetVC.view.frame.minY {
             return
         }
@@ -71,6 +73,8 @@ extension MapViewController {
      - parameter pan: The pan gesture that has been recognised.
      */
     @objc func handlePan(pan: UIPanGestureRecognizer) {
+        
+        // Only activate gesture if bottomSheetVC is closed
         let panLocation = pan.location(in: self.view)
         if panLocation.y > bottomSheetVC.view.frame.minY {
             return
@@ -84,14 +88,62 @@ extension MapViewController {
             }
         case .changed:
             do {
+                // Set off set depending on the scale
+                var offSet: CGFloat = 1.0
+                offSet = 750 / self.scene.size.width
+                if offSet != 1.0 {
+                    offSet = offSet < 1 ? offSet + 1 : offSet - 1
+                }
+                
                 // get the translation point
                 let transPoint = pan.translation(in: self.view)
                 
                 // calculate the new position
-                let newPosition = previousLocation + CGPoint(x: transPoint.x * -1.0, y: transPoint.y * 1.0)
+                let newPosition = previousLocation + CGPoint(x: transPoint.x * -offSet, y: transPoint.y * offSet)
                 
                 // set the camera to the new position
                 self.scene.camera?.position = newPosition
+            }
+        case .ended:
+            do {
+                // Get velocity of the pan
+                let velocity = pan.velocity(in: self.view)
+                
+                // If the velocity is significant
+                if velocity.y > 100 || velocity.y < -100 || velocity.x > 100 || velocity.x < -100 {
+                    
+                    // Get the current position
+                    var newPosition = (self.scene.camera?.position)!
+                    
+                    // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
+                    if (self.scene.camera?.position.x)! < previousLocation.x {
+                        newPosition.x -= (previousLocation.x - (self.scene.camera?.position.x)! - velocity.x * 0.06)
+                    }
+                
+                    // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
+                    if (self.scene.camera?.position.x)! > previousLocation.x {
+                        newPosition.x += ((self.scene.camera?.position.x)! - previousLocation.x + velocity.x * 0.06)
+                    }
+                
+                    // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
+                    if (self.scene.camera?.position.y)! > previousLocation.y {
+                        newPosition.y += ((self.scene.camera?.position.y)! - previousLocation.y + velocity.y * 0.06)
+                    }
+                
+                    // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
+                    if (self.scene.camera?.position.y)! < previousLocation.y {
+                        newPosition.y -= (previousLocation.y - (self.scene.camera?.position.y)! - velocity.y * 0.06)
+                    }
+                
+                    // Animate moving from the last location to the new position in the number of seconds
+                    let move = SKAction.move(to: newPosition, duration: 0.4)
+                    
+                    // Add ease out effect
+                    move.timingMode = .easeOut
+                    
+                    // Run the animation
+                    self.scene.camera?.run(move, withKey: "moving")
+                }
             }
         default:
             break
@@ -105,6 +157,7 @@ extension MapViewController {
      */
     @objc func handlePinch(pinch: UIPinchGestureRecognizer) {
         
+        // Only activate gesture if bottomSheetVC is closed
         let pinchLocation = pinch.location(in: self.view)
         if pinchLocation.y > bottomSheetVC.view.frame.minY {
             return
@@ -122,8 +175,8 @@ extension MapViewController {
                 let scale = 1 - (self.lastScale - pinch.scale)
                 
                 // get the new width and height matching the min and max sizes allowed
-                let newWidth = max(533, min(1400, self.scene.size.width / scale))
-                let newHeight = max(300, min(4000, self.scene.size.height / scale))
+                let newWidth = max(minWidth, min(maxWidth, self.scene.size.width / scale))
+                let newHeight = max(minHeight, min(maxHeight, self.scene.size.height / scale))
                 
                 // set the new size
                 self.scene.size = CGSize(width: newWidth, height: newHeight)
