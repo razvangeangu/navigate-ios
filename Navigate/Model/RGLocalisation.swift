@@ -11,6 +11,7 @@ import Foundation
 class RGLocalisation: NSObject {
     
     // Current location of the iOS device
+    static var previousLocation = (-1, -1)
     static var currentLocation = (-1, -1)
     
     /**
@@ -68,17 +69,21 @@ class RGLocalisation: NSObject {
         // If the current location is valid (not the initial value and in the bounds)
         if currentLocation != (-1, -1) {
             
+            if RGSharedDataManager.appMode == .dev {
+                MapViewController.prodLog("Found Location: \(currentLocation)")
+            }
+            
             // Show debugging log
             MapViewController.devLog(data: "Found: \(currentLocation)")
             
-            // Reset the map
-            MapViewController.resetTiles()
+            // Save the current location for future references
+            self.previousLocation = self.currentLocation
+            
+            // Save the new current location
+            self.currentLocation = currentLocation
             
             // Show the current location
             MapViewController.showCurrentLocation(currentLocation)
-            
-            // Save the current location
-            self.currentLocation = currentLocation
         }
     }
 }

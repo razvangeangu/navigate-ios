@@ -62,8 +62,8 @@ extension MapViewController {
             // If the model has been able to save data for the specific column and row
             if RGSharedDataManager.saveDataToTile(column: column, row: row) {
                 
-                // Set the tile to cyan color
-                MapViewController.setTileColor(column: column, row: row, color: .cyan)
+                // Save the tile (visually)
+                MapViewController.setTileColor(column: column, row: row, type: .saved)
             }
         } else {
             MapViewController.devLog(data: "AccessPoint already has data")

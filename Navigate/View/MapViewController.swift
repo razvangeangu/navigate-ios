@@ -33,6 +33,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let bottomSheetVC = ScrollableBottomSheetViewController()
     
+    static var locationNode: SKSpriteNode!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,7 +48,15 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
                 MapViewController.scene = scene
                 
+                // Initialise the static map
                 MapViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
+                MapViewController.map.zPosition = 0
+                
+                // Move backgroundNode (image map) under the tile map
+                let backgroundNode = scene.childNode(withName: "backgroundNode")
+                backgroundNode?.zPosition = -1
+                
+                MapViewController.locationNode = scene.childNode(withName: "locationNode") as? SKSpriteNode
                 
                 // Set the scale mode to scale to fit the window
                 MapViewController.scene.scaleMode = .aspectFill
@@ -95,7 +105,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         RGSharedDataManager.setFloor(level: 6)
         
         // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .prod // TODO: make it able to change from the view
+        RGSharedDataManager.appMode = .dev // TODO: make it able to change from the view
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -137,31 +147,26 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      
      - parameter column: The column of the tile.
      - parameter row: The row of the tile.
-     - parameter color: The color that can be .cyan or .purple
+     - parameter type: The group type of the tile (as expressed by the RGTileType class)
      */
-    static func setTileColor(column: Int, row: Int, color: TileColor) {
+    static func setTileColor(column: Int, row: Int, type: RGTileType) {
         var tileGroup: SKTileGroup!
         
-        switch color {
-        case .cyan:
+        switch type {
+        case .sample:
             do {
                 tileGroup = MapViewController.map.tileSet.tileGroups.first(
-                    where: {$0.name == "cyan_box"})
+                    where: {$0.name == "sample"})
             }
-        case .purple:
+        case .saved:
             do {
                 tileGroup = MapViewController.map.tileSet.tileGroups.first(
-                    where: {$0.name == "purple_box"})
+                    where: {$0.name == "saved"})
             }
-        case .green:
+        case .location:
             do {
                 tileGroup = MapViewController.map.tileSet.tileGroups.first(
-                    where: {$0.name == "green_box"})
-            }
-        case .grey:
-            do {
-                tileGroup = MapViewController.map.tileSet.tileGroups.first(
-                    where: {$0.name == "grey_box"})
+                    where: {$0.name == "location"})
             }
         case .none:
             do {
@@ -173,9 +178,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate static func displayDevTiles(column: Int, row: Int) {
         if RGSharedDataManager.accessPointHasData(column: column, row: row) {
-            MapViewController.setTileColor(column: column, row: row, color: .cyan)
+            MapViewController.setTileColor(column: column, row: row, type: .saved)
         } else {
-            MapViewController.setTileColor(column: column, row: row, color: .grey)
+            MapViewController.setTileColor(column: column, row: row, type: .sample)
         }
     }
     
@@ -188,14 +193,29 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 if RGSharedDataManager.appMode == .dev {
                     displayDevTiles(column: column, row: row)
                 } else if RGSharedDataManager.appMode == .prod {
-                    MapViewController.setTileColor(column: column, row: row, color: .none)
+                    
                 }
             }
         }
     }
     
     static func showCurrentLocation(_ currentLocation: (Int, Int)) {
-        MapViewController.setTileColor(column: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0, color: .purple)
+        // If the locationNode is hidden, change alpha to 1 to display it
+        if locationNode.alpha < 1 {
+            locationNode.alpha = 1
+        }
+        
+        // Get the location of the center of the tile that represents the current location
+        let location = MapViewController.map.centerOfTile(atColumn: currentLocation.1, row: currentLocation.0)
+        
+        // Animate moving from the last location to the new position in the number of seconds
+        let move = SKAction.move(to: location, duration: 0.3)
+        
+        // Add ease out effect
+        move.timingMode = .easeInEaseOut
+        
+        // Run the animation
+        locationNode.run(move, withKey: "moving")
     }
     
     /**
@@ -220,21 +240,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     static func prodLog(_ data: String) {
-//        if RGSharedDataManager.appMode == .prod {
-//
-//        }
         ScrollableBottomSheetViewController.status = data
     }
     
     fileprivate func addBottomSheetView() {
-        let rooms = RGSharedDataManager.getRooms()
-        bottomSheetVC.data = rooms
-        
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
 
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
+        
+        let rooms = RGSharedDataManager.getRooms()
+        bottomSheetVC.data = rooms
     }
     
     static func centerToLocation() {

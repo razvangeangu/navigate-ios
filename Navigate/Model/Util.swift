@@ -19,21 +19,11 @@ enum Commands: String {
 /**
  RGColor is a enum used for tile colors.
  */
-enum TileColor {
-    case cyan
-    case purple
-    case green
-    case grey
+enum RGTileType {
+    case saved
+    case sample
+    case location
     case none
-}
-
-/**
- TileType is an enum for tile types.
- */
-enum TileType: String {
-    case free = "free"
-    case wall = "wall"
-    case door = "door"
 }
 
 enum AppMode {

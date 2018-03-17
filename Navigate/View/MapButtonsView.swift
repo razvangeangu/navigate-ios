@@ -28,7 +28,7 @@ class MapButtonsView: UIView {
         addButtonsView()
         addCameraButton()
         addSeparator()
-        addLocationButton()
+        addLocateButton()
     }
     
     fileprivate func addSeparator() {
@@ -64,10 +64,10 @@ class MapButtonsView: UIView {
         (parentVC as? MapViewController)?.performSegue(withIdentifier: "arvc", sender: parentVC)
     }
     
-    fileprivate func addLocationButton() {
+    fileprivate func addLocateButton() {
         locationButton = UIButton(frame: CGRect(x: 0, y: cameraButton.frame.height + 1, width: 40, height: 40))
         locationButton.setTitleColor(.black, for: .normal)
-        locationButton.setImage(UIImage(named: "location"), for: .normal)
+        locationButton.setImage(UIImage(named: "navigation"), for: .normal)
         
         locationButton.addTarget(self, action: #selector(MapButtonsView.locationTaped), for: .touchDown)
         
