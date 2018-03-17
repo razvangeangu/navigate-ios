@@ -24,7 +24,9 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     var data = [String]() {
         didSet {
-            tableView.reloadData()
+            if data.count > 0 {
+                tableView.reloadData()
+            }
         }
     }
     

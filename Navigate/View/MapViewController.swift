@@ -228,6 +228,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func addBottomSheetView() {
         let rooms = RGSharedDataManager.getRooms()
+        bottomSheetVC.data = rooms
         
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
@@ -244,7 +245,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         let newPosition = map.centerOfTile(atColumn: tileLocation.1, row: tileLocation.0)
         
         // Animate moving from the last location to the new position in the number of seconds
-        let move = SKAction.move(to: newPosition, duration: 0.4)
+        let move = SKAction.move(to: newPosition, duration: 0.3)
         
         // Add ease out effect
         move.timingMode = .easeOut

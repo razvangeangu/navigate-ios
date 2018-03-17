@@ -120,22 +120,22 @@ extension MapViewController {
                     
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
                     if (MapViewController.scene.camera?.position.x)! < previousLocation.x {
-                        newPosition.x -= (previousLocation.x - (MapViewController.scene.camera?.position.x)! - velocity.x * 0.06)
+                        newPosition.x -= (previousLocation.x - (MapViewController.scene.camera?.position.x)! - velocity.x * 0.1)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
                     if (MapViewController.scene.camera?.position.x)! > previousLocation.x {
-                        newPosition.x += ((MapViewController.scene.camera?.position.x)! - previousLocation.x + velocity.x * 0.06)
+                        newPosition.x += ((MapViewController.scene.camera?.position.x)! - previousLocation.x + velocity.x * 0.1)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
                     if (MapViewController.scene.camera?.position.y)! > previousLocation.y {
-                        newPosition.y += ((MapViewController.scene.camera?.position.y)! - previousLocation.y + velocity.y * 0.06)
+                        newPosition.y += ((MapViewController.scene.camera?.position.y)! - previousLocation.y + velocity.y * 0.1)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
                     if (MapViewController.scene.camera?.position.y)! < previousLocation.y {
-                        newPosition.y -= (previousLocation.y - (MapViewController.scene.camera?.position.y)! - velocity.y * 0.06)
+                        newPosition.y -= (previousLocation.y - (MapViewController.scene.camera?.position.y)! - velocity.y * 0.1)
                     }
                 
                     // Animate moving from the last location to the new position in the number of seconds
