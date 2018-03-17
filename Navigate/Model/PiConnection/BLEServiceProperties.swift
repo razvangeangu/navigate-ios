@@ -18,6 +18,7 @@ extension BLEService: CBCentralManagerDelegate {
             if serviceCBUUID != nil {
                 
                 MapViewController.devLog(data: "Scanning for peripherals")
+                MapViewController.prodLog("Scanning for peripherals")
                 
                 // Search for peripherals
                 centralManager.scanForPeripherals(withServices: [serviceCBUUID])
@@ -42,6 +43,7 @@ extension BLEService: CBCentralManagerDelegate {
     // If connected to peripheral
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         MapViewController.devLog(data: "Connected")
+        MapViewController.prodLog("Connected")
         
         // Set the connection status of the BLEService
         BLEService.isConnected = true
@@ -53,12 +55,14 @@ extension BLEService: CBCentralManagerDelegate {
     // If the peripheral disconnected
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         MapViewController.devLog(data: "Disconnected")
+        MapViewController.prodLog("Disconnected")
         
         // Set the connection status of the BLEService
         BLEService.isConnected = false
         
         if central.state == .poweredOn {
             MapViewController.devLog(data: "Scanning for peripherals")
+            MapViewController.prodLog("Scanning for peripherals")
             centralManager.scanForPeripherals(withServices: [serviceCBUUID])
         }
     }

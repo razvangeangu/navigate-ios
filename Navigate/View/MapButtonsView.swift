@@ -1,5 +1,5 @@
 //
-//  MapButtons.swift
+//  MapButtonsView.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 16/03/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapButtons: UIView {
+class MapButtonsView: UIView {
     
     private var cameraButton: UIButton!
     private var locationButton: UIButton!
@@ -55,7 +55,7 @@ class MapButtons: UIView {
         cameraButton.setTitleColor(.black, for: .normal)
         cameraButton.setImage(UIImage(named: "ar"), for: .normal)
         
-        cameraButton.addTarget(self, action: #selector(MapButtons.cameraTaped), for: .touchDown)
+        cameraButton.addTarget(self, action: #selector(MapButtonsView.cameraTaped), for: .touchDown)
         
         buttonsView.addSubview(cameraButton)
     }
@@ -69,7 +69,7 @@ class MapButtons: UIView {
         locationButton.setTitleColor(.black, for: .normal)
         locationButton.setImage(UIImage(named: "location"), for: .normal)
         
-        locationButton.addTarget(self, action: #selector(MapButtons.locationTaped), for: .touchDown)
+        locationButton.addTarget(self, action: #selector(MapButtonsView.locationTaped), for: .touchDown)
         
         buttonsView.addSubview(locationButton)
     }

@@ -69,16 +69,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         addDevLabel()
         
         // Activate the tiles that have access points stored in core data
-        MapViewController.activateTiles()
-        
-        let mapButtons = MapButtons(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
-        mapButtons.backgroundColor = .clear
-        mapButtons.parentVC = self
-        self.view.addSubview(mapButtons)
+        MapViewController.resetTiles()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        
+        let mapButtons = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
+        mapButtons.backgroundColor = .clear
+        mapButtons.parentVC = self
+        self.view.addSubview(mapButtons)
         
         addBottomSheetView()
     }
@@ -94,7 +95,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         RGSharedDataManager.setFloor(level: 6)
         
         // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .prod
+        RGSharedDataManager.appMode = .prod // TODO: make it able to change from the view
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -127,7 +128,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             MapViewController.devLabel.numberOfLines = 4
             MapViewController.devLabel.textColor = .white
             MapViewController.devLabel.textAlignment = .center
-            view.addSubview(MapViewController.devLabel)
+//            view.addSubview(MapViewController.devLabel) // TODO: change devLog to statusLog
         }
     }
     
@@ -162,23 +163,39 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 tileGroup = MapViewController.map.tileSet.tileGroups.first(
                     where: {$0.name == "grey_box"})
             }
+        case .none:
+            do {
+                tileGroup = SKTileGroup.empty()
+            }
         }
         MapViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
+    }
+    
+    fileprivate static func displayDevTiles(column: Int, row: Int) {
+        if RGSharedDataManager.accessPointHasData(column: column, row: row) {
+            MapViewController.setTileColor(column: column, row: row, color: .cyan)
+        } else {
+            MapViewController.setTileColor(column: column, row: row, color: .grey)
+        }
     }
     
     /**
      Display blue tile if it contains data.
      */
-    static func activateTiles() {
+    static func resetTiles() {
         for row in 0...MapViewController.map.numberOfRows {
             for column in 0...MapViewController.map.numberOfColumns {
-                if RGSharedDataManager.accessPointHasData(column: column, row: row) {
-                    MapViewController.setTileColor(column: column, row: row, color: .cyan)
-                } else {
-                    MapViewController.setTileColor(column: column, row: row, color: .grey)
+                if RGSharedDataManager.appMode == .dev {
+                    displayDevTiles(column: column, row: row)
+                } else if RGSharedDataManager.appMode == .prod {
+                    MapViewController.setTileColor(column: column, row: row, color: .none)
                 }
             }
         }
+    }
+    
+    static func showCurrentLocation(_ currentLocation: (Int, Int)) {
+        MapViewController.setTileColor(column: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0, color: .purple)
     }
     
     /**
@@ -191,13 +208,27 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     static func devLog(data: String) {
-        if RGSharedDataManager.appMode == .dev {
-            debugPrint(data)
-            devLabel.text = data
+        switch RGSharedDataManager.appMode {
+        case .dev:
+            do {
+                debugPrint(data)
+                devLabel.text = data
+            }
+        default:
+            break
         }
     }
     
+    static func prodLog(_ data: String) {
+//        if RGSharedDataManager.appMode == .prod {
+//
+//        }
+        ScrollableBottomSheetViewController.status = data
+    }
+    
     fileprivate func addBottomSheetView() {
+        let rooms = RGSharedDataManager.getRooms()
+        
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)

@@ -72,10 +72,10 @@ class RGLocalisation: NSObject {
             MapViewController.devLog(data: "Found: \(currentLocation)")
             
             // Reset the map
-            MapViewController.activateTiles()
+            MapViewController.resetTiles()
             
             // Show the current location
-            MapViewController.setTileColor(column: currentLocation.1, row: currentLocation.0, color: .purple)
+            MapViewController.showCurrentLocation(currentLocation)
             
             // Save the current location
             self.currentLocation = currentLocation

@@ -12,6 +12,9 @@ class RGSharedDataManager: NSObject {
     
     static var appMode: AppMode = .prod
     
+    // Room information
+    static var selectedRoom = ""
+    
     // Floor information
     static var floorLevel = 6
     static var floor: Floor!
@@ -148,6 +151,9 @@ class RGSharedDataManager: NSObject {
         tile.x = Int16(row)
         tile.y = Int16(column)
         
+        // Add the room to the tile
+        tile.room = selectedRoom
+        
         // Add the APs data
         tile.accessPoints = accessPoints
         
@@ -187,5 +193,17 @@ class RGSharedDataManager: NSObject {
             }
         }
         return false
+    }
+    
+    static func getRooms() -> [String] {
+        var rooms = [String]()
+        for tile in RGSharedDataManager.floor.tiles! {
+            let room = (tile as! Tile).room
+            if room != nil && !rooms.contains(room!) {
+                rooms.append(room!)
+            }
+        }
+        
+        return rooms
     }
 }

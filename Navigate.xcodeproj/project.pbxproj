@@ -21,14 +21,15 @@
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* MapViewController.swift */; };
 		1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */; };
-		18363B6F205C383700FC17F4 /* MapButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtons.swift */; };
-		183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */; };
-		183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */; };
-		183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */; };
-		183C3226205A71DA0098235A /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */; };
-		183C3227205A71DA0098235A /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */; };
-		183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */; };
+		18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtonsView.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
+		18587619205D459E008CF624 /* AccessPoint+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587613205D459E008CF624 /* AccessPoint+CoreDataClass.swift */; };
+		1858761A205D459E008CF624 /* AccessPoint+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587614205D459E008CF624 /* AccessPoint+CoreDataProperties.swift */; };
+		1858761B205D459E008CF624 /* Tile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587615205D459E008CF624 /* Tile+CoreDataClass.swift */; };
+		1858761C205D459E008CF624 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587616205D459E008CF624 /* Tile+CoreDataProperties.swift */; };
+		1858761D205D459E008CF624 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587617205D459E008CF624 /* Floor+CoreDataClass.swift */; };
+		1858761E205D459E008CF624 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18587618205D459E008CF624 /* Floor+CoreDataProperties.swift */; };
+		18587620205D5CAC008CF624 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* RoomViewController.swift */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
@@ -82,13 +83,14 @@
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
 		18309F6220291F30009F5CDD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
-		18363B6E205C383700FC17F4 /* MapButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtons.swift; sourceTree = "<group>"; };
-		183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
-		183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
-		183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18363B6E205C383700FC17F4 /* MapButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsView.swift; sourceTree = "<group>"; };
+		18587613205D459E008CF624 /* AccessPoint+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18587614205D459E008CF624 /* AccessPoint+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccessPoint+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18587615205D459E008CF624 /* Tile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18587616205D459E008CF624 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18587617205D459E008CF624 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18587618205D459E008CF624 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1858761F205D5CAC008CF624 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
@@ -219,9 +221,9 @@
 		18309F5E20291ED1009F5CDD /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				183C321E205A71DA0098235A /* Floor+CoreDataProperties.swift */,
-				183C3220205A71DA0098235A /* Tile+CoreDataProperties.swift */,
-				183C3222205A71DA0098235A /* AccessPoint+CoreDataProperties.swift */,
+				18587614205D459E008CF624 /* AccessPoint+CoreDataProperties.swift */,
+				18587616205D459E008CF624 /* Tile+CoreDataProperties.swift */,
+				18587618205D459E008CF624 /* Floor+CoreDataProperties.swift */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -229,9 +231,9 @@
 		18309F5F20291EDC009F5CDD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				183C321D205A71DA0098235A /* Floor+CoreDataClass.swift */,
-				183C321F205A71DA0098235A /* Tile+CoreDataClass.swift */,
-				183C3221205A71DA0098235A /* AccessPoint+CoreDataClass.swift */,
+				18587613205D459E008CF624 /* AccessPoint+CoreDataClass.swift */,
+				18587615205D459E008CF624 /* Tile+CoreDataClass.swift */,
+				18587617205D459E008CF624 /* Floor+CoreDataClass.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -253,13 +255,17 @@
 			path = PiConnection;
 			sourceTree = "<group>";
 		};
-		18309F6420291F43009F5CDD /* Storyboards */ = {
+		18309F6420291F43009F5CDD /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				182519021FAF454A0005F5F6 /* Main.storyboard */,
 				182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */,
+				18D57724205C028C001C4B1C /* DefaultTableViewCell.xib */,
+				18D57720205C0225001C4B1C /* ScrollableBottomSheetViewController.xib */,
+				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
+				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
 			);
-			path = Storyboards;
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		18363B6D205C37C900FC17F4 /* AR */ = {
@@ -273,14 +279,13 @@
 		185936721FBD9DA60016BF66 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18309F6420291F43009F5CDD /* Scenes */,
 				18363B6D205C37C900FC17F4 /* AR */,
 				18D5771E205C0211001C4B1C /* BottomTableView */,
-				18309F6420291F43009F5CDD /* Storyboards */,
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
 				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
-				18363B6E205C383700FC17F4 /* MapButtons.swift */,
-				18B93D972052AD7A00AD8B31 /* MapTileset.sks */,
-				181D01002053EB13001CB8BD /* MapTilemapScene.sks */,
+				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
+				1858761F205D5CAC008CF624 /* RoomViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -289,10 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				18D57723205C028B001C4B1C /* DefaultTableViewCell.swift */,
-				18D57724205C028C001C4B1C /* DefaultTableViewCell.xib */,
 				18D5771F205C0225001C4B1C /* ScrollableBottomSheetViewController.swift */,
 				18D57727205C02C3001C4B1C /* ScrollableBottomSheetViewControllerExtensions.swift */,
-				18D57720205C0225001C4B1C /* ScrollableBottomSheetViewController.xib */,
 			);
 			path = BottomTableView;
 			sourceTree = "<group>";
@@ -454,28 +457,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D57721205C0225001C4B1C /* ScrollableBottomSheetViewController.swift in Sources */,
+				1858761C205D459E008CF624 /* Tile+CoreDataProperties.swift in Sources */,
+				1858761D205D459E008CF624 /* Floor+CoreDataClass.swift in Sources */,
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
 				18D57728205C02C3001C4B1C /* ScrollableBottomSheetViewControllerExtensions.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
-				183C3225205A71DA0098235A /* Tile+CoreDataClass.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
+				18587619205D459E008CF624 /* AccessPoint+CoreDataClass.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
-				183C3227205A71DA0098235A /* AccessPoint+CoreDataClass.swift in Sources */,
-				183C3226205A71DA0098235A /* Tile+CoreDataProperties.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
 				18D57725205C028C001C4B1C /* DefaultTableViewCell.swift in Sources */,
-				183C3224205A71DA0098235A /* Floor+CoreDataProperties.swift in Sources */,
+				18587620205D5CAC008CF624 /* RoomViewController.swift in Sources */,
+				1858761B205D459E008CF624 /* Tile+CoreDataClass.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */,
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
-				183C3223205A71DA0098235A /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
-				18363B6F205C383700FC17F4 /* MapButtons.swift in Sources */,
-				183C3228205A71DA0098235A /* AccessPoint+CoreDataProperties.swift in Sources */,
+				18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */,
+				1858761E205D459E008CF624 /* Floor+CoreDataProperties.swift in Sources */,
+				1858761A205D459E008CF624 /* AccessPoint+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

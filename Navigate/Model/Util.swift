@@ -19,11 +19,12 @@ enum Commands: String {
 /**
  RGColor is a enum used for tile colors.
  */
-enum TileColor: String {
-    case cyan = "cyan"
-    case purple = "purple"
-    case green = "green"
-    case grey = "grey"
+enum TileColor {
+    case cyan
+    case purple
+    case green
+    case grey
+    case none
 }
 
 /**

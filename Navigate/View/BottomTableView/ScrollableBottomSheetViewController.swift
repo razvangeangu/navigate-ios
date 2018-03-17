@@ -16,8 +16,25 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var dragIndicatorView: UIView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var baseView: UIView!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var devSeparatorView: UIView!
+    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
     
-    let data = ["BH(S)6.01", "BH(S)6.02", "BH(S)6.03", "BH(S)6.04", "BH(N)6.05"]
+    
+    
+    var data = [String]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    static var status: String = "" {
+        didSet {
+            staticSelf.statusLabel.text = status
+        }
+    }
+    
+    static var staticSelf: ScrollableBottomSheetViewController!
     
     let fullView: CGFloat = 200
     var partialView: CGFloat {
@@ -36,6 +53,8 @@ class ScrollableBottomSheetViewController: UIViewController {
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
+        
+        ScrollableBottomSheetViewController.staticSelf = self
         
         tableView.delaysContentTouches = false
     }
@@ -118,5 +137,26 @@ class ScrollableBottomSheetViewController: UIViewController {
         
         dragIndicatorView.layer.cornerRadius = 3
         dragIndicatorView.layer.masksToBounds = true
+        
+        statusLabel.textColor = UIColor.gray
+        statusLabel.text = "Status"
+        
+        if RGSharedDataManager.appMode == .dev {
+            // add room button
+            let addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
+            addButton.setTitle("+", for: .normal)
+            addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
+            addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
+            
+            addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchDown)
+            
+            headerView.addSubview(addButton)
+
+            searchBarWidthConstraint.constant -= 44
+        }
+    }
+    
+    @objc func addButtonTaped(_ sender: UIButton!) {
+        parent?.performSegue(withIdentifier: "roomAdmin", sender: parent)
     }
 }

@@ -29,6 +29,11 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        RGSharedDataManager.selectedRoom = data[indexPath.row]
+        MapViewController.prodLog("\(RGSharedDataManager.selectedRoom) selected")
+    }
 }
 
 extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
