@@ -14,7 +14,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var containerView: UIView!
     
     // The scene that holds the map nodes
-    var scene: SKScene!
+    static var scene: SKScene!
     
     // Developer label to display information
     fileprivate static var devLabel: UILabel!
@@ -44,21 +44,21 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
-                self.scene = scene
+                MapViewController.scene = scene
                 
                 MapViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
                 
                 // Set the scale mode to scale to fit the window
-                self.scene.scaleMode = .aspectFill
+                MapViewController.scene.scaleMode = .aspectFill
                 
                 // Present the scene
-                view.presentScene(self.scene)
+                view.presentScene(MapViewController.scene)
                 view.ignoresSiblingOrder = true
                 
                 // Add the camera node
                 let cameraNode = SKCameraNode()
-                self.scene.addChild(cameraNode)
-                self.scene.camera = cameraNode
+                MapViewController.scene.addChild(cameraNode)
+                MapViewController.scene.camera = cameraNode
                 
                 // Add the gesture to the view
                 self.addGesturesRecognisers()
@@ -71,8 +71,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Activate the tiles that have access points stored in core data
         MapViewController.activateTiles()
         
-        let mapButtons = MapButtons(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 82))
+        let mapButtons = MapButtons(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
         mapButtons.backgroundColor = .clear
+        mapButtons.parentVC = self
         self.view.addSubview(mapButtons)
     }
     
@@ -202,6 +203,23 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         bottomSheetVC.didMove(toParentViewController: self)
 
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
+    }
+    
+    static func centerToLocation() {
+        let tileLocation = RGLocalisation.currentLocation
+        
+        if tileLocation == (-1, -1) { return }
+        
+        let newPosition = map.centerOfTile(atColumn: tileLocation.1, row: tileLocation.0)
+        
+        // Animate moving from the last location to the new position in the number of seconds
+        let move = SKAction.move(to: newPosition, duration: 0.4)
+        
+        // Add ease out effect
+        move.timingMode = .easeOut
+        
+        // Run the animation
+        MapViewController.scene.camera?.run(move, withKey: "localising")
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {

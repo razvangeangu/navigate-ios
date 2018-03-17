@@ -36,6 +36,8 @@ class ScrollableBottomSheetViewController: UIViewController {
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
+        
+        tableView.delaysContentTouches = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

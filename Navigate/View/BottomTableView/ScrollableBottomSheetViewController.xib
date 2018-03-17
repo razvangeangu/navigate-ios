@@ -46,7 +46,7 @@
                                         </searchBar>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pir-hd-Exb" userLabel="Drag Indicator View">
                                             <rect key="frame" x="157" y="12" width="60" height="6"/>
-                                            <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" white="0.80000000000000004" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="6" id="36W-WY-Gcc"/>
                                                 <constraint firstAttribute="width" constant="60" id="KQV-Yu-Fyr"/>

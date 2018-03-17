@@ -21,6 +21,7 @@ class BLEService: NSObject {
             RGSharedDataManager.jsonData = json
         }
     }
+    static var isConnected = false
     
     override init() {
         super.init()

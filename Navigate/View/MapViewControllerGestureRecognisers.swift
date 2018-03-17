@@ -32,6 +32,9 @@ extension MapViewController {
     @objc func handleTapFrom(tap: UITapGestureRecognizer) {
         if tap.state != .ended { return }
         
+        // If external device is not connected then do not try to execute tap functions
+        if !BLEService.isConnected { return }
+        
         // Get the row and column of the taped square/tile
         let tapLocation = tap.location(in: view)
         
@@ -41,7 +44,7 @@ extension MapViewController {
         }
         
         // Detect the location from the view in the scene
-        let location = scene.convertPoint(fromView: tapLocation)
+        let location = MapViewController.scene.convertPoint(fromView: tapLocation)
         
         // Row and Column for the tapped location
         let column = MapViewController.map.tileColumnIndex(fromPosition: location)
@@ -84,13 +87,13 @@ extension MapViewController {
         case .began:
             do {
                 // Save the previous location
-                previousLocation = (self.scene.camera?.position)!
+                previousLocation = (MapViewController.scene.camera?.position)!
             }
         case .changed:
             do {
                 // Set off set depending on the scale
                 var offSet: CGFloat = 1.0
-                offSet = 750 / self.scene.size.width
+                offSet = 750 / MapViewController.scene.size.width
                 if offSet != 1.0 {
                     offSet = offSet < 1 ? offSet + 1 : offSet - 1
                 }
@@ -102,7 +105,7 @@ extension MapViewController {
                 let newPosition = previousLocation + CGPoint(x: transPoint.x * -offSet, y: transPoint.y * offSet)
                 
                 // set the camera to the new position
-                self.scene.camera?.position = newPosition
+                MapViewController.scene.camera?.position = newPosition
             }
         case .ended:
             do {
@@ -113,26 +116,26 @@ extension MapViewController {
                 if velocity.y > 100 || velocity.y < -100 || velocity.x > 100 || velocity.x < -100 {
                     
                     // Get the current position
-                    var newPosition = (self.scene.camera?.position)!
+                    var newPosition = (MapViewController.scene.camera?.position)!
                     
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
-                    if (self.scene.camera?.position.x)! < previousLocation.x {
-                        newPosition.x -= (previousLocation.x - (self.scene.camera?.position.x)! - velocity.x * 0.06)
+                    if (MapViewController.scene.camera?.position.x)! < previousLocation.x {
+                        newPosition.x -= (previousLocation.x - (MapViewController.scene.camera?.position.x)! - velocity.x * 0.06)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the x axis
-                    if (self.scene.camera?.position.x)! > previousLocation.x {
-                        newPosition.x += ((self.scene.camera?.position.x)! - previousLocation.x + velocity.x * 0.06)
+                    if (MapViewController.scene.camera?.position.x)! > previousLocation.x {
+                        newPosition.x += ((MapViewController.scene.camera?.position.x)! - previousLocation.x + velocity.x * 0.06)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
-                    if (self.scene.camera?.position.y)! > previousLocation.y {
-                        newPosition.y += ((self.scene.camera?.position.y)! - previousLocation.y + velocity.y * 0.06)
+                    if (MapViewController.scene.camera?.position.y)! > previousLocation.y {
+                        newPosition.y += ((MapViewController.scene.camera?.position.y)! - previousLocation.y + velocity.y * 0.06)
                     }
                 
                     // Add the distance that can be travelled in the number of seconds with the speed of velocity on the y axis
-                    if (self.scene.camera?.position.y)! < previousLocation.y {
-                        newPosition.y -= (previousLocation.y - (self.scene.camera?.position.y)! - velocity.y * 0.06)
+                    if (MapViewController.scene.camera?.position.y)! < previousLocation.y {
+                        newPosition.y -= (previousLocation.y - (MapViewController.scene.camera?.position.y)! - velocity.y * 0.06)
                     }
                 
                     // Animate moving from the last location to the new position in the number of seconds
@@ -142,7 +145,7 @@ extension MapViewController {
                     move.timingMode = .easeOut
                     
                     // Run the animation
-                    self.scene.camera?.run(move, withKey: "moving")
+                    MapViewController.scene.camera?.run(move, withKey: "moving")
                 }
             }
         default:
@@ -175,11 +178,11 @@ extension MapViewController {
                 let scale = 1 - (self.lastScale - pinch.scale)
                 
                 // get the new width and height matching the min and max sizes allowed
-                let newWidth = max(minWidth, min(maxWidth, self.scene.size.width / scale))
-                let newHeight = max(minHeight, min(maxHeight, self.scene.size.height / scale))
+                let newWidth = max(minWidth, min(maxWidth, MapViewController.scene.size.width / scale))
+                let newHeight = max(minHeight, min(maxHeight, MapViewController.scene.size.height / scale))
                 
                 // set the new size
-                self.scene.size = CGSize(width: newWidth, height: newHeight)
+                MapViewController.scene.size = CGSize(width: newWidth, height: newHeight)
                 
                 // save the last scale
                 self.lastScale = pinch.scale

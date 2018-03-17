@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 05/11/2017.
-//  Copyright © 2017 Răzvan-Gabriel Geangu. All rights reserved.
+//  Created by Răzvan-Gabriel Geangu on 17/03/2018.
+//  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 
 import UIKit
@@ -11,12 +11,12 @@ import SceneKit
 import ARKit
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -36,9 +36,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         
-        configuration.planeDetection = .horizontal
-        configuration.worldAlignment = .gravityAndHeading
-
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -54,17 +51,17 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
+    /*
+     // Override to create and configure nodes for anchors added to the view's session.
+     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+     let node = SCNNode()
      
-        return node
-    }
-*/
+     return node
+     }
+     */
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user

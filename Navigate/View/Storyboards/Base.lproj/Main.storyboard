@@ -20,7 +20,7 @@
                         <viewLayoutGuide key="safeArea" id="7yk-dz-miW"/>
                     </view>
                     <connections>
-                        <segue destination="BV1-FR-VrT" kind="show" identifier="toVC_edit" id="6KH-bo-w50"/>
+                        <segue destination="2Wq-io-Nfy" kind="show" identifier="arvc" id="isD-kj-wds"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cle-oD-trY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -28,20 +28,20 @@
             <point key="canvasLocation" x="-556" y="99.753694581280797"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="tXr-a1-R10">
+        <scene sceneID="so0-cq-Irj">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ARViewController" customModule="Navigate" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                <viewController id="2Wq-io-Nfy" customClass="ARViewController" customModule="Navigate" customModuleProvider="target" sceneMemberID="viewController">
+                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="r72-Hf-A7Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </arscnView>
                     <connections>
-                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="sceneView" destination="r72-Hf-A7Z" id="Ohv-v2-HOR"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k22-Sh-tWq" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="482" y="99"/>
+            <point key="canvasLocation" x="364" y="100"/>
         </scene>
     </scenes>
 </document>
