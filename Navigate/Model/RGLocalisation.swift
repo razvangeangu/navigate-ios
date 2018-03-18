@@ -69,12 +69,8 @@ class RGLocalisation: NSObject {
         // If the current location is valid (not the initial value and in the bounds)
         if currentLocation != (-1, -1) {
             
-            if RGSharedDataManager.appMode == .dev {
-                MapViewController.prodLog("Found Location: \(currentLocation)")
-            }
-            
             // Show debugging log
-            MapViewController.devLog(data: "Found: \(currentLocation)")
+            MapViewController.devLog(data: "Found Location: \(currentLocation)")
             
             // Save the current location for future references
             self.previousLocation = self.currentLocation

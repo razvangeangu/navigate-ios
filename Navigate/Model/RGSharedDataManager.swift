@@ -41,9 +41,18 @@ class RGSharedDataManager: NSObject {
     }
     
     /**
+     Write a command to the terminal of the external device.
+     
+     - parameter command: A string that represents the command to be executed by the external device.
+     */
+    static func writeToTerminal(command: String) {
+        ble.write(command: command)
+    }
+    
+    /**
      Connect to an external device using a UUID.
      
-     - parameter to: UUID as string
+     - parameter to: UUID as string.
      */
     static func connect(to: String) {
         ble.connect(to: to)
@@ -108,7 +117,7 @@ class RGSharedDataManager: NSObject {
     /**
      A method to get the APs from the external device and save them to the context.
      
-     - Returns: An **NSSet?** containing the APs
+     - Returns: An **NSSet?** containing the APs.
      */
     static func getAccessPoints() -> NSSet? {
         let accessPoints = NSMutableSet()
@@ -142,7 +151,7 @@ class RGSharedDataManager: NSObject {
      - parameter column: The column of the tile *(y index of the tile in database)*
      - parameter row: The row of the tile *(x index of the tile in database)*
      
-     - Returns: **true** if the data has been saved successfuly or **false** if could not find APs
+     - Returns: **true** if the data has been saved successfuly or **false** if could not find APs.
      */
     static func saveDataToTile(column: Int, row: Int) -> Bool {
         guard let accessPoints = getAccessPoints() else { return false }
@@ -198,6 +207,11 @@ class RGSharedDataManager: NSObject {
         return false
     }
     
+    /**
+     Get the rooms for the current floor.
+     
+     - Returns: An array of strings that represent the information about the room.
+     */
     static func getRooms() -> [String] {
         var rooms = [String]()
         for tile in RGSharedDataManager.floor.tiles! {

@@ -16,8 +16,8 @@ class MapButtonsView: UIView {
     
     var parentVC: UIViewController!
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         backgroundColor = UIColor.clear
         layer.shadowColor = UIColor.black.cgColor
@@ -29,6 +29,10 @@ class MapButtonsView: UIView {
         addCameraButton()
         addSeparator()
         addLocateButton()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     fileprivate func addSeparator() {
@@ -55,7 +59,7 @@ class MapButtonsView: UIView {
         cameraButton.setTitleColor(.black, for: .normal)
         cameraButton.setImage(UIImage(named: "ar"), for: .normal)
         
-        cameraButton.addTarget(self, action: #selector(MapButtonsView.cameraTaped), for: .touchDown)
+        cameraButton.addTarget(self, action: #selector(MapButtonsView.cameraTaped), for: .touchUpInside)
         
         buttonsView.addSubview(cameraButton)
     }
@@ -69,7 +73,7 @@ class MapButtonsView: UIView {
         locationButton.setTitleColor(.black, for: .normal)
         locationButton.setImage(UIImage(named: "navigation"), for: .normal)
         
-        locationButton.addTarget(self, action: #selector(MapButtonsView.locationTaped), for: .touchDown)
+        locationButton.addTarget(self, action: #selector(MapButtonsView.locationTaped), for: .touchUpInside)
         
         buttonsView.addSubview(locationButton)
     }

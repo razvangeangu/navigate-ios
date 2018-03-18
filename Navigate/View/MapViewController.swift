@@ -16,9 +16,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // The scene that holds the map nodes
     static var scene: SKScene!
     
-    // Developer label to display information
-    fileprivate static var devLabel: UILabel!
-    
     // Vars for gesture recognisers
     var lastScale: CGFloat = 0.0
     var previousLocation = CGPoint.zero
@@ -75,8 +72,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
-        // Add the developer label to show different events
-        addDevLabel()
+        let mapButtons = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
+        mapButtons.backgroundColor = .clear
+        mapButtons.parentVC = self
+        self.view.addSubview(mapButtons)
+        
+        addBottomSheetView()
         
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
@@ -84,14 +85,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
-        let mapButtons = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
-        mapButtons.backgroundColor = .clear
-        mapButtons.parentVC = self
-        self.view.addSubview(mapButtons)
-        
-        addBottomSheetView()
     }
     
     /**
@@ -125,21 +118,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         tapGesture.numberOfTouchesRequired = 1
         view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
-    }
-    
-    /**
-     Construct and add development label to the view.
-     */
-    fileprivate func addDevLabel() {
-        if RGSharedDataManager.appMode == .dev {
-            MapViewController.devLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
-            MapViewController.devLabel.backgroundColor = .black
-            MapViewController.devLabel.text = "#"
-            MapViewController.devLabel.numberOfLines = 4
-            MapViewController.devLabel.textColor = .white
-            MapViewController.devLabel.textAlignment = .center
-//            view.addSubview(MapViewController.devLabel) // TODO: change devLog to statusLog
-        }
     }
     
     /**
@@ -223,19 +201,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            RGSharedDataManager.disconnect()
+            // RGSharedDataManager.disconnect()
+            
         }
     }
     
     static func devLog(data: String) {
-        switch RGSharedDataManager.appMode {
-        case .dev:
-            do {
-                debugPrint(data)
-                devLabel.text = data
-            }
-        default:
-            break
+        let hour = Calendar.current.component(.hour, from: Date())
+        let minute = Calendar.current.component(.minute, from: Date())
+        let second = Calendar.current.component(.second, from: Date())
+        if RGSharedDataManager.appMode == .dev {
+            debugPrint("\(hour):\(minute):\(second) \(data)")
+            prodLog("\(hour):\(minute):\(second) \(data)")
         }
     }
     

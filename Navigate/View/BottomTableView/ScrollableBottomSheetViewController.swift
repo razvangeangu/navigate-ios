@@ -1,9 +1,9 @@
 //
 //  ScrollableBottomSheetViewController.swift
-//  BottomSheet
+//  Navigate
 //
-//  Created by Ahmed Elassuty on 10/15/16.
-//  Copyright © 2016 Ahmed Elassuty. All rights reserved.
+//  Created by Răzvan-Gabriel Geangu on 16/03/2018.
+//  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 
 import UIKit
@@ -20,8 +20,9 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var devSeparatorView: UIView!
     @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
     
+    var isSearching = false
     
-    
+    var filteredData = [String]()
     var data = [String]() {
         didSet {
             if data.count > 0 {
@@ -46,24 +47,25 @@ class ScrollableBottomSheetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "DefaultTableViewCell", bundle: nil), forCellReuseIdentifier: "default")
         
-        searchBar.isUserInteractionEnabled = false
-        
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
-        gesture.delegate = self
-        view.addGestureRecognizer(gesture)
+        let panGesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
+        panGesture.delegate = self
+        view.addGestureRecognizer(panGesture)
         
         ScrollableBottomSheetViewController.staticSelf = self
         
         tableView.delaysContentTouches = false
+        
+        prepareBackgroundView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        prepareBackgroundView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,42 +82,6 @@ class ScrollableBottomSheetViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
-        
-        let translation = recognizer.translation(in: self.view)
-        let velocity = recognizer.velocity(in: self.view)
-
-        let y = self.view.frame.minY
-        if (y + translation.y >= fullView) && (y + translation.y <= partialView) {
-            self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
-            recognizer.setTranslation(CGPoint.zero, in: self.view)
-        }
-        
-        if recognizer.state == .ended {
-            var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((partialView - y) / velocity.y )
-            
-            duration = duration > 1.3 ? 1 : duration
-            
-            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
-                if  velocity.y >= 0 {
-                    self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
-                } else {
-                    self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: self.view.frame.height)
-                }
-                
-                self.view.endEditing(true)
-                self.searchBar.isUserInteractionEnabled = false
-                
-                }, completion: { [weak self] _ in
-                    if ( velocity.y < 0 ) {
-                        self?.tableView.isScrollEnabled = true
-                        self?.searchBar.isUserInteractionEnabled = true
-                    }
-            })
-        }
-    }
-    
     
     func prepareBackgroundView(){
         view.backgroundColor = .clear
@@ -150,7 +116,7 @@ class ScrollableBottomSheetViewController: UIViewController {
             addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
             addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
             
-            addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchDown)
+            addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchUpInside)
             
             headerView.addSubview(addButton)
 
@@ -160,5 +126,33 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     @objc func addButtonTaped(_ sender: UIButton!) {
         parent?.performSegue(withIdentifier: "roomAdmin", sender: parent)
+    }
+}
+
+extension ScrollableBottomSheetViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            isSearching = false
+        } else {
+            isSearching = true
+            filteredData = data.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if self.view.frame.minY != self.fullView {
+            UIView.animate(withDuration: 0.24, animations: { [weak self] in
+                let frame = self?.view.frame
+                let yComponent = self?.fullView
+                self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height)
+            })
+        }
     }
 }

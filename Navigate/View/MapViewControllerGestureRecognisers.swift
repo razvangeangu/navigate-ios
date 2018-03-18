@@ -30,43 +30,45 @@ extension MapViewController {
      - parameter tap: The tap gesture that has been recognised.
      */
     @objc func handleTapFrom(tap: UITapGestureRecognizer) {
-        if tap.state != .ended { return }
+        if RGSharedDataManager.appMode == .dev {
+            if tap.state != .ended { return }
         
-        // If external device is not connected then do not try to execute tap functions
-        if !BLEService.isConnected { return }
+            // If external device is not connected then do not try to execute tap functions
+            if !BLEService.isConnected { return }
         
-        // Get the row and column of the taped square/tile
-        let tapLocation = tap.location(in: view)
+            // Get the row and column of the taped square/tile
+            let tapLocation = tap.location(in: view)
         
-        // Only activate gesture if bottomSheetVC is closed
-        if tapLocation.y > bottomSheetVC.view.frame.minY {
-            return
-        }
-        
-        // Detect the location from the view in the scene
-        let location = MapViewController.scene.convertPoint(fromView: tapLocation)
-        
-        // Row and Column for the tapped location
-        let column = MapViewController.map.tileColumnIndex(fromPosition: location)
-        let row = MapViewController.map.tileRowIndex(fromPosition: location)
-        
-        // The tile definition for more access
-        let _ = MapViewController.map.tileDefinition(atColumn: column, row: row)
-        
-        // Dev data
-        MapViewController.devLog(data: "Touched Tile(\(column),\(row))")
-    
-        // If the model has not got any data for the specified location proceed
-        if !RGSharedDataManager.accessPointHasData(column: column, row: row) {
-            
-            // If the model has been able to save data for the specific column and row
-            if RGSharedDataManager.saveDataToTile(column: column, row: row) {
-                
-                // Save the tile (visually)
-                MapViewController.setTileColor(column: column, row: row, type: .saved)
+            // Only activate gesture if bottomSheetVC is closed
+            if tapLocation.y > bottomSheetVC.view.frame.minY {
+                return
             }
-        } else {
-            MapViewController.devLog(data: "AccessPoint already has data")
+        
+            // Detect the location from the view in the scene
+            let location = MapViewController.scene.convertPoint(fromView: tapLocation)
+        
+            // Row and Column for the tapped location
+            let column = MapViewController.map.tileColumnIndex(fromPosition: location)
+            let row = MapViewController.map.tileRowIndex(fromPosition: location)
+        
+            // The tile definition for more access
+            let _ = MapViewController.map.tileDefinition(atColumn: column, row: row)
+        
+            // Dev data
+            MapViewController.devLog(data: "Touched Tile(\(column),\(row))")
+        
+            // If the model has not got any data for the specified location proceed
+            if !RGSharedDataManager.accessPointHasData(column: column, row: row) {
+                
+                // If the model has been able to save data for the specific column and row
+                if RGSharedDataManager.saveDataToTile(column: column, row: row) {
+                    
+                    // Save the tile (visually)
+                    MapViewController.setTileColor(column: column, row: row, type: .saved)
+                }
+            } else {
+                MapViewController.devLog(data: "AccessPoint already has data")
+            }
         }
     }
     

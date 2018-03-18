@@ -1,9 +1,9 @@
 //
-//  DefaultTableViewCell.swift
-//  BottomSheet
+//  DefaultTableViewCell
+//  Navigate
 //
-//  Created by Ahmed Elassuty on 10/15/16.
-//  Copyright © 2016 Ahmed Elassuty. All rights reserved.
+//  Created by Răzvan-Gabriel Geangu on 16/03/2018.
+//  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 
 import UIKit
