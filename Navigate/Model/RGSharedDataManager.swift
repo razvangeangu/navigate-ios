@@ -28,10 +28,7 @@ class RGSharedDataManager: NSObject {
     
     // Detect location on changing value of the json
     static var jsonData: Any! {
-        didSet {
-            if appMode == .dev {
-                MapViewController.prodLog("Data received")
-            }
+        didSet {        
             RGLocalisation.detectLocation()
         }
     }

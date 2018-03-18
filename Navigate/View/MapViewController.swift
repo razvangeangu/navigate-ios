@@ -151,6 +151,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 tileGroup = SKTileGroup.empty()
             }
         }
+        
         MapViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
@@ -202,17 +203,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
             // RGSharedDataManager.disconnect()
-            
+            RGSharedDataManager.writeToTerminal(command: RGCommands.updateServer.rawValue)
         }
     }
     
     static func devLog(data: String) {
-        let hour = Calendar.current.component(.hour, from: Date())
-        let minute = Calendar.current.component(.minute, from: Date())
-        let second = Calendar.current.component(.second, from: Date())
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSSS"
+        
         if RGSharedDataManager.appMode == .dev {
-            debugPrint("\(hour):\(minute):\(second) \(data)")
-            prodLog("\(hour):\(minute):\(second) \(data)")
+            debugPrint("\(formatter.string(from: date)) \(data)")
+            prodLog("\(formatter.string(from: date)) \(data)")
         }
     }
     

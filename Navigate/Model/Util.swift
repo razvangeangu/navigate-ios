@@ -11,13 +11,14 @@ import Foundation
 /**
  Commands available for the external bluetooth device.
  */
-enum Commands: String {
+enum RGCommands: String {
     case stopPi = "sudo shutdown now"
     case updateServer = "cd /root/navigate-server && git pull && forever restartall"
+    case restartServer = "cd /root/navigate-server && forever restartall"
 }
 
 /**
- RGColor is a enum used for tile colors.
+ An enum used for tile types.
  */
 enum RGTileType {
     case saved
@@ -26,6 +27,9 @@ enum RGTileType {
     case none
 }
 
+/**
+ An enum used to define the application mode.
+ */
 enum AppMode {
     case dev
     case prod

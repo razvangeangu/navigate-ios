@@ -62,19 +62,6 @@ class BLEService: NSObject {
      Shutdown the external device.
      */
     func stopPi() {
-        write(command: "sudo shutdown now")
-    }
-    
-    /**
-     Get the WiFi list from the external device.
-     
-     - Returns: A json object that contains a list of access points with uuid and strength.
-     */
-    func getWiFiList() -> Any? {
-        if self.json != nil {
-            return self.json
-        }
-        
-        return {}
+        write(command: RGCommands.stopPi.rawValue)
     }
 }
