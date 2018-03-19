@@ -19,6 +19,9 @@ extension RGSharedDataManager {
         // Set the room name
         room.name = name
         
+        // Set the room floor
+        room.floor = floor
+        
         // Save the context for CoreData
         PersistenceService.saveContext()
         
@@ -47,22 +50,9 @@ extension RGSharedDataManager {
     /**
      Get the rooms for the current floor.
      
-     - Returns: An array of strings that represent the information about the room.
+     - Returns: An array of strings that represent the rooms for the current floor.
      */
     static func getRooms() -> [Room]? {
-        var rooms = [Room]()
-        
-        if let tiles = RGSharedDataManager.floor.tiles {
-            for tile in tiles {
-                guard let room = (tile as! Tile).room else { continue }
-                if !rooms.contains { (r) -> Bool in
-                    return r.name == room.name
-                    } {
-                    rooms.append(room)
-                }
-            }
-        }
-        
-        return rooms
+        return floor.rooms!.allObjects as? [Room]
     }
 }

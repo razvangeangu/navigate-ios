@@ -30,6 +30,9 @@ extension RGSharedDataManager {
             // Set the room name
             room.name = selectedRoom
             
+            // Set the room floor
+            room.floor = floor
+            
             // Add tiles to the room
             room.addToTiles(tile)
             
@@ -61,12 +64,11 @@ extension RGSharedDataManager {
      */
     static func tileHasData(column: Int, row: Int) -> Bool {
         // Get all the tiles
-        for tile in RGSharedDataManager.floor.tiles! {
-            
+        for case let tile as Tile in floor.tiles! {
             // If the tile matches
-            if (tile as! Tile).row == row && (tile as! Tile).col == column {
+            if tile.row == row && tile.col == column {
                 // Check the number of APs
-                return ((tile as! Tile).accessPoints?.count)! > 0
+                return (tile.accessPoints?.count)! > 0
             }
         }
         return false
@@ -78,8 +80,7 @@ extension RGSharedDataManager {
      - Returns: A **Tile** object from the CoreData.
      */
     fileprivate static func getTile(col: Int, row: Int) -> Tile? {
-        for tile in RGSharedDataManager.floor.tiles! {
-            let tile = tile as! Tile
+        for case let tile as Tile in floor.tiles! {
             if tile.row == row && tile.col == col {
                 return tile
             }
@@ -96,9 +97,7 @@ extension RGSharedDataManager {
     static func getAdjacentTiles(column: Int, row: Int) -> [Tile] {
         var adjacentTiles = [Tile]()
         
-        for tile in RGSharedDataManager.floor.tiles! {
-            let tile = tile as! Tile
-            
+        for case let tile as Tile in floor.tiles! {
             // up
             if tile.row == row - 1 && tile.col == column {
                 adjacentTiles.append(tile)
