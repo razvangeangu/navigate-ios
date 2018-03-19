@@ -34,6 +34,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     var mapButtonsView: MapButtonsView!
     
     static var locationNode: SKSpriteNode!
+    static var backgroundNode: SKSpriteNode!
     
     static var shouldCenterMap = false
     static var shouldRotateMap = false
@@ -46,8 +47,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initModel()
         
         let oldFrame = view.frame
         view = SKView(frame: oldFrame)
@@ -62,8 +61,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 MapViewController.map.zPosition = 0
                 
                 // Move backgroundNode (image map) under the tile map
-                let backgroundNode = scene.childNode(withName: "backgroundNode")
-                backgroundNode?.zPosition = -1
+                MapViewController.backgroundNode = scene.childNode(withName: "backgroundNode") as? SKSpriteNode
+                MapViewController.backgroundNode?.zPosition = -1
                 
                 initLocationNode()
                 
@@ -89,6 +88,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         mapButtonsView.parentVC = self
         self.view.addSubview(mapButtonsView)
         
+        initModel()
+        
         addBottomSheetView()
         
         // Activate the tiles that have access points stored in core data
@@ -112,13 +113,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Connect to device that scans for Wi-Fi APs
         RGSharedDataManager.connect(to: "0x12AB")
         
+        RGSharedDataManager.numberOfRows = MapViewController.map.numberOfRows
+        RGSharedDataManager.numberOfColumns = MapViewController.map.numberOfRows
+        
+        RGSharedDataManager.floorLevel = 6
+        RGSharedDataManager.setFloor(level: 6)
+        RGSharedDataManager.mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
+        
         RGSharedDataManager.initData()
         
-        // Set the floor level
-        RGSharedDataManager.setFloor(level: 6)
-        
         // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .prod // TODO: make it able to change from the view
+        RGSharedDataManager.appMode = .dev
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -180,7 +185,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     fileprivate static func displayDevTiles(column: Int, row: Int) {
-        if RGSharedDataManager.accessPointHasData(column: column, row: row) {
+        if RGSharedDataManager.tileHasData(column: column, row: row) {
             MapViewController.setTileColor(column: column, row: row, type: .saved)
         } else {
             MapViewController.setTileColor(column: column, row: row, type: .sample)
@@ -253,15 +258,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         self.addChildViewController(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         bottomSheetVC.didMove(toParentViewController: self)
-
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
-        
-        let floors = RGSharedDataManager.getFloors()
-        bottomSheetVC.pickerData = floors
-        bottomSheetVC.pickerView.selectRow(bottomSheetVC.pickerData.index(of: RGSharedDataManager.floorLevel)!, inComponent: 0, animated: false)
-        
-        let rooms = RGSharedDataManager.getRooms()
-        bottomSheetVC.tableViewData = rooms
+        bottomSheetVC.updatePickerData()
+        bottomSheetVC.updateTableData()
     }
     
     static func centerToLocation() {
@@ -294,6 +293,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override var shouldAutorotate: Bool {
         return false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? AdminViewController {
+            destinationVC.modalPresentationStyle = .overFullScreen
+            destinationVC.parentVC = self
+        }
     }
 }
 

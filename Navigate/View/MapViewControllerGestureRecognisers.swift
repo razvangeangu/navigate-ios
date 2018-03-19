@@ -46,7 +46,7 @@ extension MapViewController {
             }
             
             // If there is no selected room
-            if RGSharedDataManager.selectedRoom.isEmpty {
+            guard let _ = RGSharedDataManager.selectedRoom else {
                 
                 // Give feedback to the admin
                 MapViewController.devLog(data: "A room needs to be selected")
@@ -67,7 +67,7 @@ extension MapViewController {
             MapViewController.devLog(data: "Touched Tile(\(column),\(row))")
         
             // If the model has not got any data for the specified location proceed
-            if !RGSharedDataManager.accessPointHasData(column: column, row: row) {
+            if !RGSharedDataManager.tileHasData(column: column, row: row) {
                 
                 // If the model has been able to save data for the specific column and row
                 if RGSharedDataManager.saveDataToTile(column: column, row: row) {

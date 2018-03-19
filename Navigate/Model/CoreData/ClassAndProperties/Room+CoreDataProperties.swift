@@ -1,5 +1,5 @@
 //
-//  AccessPoint+CoreDataProperties.swift
+//  Room+CoreDataProperties.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 19/03/2018.
@@ -11,20 +11,20 @@ import Foundation
 import CoreData
 
 
-extension AccessPoint {
+extension Room {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<AccessPoint> {
-        return NSFetchRequest<AccessPoint>(entityName: "AccessPoint")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Room> {
+        return NSFetchRequest<Room>(entityName: "Room")
     }
 
-    @NSManaged public var strength: Int64
-    @NSManaged public var uuid: String?
+    @NSManaged public var name: String?
     @NSManaged public var tiles: NSSet?
+    @NSManaged public var floor: Floor?
 
 }
 
 // MARK: Generated accessors for tiles
-extension AccessPoint {
+extension Room {
 
     @objc(addTilesObject:)
     @NSManaged public func addToTiles(_ value: Tile)

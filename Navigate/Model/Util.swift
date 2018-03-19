@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  Commands available for the external bluetooth device.

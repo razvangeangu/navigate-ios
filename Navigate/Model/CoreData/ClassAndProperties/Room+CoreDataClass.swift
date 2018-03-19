@@ -1,5 +1,5 @@
 //
-//  AccessPoint+CoreDataClass.swift
+//  Room+CoreDataClass.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 19/03/2018.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(AccessPoint)
-public class AccessPoint: NSManagedObject {
+@objc(Room)
+public class Room: NSManagedObject {
 
 }

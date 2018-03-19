@@ -10,7 +10,7 @@ import Foundation
 
 extension Tile: PathfinderDataSource {
     func walkableAdjacentTilesForTile(tile: Tile) -> [Tile] {
-        let adjacentTiles = RGSharedDataManager.getAdjacentTiles(column: Int(tile.y), row: Int(tile.x))
+        let adjacentTiles = RGSharedDataManager.getAdjacentTiles(column: Int(tile.col), row: Int(tile.row))
         return adjacentTiles.filter { _ in true }
     }
     

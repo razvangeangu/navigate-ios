@@ -52,7 +52,7 @@ extension UIColor {
     }
 }
 
-// Credits: https://medium.com/swiftly-swift/how-to-build-a-compass-app-in-swift-2b6647ae25e8 // TODO: Should this be here?
+// Credits: https://medium.com/swiftly-swift/how-to-build-a-compass-app-in-swift-2b6647ae25e8
 extension Double {
     var toRadians: Double { return self * .pi / 180 }
     var toDegrees: Double { return self * 180 / .pi }

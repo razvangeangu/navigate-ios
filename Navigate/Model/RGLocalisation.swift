@@ -62,7 +62,7 @@ class RGLocalisation: NSObject {
                                 if accessPoint.strength < currentAccessPoint.strength + 5 {
                                     
                                     // Increase the similarity value of the AP / Tile
-                                    matrix[Int(tile.x)][Int(tile.y)] += 1
+                                    matrix[Int(tile.row)][Int(tile.col)] += 1
                                 }
                             }
                         }
@@ -72,7 +72,7 @@ class RGLocalisation: NSObject {
             
             // Current location local value to find the maximum in the matrix
             var currentLocation = self.currentLocation
-            var max = -1
+            var max = 0
             
             // Loop through all the tiles
             for i in 0...RGSharedDataManager.numberOfRows - 1 {

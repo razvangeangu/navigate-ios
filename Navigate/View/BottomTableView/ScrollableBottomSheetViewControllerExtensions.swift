@@ -50,7 +50,7 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
         selectedCell.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
         
-        MapViewController.prodLog("\(RGSharedDataManager.selectedRoom) selected")
+        MapViewController.prodLog("\(RGSharedDataManager.selectedRoom ?? "N/A") selected")
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

@@ -2,7 +2,7 @@
 //  Floor+CoreDataClass.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 17/03/2018.
+//  Created by Răzvan-Gabriel Geangu on 19/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //

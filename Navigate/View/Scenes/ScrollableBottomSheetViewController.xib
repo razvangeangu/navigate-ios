@@ -17,6 +17,7 @@
                 <outlet property="headerView" destination="Jqb-lC-sL5" id="2Bt-iO-hyv"/>
                 <outlet property="pickerView" destination="eR3-Ez-Vae" id="1nn-UZ-IHj"/>
                 <outlet property="searchBar" destination="lCb-mm-wKD" id="kw1-PU-tqZ"/>
+                <outlet property="searchBarWidthConstraint" destination="stC-GH-Xew" id="WMB-0b-rJu"/>
                 <outlet property="stackView" destination="Erf-d4-QVB" id="cTQ-bW-CwH"/>
                 <outlet property="statusLabel" destination="tFQ-3b-8bG" id="Zv0-CG-qUo"/>
                 <outlet property="tableView" destination="GSW-2o-otm" id="qZN-2R-jqt"/>
@@ -58,15 +59,16 @@
                                             </constraints>
                                         </view>
                                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eR3-Ez-Vae">
-                                            <rect key="frame" x="16" y="12" width="32" height="80"/>
+                                            <rect key="frame" x="16" y="10" width="32" height="80"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="uib-5p-yx8"/>
+                                                <constraint firstAttribute="height" constant="80" id="2kg-80-eBo"/>
+                                                <constraint firstAttribute="width" constant="32" id="UGJ-3y-gpB"/>
                                             </constraints>
                                         </pickerView>
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for room" translatesAutoresizingMaskIntoConstraints="NO" id="lCb-mm-wKD">
                                             <rect key="frame" x="48" y="22" width="319" height="56"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="319" id="rpg-hs-KkC"/>
+                                                <constraint firstAttribute="width" constant="319" id="stC-GH-Xew"/>
                                             </constraints>
                                             <color key="barTintColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" smartQuotesType="no"/>
@@ -79,17 +81,16 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="pir-hd-Exb" firstAttribute="centerX" secondItem="Jqb-lC-sL5" secondAttribute="centerX" id="3Nt-2u-s40"/>
-                                        <constraint firstItem="eR3-Ez-Vae" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" constant="2" id="3f2-UN-f7j"/>
-                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" id="CnA-Nc-glU"/>
+                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" constant="48" id="AIW-JB-h3M"/>
                                         <constraint firstAttribute="bottom" secondItem="tFQ-3b-8bG" secondAttribute="bottom" constant="12" id="SkR-hy-avd"/>
                                         <constraint firstAttribute="height" constant="100" id="UmJ-Zr-fpg"/>
                                         <constraint firstItem="B7q-0T-Git" firstAttribute="centerX" secondItem="Jqb-lC-sL5" secondAttribute="centerX" id="bhR-fj-Vb1"/>
-                                        <constraint firstAttribute="trailing" secondItem="lCb-mm-wKD" secondAttribute="trailing" constant="8" id="dCK-0o-lB1"/>
-                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="leading" secondItem="eR3-Ez-Vae" secondAttribute="trailing" id="hcF-Wl-jEX"/>
+                                        <constraint firstItem="eR3-Ez-Vae" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" id="hg7-sa-WkR"/>
+                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" id="mPY-5d-pek"/>
                                         <constraint firstAttribute="bottom" secondItem="pir-hd-Exb" secondAttribute="bottom" constant="82" id="oci-P9-DSE"/>
                                         <constraint firstItem="pir-hd-Exb" firstAttribute="top" secondItem="Jqb-lC-sL5" secondAttribute="top" constant="12" id="onz-53-EKy"/>
                                         <constraint firstItem="B7q-0T-Git" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" id="qYM-Rb-wA9"/>
-                                        <constraint firstItem="eR3-Ez-Vae" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" constant="16" id="uJc-KV-C4k"/>
+                                        <constraint firstItem="eR3-Ez-Vae" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" constant="16" id="rTT-q0-SvL"/>
                                         <constraint firstItem="B7q-0T-Git" firstAttribute="top" secondItem="Jqb-lC-sL5" secondAttribute="top" constant="99" id="yLN-bQ-QLA"/>
                                     </constraints>
                                 </view>

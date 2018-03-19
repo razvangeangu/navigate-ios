@@ -18,8 +18,8 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var devSeparatorView: UIView!
-    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
     
     var isSearching = false
     
@@ -34,6 +34,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     var pickerData = [Int]() {
         didSet {
+            pickerData.sort()
             pickerView.reloadAllComponents()
         }
     }
@@ -136,6 +137,24 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     @objc func addButtonTaped(_ sender: UIButton!) {
         parent?.performSegue(withIdentifier: "roomAdmin", sender: parent)
+    }
+    
+    func updatePickerData() {
+        if let floors = RGSharedDataManager.getFloors() {
+            pickerData = floors
+            
+            if let row = pickerData.index(of: RGSharedDataManager.floorLevel) {
+                pickerView.selectRow(row, inComponent: 0, animated: false)
+            }
+        }
+    }
+    
+    func updateTableData() {
+        if let rooms = RGSharedDataManager.getRooms() {
+            tableViewData = rooms.map({ (room) -> String in
+                return room.name!
+            })
+        }
     }
 }
 
