@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import CoreLocation
 
 extension MapViewController {
     
@@ -41,6 +42,14 @@ extension MapViewController {
         
             // Only activate gesture if bottomSheetVC is closed
             if tapLocation.y > bottomSheetVC.view.frame.minY {
+                return
+            }
+            
+            // If there is no selected room
+            if RGSharedDataManager.selectedRoom.isEmpty {
+                
+                // Give feedback to the admin
+                MapViewController.devLog(data: "A room needs to be selected")
                 return
             }
         
@@ -78,6 +87,10 @@ extension MapViewController {
      - parameter pan: The pan gesture that has been recognised.
      */
     @objc func handlePan(pan: UIPanGestureRecognizer) {
+        if mapButtonsView.locationNumberOfTouches > 0 {
+            mapButtonsView.locationNumberOfTouches = -1
+            mapButtonsView.locationTaped()
+        }
         
         // Only activate gesture if bottomSheetVC is closed
         let panLocation = pan.location(in: self.view)
@@ -103,8 +116,14 @@ extension MapViewController {
                 // get the translation point
                 let transPoint = pan.translation(in: self.view)
                 
+                pan.view?.transform = CGAffineTransform(rotationAngle: (MapViewController.scene.camera?.zRotation)!)
+                MapViewController.scene.camera?.zRotation = 0
+                
+                let x = (transPoint.x * -offSet)
+                let y = (transPoint.y * offSet)
+                
                 // calculate the new position
-                let newPosition = previousLocation + CGPoint(x: transPoint.x * -offSet, y: transPoint.y * offSet)
+                let newPosition = previousLocation + CGPoint(x: x, y: y)
                 
                 // set the camera to the new position
                 MapViewController.scene.camera?.position = newPosition
@@ -191,6 +210,52 @@ extension MapViewController {
             }
         default:
             break
+        }
+    }
+    
+    @objc func handleRotation(rotate: UIRotationGestureRecognizer) {
+        switch rotate.state {
+        case .began:
+            do {
+                initialRotation = atan2(rotate.view!.transform.b, rotate.view!.transform.a)
+            }
+        case .changed:
+            do {
+                let newRotation = initialRotation + rotate.rotation
+                MapViewController.scene.camera?.zRotation = newRotation
+            }
+        default:
+            break
+        }
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        MapViewController.shouldCenterMap = false
+        
+        return true
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        let angle = CGFloat((newHeading.trueHeading - 60).toRadians)
+        let northAngle = CGFloat(newHeading.trueHeading.toRadians)
+        
+        UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            let rotation = SKAction.rotate(toAngle: -angle, duration: 0.3, shortestUnitArc: true)
+            rotation.timingMode = .linear
+            MapViewController.locationNode.run(rotation, withKey: "rotatingLocationNodeBearing")
+        }, completion: nil)
+        
+        if MapViewController.shouldRotateMap {
+            UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
+                self.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: -northAngle)
+                
+                let rotation = SKAction.rotate(toAngle: -angle, duration: 0.3, shortestUnitArc: true)
+                rotation.timingMode = .linear
+                MapViewController.scene.camera?.run(rotation, withKey: "rotatingCameraBearing")
+            }, completion: nil)
         }
     }
 }

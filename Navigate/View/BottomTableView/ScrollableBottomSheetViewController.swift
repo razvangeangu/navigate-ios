@@ -19,15 +19,22 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var devSeparatorView: UIView!
     @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var pickerView: UIPickerView!
     
     var isSearching = false
     
-    var filteredData = [String]()
-    var data = [String]() {
+    var tableViewFilteredData = [String]()
+    var tableViewData = [String]() {
         didSet {
-            if data.count > 0 {
+            if tableViewData.count > 0 {
                 tableView.reloadData()
             }
+        }
+    }
+    
+    var pickerData = [Int]() {
+        didSet {
+            pickerView.reloadAllComponents()
         }
     }
     
@@ -52,6 +59,9 @@ class ScrollableBottomSheetViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "DefaultTableViewCell", bundle: nil), forCellReuseIdentifier: "default")
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
         let panGesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
         panGesture.delegate = self
@@ -136,7 +146,7 @@ extension ScrollableBottomSheetViewController: UISearchBarDelegate {
             isSearching = false
         } else {
             isSearching = true
-            filteredData = data.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
+            tableViewFilteredData = tableViewData.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
         }
         
         tableView.reloadData()

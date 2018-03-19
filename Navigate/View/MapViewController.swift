@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import CoreLocation
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -19,6 +20,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // Vars for gesture recognisers
     var lastScale: CGFloat = 0.0
     var previousLocation = CGPoint.zero
+    var initialRotation: CGFloat = 0.0
     
     // Limits for the map
     let minWidth: CGFloat = 300
@@ -29,8 +31,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var map: SKTileMapNode!
     
     let bottomSheetVC = ScrollableBottomSheetViewController()
+    var mapButtonsView: MapButtonsView!
     
     static var locationNode: SKSpriteNode!
+    
+    static var shouldCenterMap = false
+    static var shouldRotateMap = false
+    
+    let locationManager: CLLocationManager = {
+        $0.requestWhenInUseAuthorization()
+        $0.startUpdatingHeading()
+        return $0
+    }(CLLocationManager())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +65,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 let backgroundNode = scene.childNode(withName: "backgroundNode")
                 backgroundNode?.zPosition = -1
                 
-                MapViewController.locationNode = scene.childNode(withName: "locationNode") as? SKSpriteNode
+                initLocationNode()
                 
                 // Set the scale mode to scale to fit the window
                 MapViewController.scene.scaleMode = .aspectFill
@@ -72,19 +84,25 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
-        let mapButtons = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 81))
-        mapButtons.backgroundColor = .clear
-        mapButtons.parentVC = self
-        self.view.addSubview(mapButtons)
+        mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
+        mapButtonsView.backgroundColor = .clear
+        mapButtonsView.parentVC = self
+        self.view.addSubview(mapButtonsView)
         
         addBottomSheetView()
         
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
+        
+        locationManager.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    fileprivate func initLocationNode() {
+        MapViewController.locationNode = MapViewController.scene.childNode(withName: "locationNode") as? SKSpriteNode
     }
     
     /**
@@ -94,11 +112,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Connect to device that scans for Wi-Fi APs
         RGSharedDataManager.connect(to: "0x12AB")
         
+        RGSharedDataManager.initData()
+        
         // Set the floor level
         RGSharedDataManager.setFloor(level: 6)
         
         // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .dev // TODO: make it able to change from the view
+        RGSharedDataManager.appMode = .prod // TODO: make it able to change from the view
     }
     
     fileprivate func addGesturesRecognisers() {
@@ -118,6 +138,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         tapGesture.numberOfTouchesRequired = 1
         view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
+        
+//        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(MapViewController.handleRotation))
+//        view.addGestureRecognizer(rotationGesture)
+//        rotationGesture.delegate = self
     }
     
     /**
@@ -195,6 +219,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Run the animation
         locationNode.run(move, withKey: "moving")
+        
+        if shouldCenterMap {
+            centerToLocation()
+        }
     }
     
     /**
@@ -202,8 +230,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            // RGSharedDataManager.disconnect()
-            RGSharedDataManager.writeToTerminal(command: RGCommands.updateServer.rawValue)
+            RGSharedDataManager.disconnect()
         }
     }
     
@@ -229,8 +256,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
 
         bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
         
+        let floors = RGSharedDataManager.getFloors()
+        bottomSheetVC.pickerData = floors
+        bottomSheetVC.pickerView.selectRow(bottomSheetVC.pickerData.index(of: RGSharedDataManager.floorLevel)!, inComponent: 0, animated: false)
+        
         let rooms = RGSharedDataManager.getRooms()
-        bottomSheetVC.data = rooms
+        bottomSheetVC.tableViewData = rooms
     }
     
     static func centerToLocation() {
@@ -250,8 +281,19 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         MapViewController.scene.camera?.run(move, withKey: "localising")
     }
     
+    static func resetCameraRotation() {
+        MapViewController.shouldRotateMap = false
+        let rotation = SKAction.rotate(toAngle: 0, duration: 0.3, shortestUnitArc: true)
+        rotation.timingMode = .linear
+        MapViewController.scene.camera?.run(rotation, withKey: "moving")
+    }
+    
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
     }
 }
 

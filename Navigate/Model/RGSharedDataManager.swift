@@ -33,10 +33,6 @@ class RGSharedDataManager: NSObject {
         }
     }
     
-    override init() {
-        super.init()
-    }
-    
     /**
      Write a command to the terminal of the external device.
      
@@ -105,7 +101,7 @@ class RGSharedDataManager: NSObject {
                 }
             }
         } catch {
-            MapViewController.devLog(data: "Error in Floor fetchRequest")
+            debugPrint("Error in Floor fetchRequest")
         }
         
         return nil
@@ -153,12 +149,7 @@ class RGSharedDataManager: NSObject {
     static func saveDataToTile(column: Int, row: Int) -> Bool {
         guard let accessPoints = getAccessPoints() else { return false }
         
-        // Create a new tile
-        let tile = Tile(context: PersistenceService.context)
-        
-        // Set the location for the tile
-        tile.x = Int16(row)
-        tile.y = Int16(column)
+        guard let tile = getTile(col: column, row: row) else { return false }
         
         // Add the room to the tile
         tile.room = selectedRoom
@@ -196,7 +187,7 @@ class RGSharedDataManager: NSObject {
         for tile in RGSharedDataManager.floor.tiles! {
             
             // If the tile matches
-            if (tile as! Tile).x == Int16(row) && (tile as! Tile).y == Int16(column) {
+            if (tile as! Tile).x == row && (tile as! Tile).y == column {
                 // Check the number of APs
                 return ((tile as! Tile).accessPoints?.count)! > 0
             }
@@ -219,5 +210,103 @@ class RGSharedDataManager: NSObject {
         }
         
         return rooms
+    }
+    
+    /**
+     Get a tile at a specific location from the current floor.
+     
+     - Returns: A **Tile** object from the CoreData.
+     */
+    fileprivate static func getTile(col: Int, row: Int) -> Tile? {
+        for tile in RGSharedDataManager.floor.tiles! {
+            let tile = tile as! Tile
+            if tile.x == row && tile.y == col {
+                return tile
+            }
+        }
+        
+        return nil
+    }
+    
+    /**
+     Get adjacent tiles for a specific location from the current floor.
+     
+     - Returns: An array of tiles from the CoreData.
+     */
+    static func getAdjacentTiles(column: Int, row: Int) -> [Tile] {
+        var adjacentTiles = [Tile]()
+        
+        for tile in RGSharedDataManager.floor.tiles! {
+            let tile = tile as! Tile
+            
+            // up
+            if tile.x == row - 1 && tile.y == column {
+                adjacentTiles.append(tile)
+                continue
+            }
+            
+            // right
+            if tile.x == row && tile.y == column + 1 {
+                adjacentTiles.append(tile)
+                continue
+            }
+            
+            // down
+            if tile.x == row + 1 && tile.y == column {
+                adjacentTiles.append(tile)
+                continue
+            }
+            
+            // left
+            if tile.x == row && tile.y == column - 1 {
+                adjacentTiles.append(tile)
+                continue
+            }
+        }
+        
+        return adjacentTiles
+    }
+    
+    static func initData() {
+        do {
+            let numberOfFloors = try PersistenceService.context.count(for: NSFetchRequest(entityName: "Floor"))
+            if numberOfFloors == 0 {
+                
+                // Create a new floor
+                setFloor(level: floorLevel)
+                
+                for i in 0...numberOfRows - 1 {
+                    for j in 0...numberOfColumns - 1 {
+                        // Create a new tile
+                        let tile = Tile(context: PersistenceService.context)
+                        
+                        // Set the location for the tile
+                        tile.x = Int16(i)
+                        tile.y = Int16(j)
+                    }
+                }
+            } else {
+                debugPrint("Data already created")
+            }
+        } catch {
+            debugPrint("Error in Floor Count fetchRequest")
+        }
+    }
+    
+    static func getFloors() -> [Int] {
+        var floorsToReturn = [Int]()
+        
+        let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
+        do {
+            // Get all the floors from CoreData
+            let floors = try PersistenceService.context.fetch(fetchRequest)
+            for floor in floors {
+                floorsToReturn.append(Int(floor.level))
+            }
+        } catch {
+            debugPrint("Error in Floor fetchRequest")
+        }
+        
+        return floorsToReturn
     }
 }

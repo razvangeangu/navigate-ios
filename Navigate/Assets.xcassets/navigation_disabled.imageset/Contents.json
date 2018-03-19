@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "navigation.png",
+      "filename" : "navigation_disabled.png",
       "scale" : "1x"
     },
     {

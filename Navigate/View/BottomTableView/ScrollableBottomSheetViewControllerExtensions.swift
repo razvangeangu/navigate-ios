@@ -2,9 +2,6 @@
 //  ScrollableBottomSheetViewControllerExtensions.swift
 //  Navigate
 //
-//  Created by Ahmed Elassuty on 10/15/16.
-//  https://github.com/AhmedElassuty/BottomSheetController
-//
 //  Modified by Răzvan-Gabriel Geangu on 16/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
@@ -19,9 +16,9 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
-            return filteredData.count
+            return tableViewFilteredData.count
         }
-        return data.count
+        return tableViewData.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -30,23 +27,35 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default")!
+        cell.selectionStyle = .default
         
         if isSearching {
-            cell.textLabel?.text = filteredData[indexPath.row]
+            cell.textLabel?.text = tableViewFilteredData[indexPath.row]
         } else {
-            cell.textLabel?.text = data[indexPath.row]
+            cell.textLabel?.text = tableViewData[indexPath.row]
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)!
+
         if isSearching {
-            RGSharedDataManager.selectedRoom = filteredData[indexPath.row]
+            RGSharedDataManager.selectedRoom = tableViewFilteredData[indexPath.row]
         } else {
-            RGSharedDataManager.selectedRoom = data[indexPath.row]
+            RGSharedDataManager.selectedRoom = tableViewData[indexPath.row]
         }
+        
+        selectedCell.accessoryType = .checkmark
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         MapViewController.prodLog("\(RGSharedDataManager.selectedRoom) selected")
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let deselectedCell = tableView.cellForRow(at: indexPath)!
+        deselectedCell.contentView.backgroundColor = .clear
     }
 }
 
@@ -66,6 +75,7 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
         return false
     }
     
+    // https://github.com/AhmedElassuty/BottomSheetController
     @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         let velocity = recognizer.velocity(in: self.view)
@@ -83,7 +93,7 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
             
             duration = duration > 1.3 ? 1 : duration
             
-            UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
+            UIView.animate(withDuration: duration, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
                     self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
                 } else {
@@ -98,5 +108,38 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
                 }
             })
         }
+    }
+}
+
+extension ScrollableBottomSheetViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        pickerView.subviews.forEach({ $0.isHidden = $0.frame.height < 1.0 })
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(pickerData[row])"
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if RGSharedDataManager.floorLevel != pickerData[row] {
+           RGSharedDataManager.floorLevel = pickerData[row]
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var labelToReturn: UILabel!
+        
+        if let view = view as? UILabel { labelToReturn = view } else { labelToReturn = UILabel() }
+
+        labelToReturn.text = "\(pickerData[row])"
+        labelToReturn.textColor = .gray
+        labelToReturn.textAlignment = .center
+        
+        return labelToReturn
     }
 }
