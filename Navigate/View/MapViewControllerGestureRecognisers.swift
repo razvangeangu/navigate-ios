@@ -239,15 +239,20 @@ extension MapViewController {
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        let angle = CGFloat((newHeading.trueHeading - 60).toRadians)
-        let northAngle = CGFloat(newHeading.trueHeading.toRadians)
+        // Get the angle of Bush House relative to magnetic north
+        let angle = CGFloat((newHeading.magneticHeading - 60).toRadians)
         
+        // Get the heading for North
+        let northAngle = CGFloat(newHeading.magneticHeading.toRadians)
+        
+        // Animate the location node
         UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
             let rotation = SKAction.rotate(toAngle: -angle, duration: 0.3, shortestUnitArc: true)
             rotation.timingMode = .linear
             MapViewController.locationNode.run(rotation, withKey: "rotatingLocationNodeBearing")
         }, completion: nil)
         
+        // Animate the camera node
         if MapViewController.shouldRotateMap {
             UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
                 self.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: -northAngle)

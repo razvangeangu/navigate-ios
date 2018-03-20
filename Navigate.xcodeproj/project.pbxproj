@@ -49,6 +49,7 @@
 		18DCD75A20606A220003644D /* RGSharedDataManagerRoomsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */; };
 		18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */; };
 		18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */; };
+		18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD76020607CAA0003644D /* RGBackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerRoomsExtension.swift; sourceTree = "<group>"; };
 		18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerFloorExtension.swift; sourceTree = "<group>"; };
 		18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerBLEExtension.swift; sourceTree = "<group>"; };
+		18DCD76020607CAA0003644D /* RGBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +189,8 @@
 		182518FB1FAF454A0005F5F6 /* Navigate */ = {
 			isa = PBXGroup;
 			children = (
-				1816BE3B205EE7300057957F /* ApplicationDelegate */,
 				182519301FAF45750005F5F6 /* Navigate.entitlements */,
+				1816BE3B205EE7300057957F /* ApplicationDelegate */,
 				1825192C1FAF45650005F5F6 /* Model */,
 				185936721FBD9DA60016BF66 /* View */,
 				182518FE1FAF454A0005F5F6 /* art.scnassets */,
@@ -311,6 +313,7 @@
 				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
 				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
 				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
+				18DCD76020607CAA0003644D /* RGBackButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				18DCD750206068A60003644D /* AccessPoint+CoreDataClass.swift in Sources */,
 				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
+				18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */,
 				18DCD754206068A70003644D /* Room+CoreDataClass.swift in Sources */,
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
 				18D57725205C028C001C4B1C /* DefaultTableViewCell.swift in Sources */,

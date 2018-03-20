@@ -10,6 +10,7 @@ import CoreData
 
 class RGSharedDataManager: NSObject {
     
+    // App mode
     static var appMode: AppMode = .prod
     
     // Room information
@@ -38,9 +39,15 @@ class RGSharedDataManager: NSObject {
         }
     }
     
+    /**
+     Init data for when the application is open for the first time
+     */
     static func initData() {
         do {
+            // Get number of floors from CoreData
             let numberOfFloors = try PersistenceService.context.count(for: NSFetchRequest(entityName: "Floor"))
+            
+            // If there are no floors, create the initial one
             if numberOfFloors == 0 {
                 
                 // Create a new floor

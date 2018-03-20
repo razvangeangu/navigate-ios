@@ -61,20 +61,22 @@ extension RGSharedDataManager {
         return nil
     }
     
-    static func getFloors() -> [Int]? {
-        var floorsToReturn = [Int]()
+    /**
+     A method that gets all the floors from CoreData.
+     
+     - Returns: An array of **Floor** objects.
+    */
+    static func getFloors() -> [Floor]? {
+        var floors = [Floor]()
         
         let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
         do {
             // Get all the floors from CoreData
-            let floors = try PersistenceService.context.fetch(fetchRequest)
-            for floor in floors {
-                floorsToReturn.append(Int(floor.level))
-            }
+            floors = try PersistenceService.context.fetch(fetchRequest) as [Floor]
         } catch {
             debugPrint("Error in Floor fetchRequest")
         }
         
-        return floorsToReturn
+        return floors
     }
 }

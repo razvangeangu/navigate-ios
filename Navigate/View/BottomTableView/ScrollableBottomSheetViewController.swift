@@ -141,7 +141,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     func updatePickerData() {
         if let floors = RGSharedDataManager.getFloors() {
-            pickerData = floors
+            pickerData = floors.map({ Int($0.level) })
             
             if let row = pickerData.index(of: RGSharedDataManager.floorLevel) {
                 pickerView.selectRow(row, inComponent: 0, animated: false)

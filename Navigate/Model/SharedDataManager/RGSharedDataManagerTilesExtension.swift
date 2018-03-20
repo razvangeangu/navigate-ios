@@ -16,12 +16,15 @@ extension RGSharedDataManager {
      - Returns: **true** if the data has been saved successfuly or **false** if could not find APs.
      */
     static func saveDataToTile(column: Int, row: Int) -> Bool {
+        
+        // Get the APs from the BLE service
         guard let accessPoints = getAccessPoints() else { return false }
         
+        // Get the tile from CoreData
         guard let tile = getTile(col: column, row: row) else { return false }
         
         // Add the room to the tile
-        if let tileRoom = getRoom(name: selectedRoom!) {
+        if let tileRoom = getRoom(name: selectedRoom!, floor: self.floor) {
             tile.room = tileRoom
         } else {
             // Create new room
@@ -80,8 +83,11 @@ extension RGSharedDataManager {
      - Returns: A **Tile** object from the CoreData.
      */
     fileprivate static func getTile(col: Int, row: Int) -> Tile? {
+        // Get all the tiles
         for case let tile as Tile in floor.tiles! {
+            // If the tile mathces
             if tile.row == row && tile.col == col {
+                // Return the tile
                 return tile
             }
         }
@@ -97,26 +103,27 @@ extension RGSharedDataManager {
     static func getAdjacentTiles(column: Int, row: Int) -> [Tile] {
         var adjacentTiles = [Tile]()
         
+        // Get all the tiles
         for case let tile as Tile in floor.tiles! {
-            // up
+            // Up
             if tile.row == row - 1 && tile.col == column {
                 adjacentTiles.append(tile)
                 continue
             }
             
-            // right
+            // Right
             if tile.row == row && tile.col == column + 1 {
                 adjacentTiles.append(tile)
                 continue
             }
             
-            // down
+            // Down
             if tile.row == row + 1 && tile.col == column {
                 adjacentTiles.append(tile)
                 continue
             }
             
-            // left
+            // Left
             if tile.row == row && tile.col == column - 1 {
                 adjacentTiles.append(tile)
                 continue

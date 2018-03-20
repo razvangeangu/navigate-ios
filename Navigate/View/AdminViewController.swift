@@ -10,6 +10,7 @@ import UIKit
 
 class AdminViewController: UIViewController {
     
+    // UI Components Outlets
     @IBOutlet weak var floorLevelTextField: UITextField!
     @IBOutlet weak var roomNameTextField: UITextField!
     @IBOutlet weak var addFloorButton: UIButton!
@@ -18,73 +19,79 @@ class AdminViewController: UIViewController {
     @IBOutlet weak var floorMapImageView: UIImageView!
     @IBOutlet weak var selectedFloorLabel: UILabel!
     
-    var backButton: UIButton!
+    // Image Picker Controller
     let imagePicker = UIImagePickerController()
+    
+    // Boolean to check if image has been picked
     var imagePicked = false
     
+    // Parent View Controller
     var parentVC: MapViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set style
+        initBlurredBackground()
         initBackButton()
         
+        // Set delegates
         setDelegates()
         
+        // Display data for the label
         if let selectedFloor = RGSharedDataManager.floorLevel {
             selectedFloorLabel.text = "Selected floor: \(selectedFloor)"
         }
-        
-        initBlurredBackground()
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // Close keyboard if touches the view
+        view.endEditing(true)
+    }
+    
+    /**
+     Initialise the background with blur efect style.
+     */
     fileprivate func initBlurredBackground() {
         view.backgroundColor = .clear
-        
+
         let blurredView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurredView.frame = view.bounds
         blurredView.isUserInteractionEnabled = true
         view.insertSubview(blurredView, at: 0)
     }
     
+    /**
+     Set the delegates for this class.
+    */
     fileprivate func setDelegates() {
         imagePicker.delegate = self
     }
     
+    /**
+     Initiliases the back button and adds it to the view.
+    */
     fileprivate func initBackButton() {
-        let shadowView = UIView(frame: CGRect(x: view.frame.minX + 20, y: view.frame.minY + 40, width: 40, height: 40))
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOffset = CGSize(width: 0.5, height: 2)
-        shadowView.layer.shadowOpacity = 0.2
-        shadowView.layer.shadowRadius = 5.0
-        
-        let baseView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        baseView.layer.cornerRadius = 20
-        baseView.layer.masksToBounds = true
-        shadowView.addSubview(baseView)
-
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        blur.frame = baseView.bounds
-        blur.isUserInteractionEnabled = false
-        baseView.insertSubview(blur, at: 0)
-
-        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        backButton.setTitle("X", for: .normal)
-        backButton.titleLabel?.font = backButton.titleLabel?.font.withSize(18)
+        let backButton = RGBackButton(frame: CGRect(x: view.frame.minX + 20, y: view.frame.minY + 40, width: 40, height: 40))
         backButton.addTarget(self, action: #selector(AdminViewController.didPressBackButton), for: .touchUpInside)
-        baseView.addSubview(backButton)
-        
-        view.addSubview(shadowView)
+        view.addSubview(backButton)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
+    /**
+     Dismisses the view controller with animation.
+    */
     @objc func didPressBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+     Creates a new floor and adds it to CoreData.
+     
+     The floor text field must not be empty.
+     Data in the picker view will be updated and textfield cleared if successful.
+     It displays alerts for all cases.
+     */
     @IBAction func didPressAddFloor(_ sender: Any) {
         if let floorLevelText = floorLevelTextField.text {
             if let floorLevel = Int(floorLevelText) {
@@ -107,11 +114,18 @@ class AdminViewController: UIViewController {
         }
     }
     
+    /**
+     Creates a new room and adds it to CoreData.
+     
+     The room text field must not be empty and a floor should be selected in the map view.
+     Data in the table view will be updated and textfield cleared if successful.
+     It displays alerts for all cases.
+     */
     @IBAction func didPressAddRoom(_ sender: Any) {
         if let roomName = roomNameTextField.text {
             if !roomName.isEmpty {
                 if let _ = RGSharedDataManager.floor {
-                    if let _ = RGSharedDataManager.getRoom(name: roomName) {
+                    if let _ = RGSharedDataManager.getRoom(name: roomName, floor: RGSharedDataManager.floor) {
                         presentAlert(title: "Error", message: "Room name already exists.", completion: nil)
                     } else {
                         if RGSharedDataManager.addRoom(name: roomName) {
@@ -131,27 +145,32 @@ class AdminViewController: UIViewController {
         }
     }
     
+    /**
+     Shows image picker to select image for the floor map.
+     */
     @IBAction func didPressLoadFloorMap(_ sender: Any) {
         imagePicker.sourceType = .photoLibrary
-        
         self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    fileprivate func presentAlert(title: String, message: String, completion: (() -> Void)?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: completion)
     }
 }
 
 extension AdminViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        // If selected image
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            // Set the style
             floorMapImageView.contentMode = .scaleAspectFit
+            
+            // Set the image
             floorMapImageView.image = pickedImage
+            
+            // Announce controllers
             imagePicked = true
         }
         
+        // Dismiss the image picker controller
         dismiss(animated: true, completion: nil)
     }
 }

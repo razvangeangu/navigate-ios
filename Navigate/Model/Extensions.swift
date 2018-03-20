@@ -62,3 +62,11 @@ extension CGFloat {
     var toRadians: CGFloat { return self * .pi / 180 }
     var toDegrees: CGFloat { return self * 180 / .pi }
 }
+
+extension UIViewController {
+    func presentAlert(title: String, message: String, completion: (() -> Void)?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: completion)
+    }
+}

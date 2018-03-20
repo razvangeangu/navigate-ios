@@ -14,8 +14,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
-    var backButton: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,26 +82,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
 }
 
 extension ARViewController {
-    func initBackButton() {
-        let baseView = UIView(frame: CGRect(x: view.frame.minX + 20, y: view.frame.minY + 40, width: 40, height: 40))
-        baseView.layer.cornerRadius = 20
-        baseView.layer.masksToBounds = true
-        
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blur.frame = baseView.bounds
-        blur.isUserInteractionEnabled = false
-        baseView.insertSubview(blur, at: 0)
-        
-        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        backButton.setTitle("X", for: .normal)
-        backButton.titleLabel?.font = backButton.titleLabel?.font.withSize(18)
-        backButton.addTarget(self, action: #selector(ARViewController.backButtonTaped), for: .touchUpInside)
-        baseView.addSubview(backButton)
-        
-        view.addSubview(baseView)
+    fileprivate func initBackButton() {
+        let backButton = RGBackButton(frame: CGRect(x: view.frame.minX + 20, y: view.frame.minY + 40, width: 40, height: 40))
+        backButton.addTarget(self, action: #selector(ARViewController.didPressBackButton), for: .touchUpInside)
+        view.addSubview(backButton)
     }
     
-    @objc func backButtonTaped(_ sender: UIButton!) {
+    @objc func didPressBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 }

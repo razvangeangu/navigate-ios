@@ -12,6 +12,7 @@ import CoreLocation
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    // A container view for visual effects
     @IBOutlet weak var containerView: UIView!
     
     // The scene that holds the map nodes
@@ -28,14 +29,22 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     let maxWidth: CGFloat = 1400
     let maxHeight: CGFloat = 4000
     
+    // Map node
     static var map: SKTileMapNode!
     
+    // The bottom view controller
     let bottomSheetVC = ScrollableBottomSheetViewController()
+    
+    // Map control buttons
     var mapButtonsView: MapButtonsView!
     
+    // The current location node
     static var locationNode: SKSpriteNode!
+    
+    // The background node
     static var backgroundNode: SKSpriteNode!
     
+    // Booleans for the visuals controlled by the map buttons
     static var shouldCenterMap = false
     static var shouldRotateMap = false
     
@@ -64,7 +73,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 MapViewController.backgroundNode = scene.childNode(withName: "backgroundNode") as? SKSpriteNode
                 MapViewController.backgroundNode?.zPosition = -1
                 
-                initLocationNode()
+                // Init the location node
+                MapViewController.locationNode = scene.childNode(withName: "locationNode") as? SKSpriteNode
                 
                 // Set the scale mode to scale to fit the window
                 MapViewController.scene.scaleMode = .aspectFill
@@ -83,18 +93,19 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
-        mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
-        mapButtonsView.backgroundColor = .clear
-        mapButtonsView.parentVC = self
-        self.view.addSubview(mapButtonsView)
-        
+        // Init the core model
         initModel()
         
+        // Add the map control buttons
+        addMapButtonsView()
+        
+        // Add the bottom view
         addBottomSheetView()
         
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
         
+        // Set the delegate for location manager to self for the bearing data
         locationManager.delegate = self
     }
     
@@ -102,8 +113,25 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidAppear(animated)
     }
     
-    fileprivate func initLocationNode() {
-        MapViewController.locationNode = MapViewController.scene.childNode(withName: "locationNode") as? SKSpriteNode
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            RGSharedDataManager.disconnect()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? AdminViewController {
+            destinationVC.modalPresentationStyle = .overFullScreen
+            destinationVC.parentVC = self
+        }
     }
     
     /**
@@ -113,40 +141,65 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Connect to device that scans for Wi-Fi APs
         RGSharedDataManager.connect(to: "0x12AB")
         
+        // Set the number of rows and columns for the map logic
         RGSharedDataManager.numberOfRows = MapViewController.map.numberOfRows
         RGSharedDataManager.numberOfColumns = MapViewController.map.numberOfRows
         
+        // Set the floor level to 6
         RGSharedDataManager.floorLevel = 6
         RGSharedDataManager.setFloor(level: 6)
         RGSharedDataManager.mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
         
+        // Initiliase data model in CoreData
         RGSharedDataManager.initData()
         
         // Set the app mode to dev to display log
         RGSharedDataManager.appMode = .dev
     }
     
+    /**
+     Add gesture recognisers to the scene.
+    */
     fileprivate func addGesturesRecognisers() {
         // Add pinch gesture for zoom
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.handlePinch))
-        view.addGestureRecognizer(pinchGesture)
         pinchGesture.delegate = self
+        view.addGestureRecognizer(pinchGesture)
         
         // Add pan gesture for movement
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.handlePan))
-        view.addGestureRecognizer(panGesture)
         panGesture.delegate = self
+        view.addGestureRecognizer(panGesture)
         
         // Add tap gesture for dev/client
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MapViewController.handleTapFrom))
         tapGesture.numberOfTapsRequired = 2
         tapGesture.numberOfTouchesRequired = 1
-        view.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
-        
-//        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(MapViewController.handleRotation))
-//        view.addGestureRecognizer(rotationGesture)
-//        rotationGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    /**
+     Initialises the bottom view and adds it to the view.
+    */
+    fileprivate func addBottomSheetView() {
+        self.addChildViewController(bottomSheetVC)
+        self.view.addSubview(bottomSheetVC.view)
+        bottomSheetVC.didMove(toParentViewController: self)
+        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
+        bottomSheetVC.updatePickerData()
+        bottomSheetVC.updateTableData()
+    }
+    
+    /**
+     Initialises the control buttons for the map and adds it to the view.
+    */
+    fileprivate func addMapButtonsView() {
+        // Add the control buttons
+        mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
+        mapButtonsView.backgroundColor = .clear
+        mapButtonsView.parentVC = self
+        self.view.addSubview(mapButtonsView)
     }
     
     /**
@@ -184,6 +237,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         MapViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
+    /**
+     Display tiles for the developer.
+    */
     fileprivate static func displayDevTiles(column: Int, row: Int) {
         if RGSharedDataManager.tileHasData(column: column, row: row) {
             MapViewController.setTileColor(column: column, row: row, type: .saved)
@@ -193,20 +249,23 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /**
-     Display blue tile if it contains data.
+     Reset all tiles to their color
      */
     static func resetTiles() {
         for row in 0...MapViewController.map.numberOfRows {
             for column in 0...MapViewController.map.numberOfColumns {
                 if RGSharedDataManager.appMode == .dev {
                     displayDevTiles(column: column, row: row)
-                } else if RGSharedDataManager.appMode == .prod {
-                    
                 }
             }
         }
     }
     
+    /**
+     A method that shows a node on the map that represents the location of the device.
+     
+     - parameter currentLocation: A pair that represents the row and column of the position.
+    */
     static func showCurrentLocation(_ currentLocation: (Int, Int)) {
         // If the locationNode is hidden, change alpha to 1 to display it
         if locationNode.alpha < 1 {
@@ -225,49 +284,47 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Run the animation
         locationNode.run(move, withKey: "moving")
         
+        // Center the map if option is activated
         if shouldCenterMap {
             centerToLocation()
         }
     }
     
     /**
-     Disconnect the bluetooth device and stop it on shaking device.
-     */
-    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
-            RGSharedDataManager.disconnect()
-        }
-    }
-    
+     A method that displays development logs to the view and console.
+     
+     - parameter data: String containing data to be displayed.
+    */
     static func devLog(data: String) {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss.SSSS"
-        
         if RGSharedDataManager.appMode == .dev {
+            let date = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm:ss.SSSS"
+            
             debugPrint("\(formatter.string(from: date)) \(data)")
             prodLog("\(formatter.string(from: date)) \(data)")
         }
     }
     
+    /**
+     Displays as a status label the current log for production mode.
+     
+     - parameter data: String containing data to be displayed.
+    */
     static func prodLog(_ data: String) {
         ScrollableBottomSheetViewController.status = data
     }
     
-    fileprivate func addBottomSheetView() {
-        self.addChildViewController(bottomSheetVC)
-        self.view.addSubview(bottomSheetVC.view)
-        bottomSheetVC.didMove(toParentViewController: self)
-        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
-        bottomSheetVC.updatePickerData()
-        bottomSheetVC.updateTableData()
-    }
-    
+    /**
+     Centers the camera view to the current location of the device.
+    */
     static func centerToLocation() {
         let tileLocation = RGLocalisation.currentLocation
         
+        // If no location was found stop
         if tileLocation == (-1, -1) { return }
         
+        // Get the new position of the camera node for the current location
         let newPosition = map.centerOfTile(atColumn: tileLocation.1, row: tileLocation.0)
         
         // Animate moving from the last location to the new position in the number of seconds
@@ -280,26 +337,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         MapViewController.scene.camera?.run(move, withKey: "localising")
     }
     
+    /**
+     Resets the camera rotation to initial angle (0) and stops the *shouldRotate* event.
+     */
     static func resetCameraRotation() {
         MapViewController.shouldRotateMap = false
         let rotation = SKAction.rotate(toAngle: 0, duration: 0.3, shortestUnitArc: true)
         rotation.timingMode = .linear
         MapViewController.scene.camera?.run(rotation, withKey: "moving")
-    }
-    
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
-    }
-    
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? AdminViewController {
-            destinationVC.modalPresentationStyle = .overFullScreen
-            destinationVC.parentVC = self
-        }
     }
 }
 
