@@ -307,16 +307,17 @@
 			path = Localisation;
 			sourceTree = "<group>";
 		};
-		183346722061FBA3001EA340 /* MapViews */ = {
+		183346722061FBA3001EA340 /* MainViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				18DFE2232062EAE700B42175 /* AdminViewController */,
+				18D5771E205C0211001C4B1C /* BottomTableView */,
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
 				1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */,
 				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
 				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
-				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
 			);
-			path = MapViews;
+			path = MainViewControllers;
 			sourceTree = "<group>";
 		};
 		183346732061FBB6001EA340 /* Util */ = {
@@ -341,8 +342,7 @@
 				183346732061FBB6001EA340 /* Util */,
 				18309F6420291F43009F5CDD /* Scenes */,
 				18363B6D205C37C900FC17F4 /* AR */,
-				18D5771E205C0211001C4B1C /* BottomTableView */,
-				183346722061FBA3001EA340 /* MapViews */,
+				183346722061FBA3001EA340 /* MainViewControllers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -367,6 +367,14 @@
 				18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */,
 			);
 			path = SharedDataManager;
+			sourceTree = "<group>";
+		};
+		18DFE2232062EAE700B42175 /* AdminViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
+			);
+			path = AdminViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
