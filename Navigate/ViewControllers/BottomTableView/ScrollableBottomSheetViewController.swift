@@ -10,6 +10,7 @@ import UIKit
 
 class ScrollableBottomSheetViewController: UIViewController {
     
+    // UI components as outlets
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,167 +21,179 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var devSeparatorView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
+
+    // Tells if user is using the search bar to filter/search for data.
+    internal var isSearching = false
     
-    var isSearching = false
-    
-    var tableViewFilteredData = [String]()
-    var tableViewData = [String]() {
+    // The data for the table view
+    internal var tableViewFilteredData = [String]() {
         didSet {
-            if tableViewData.count > 0 {
-                tableView.reloadData()
-            }
+            tableView.reloadData()
         }
     }
+    internal var tableViewData = [String]() {
+        // Reload the data of the view when set
+        didSet {
+            searchBar(searchBar, textDidChange: searchBar.text ?? "")
+            tableView.reloadSections([0], with: .fade)
+        }
+    }
+    internal var indexPathForSelectedRow: IndexPath?
     
-    var pickerData = [Int]() {
+    // The data for the picker view
+    internal var pickerData = [Int]() {
         didSet {
             pickerData.sort()
             pickerView.reloadAllComponents()
         }
     }
     
+    // The status that displays the log for dev and prod
     static var status: String = "" {
+        // Reload the view when the status is changed
         didSet {
             staticSelf.statusLabel.text = status
         }
     }
     
-    static var staticSelf: ScrollableBottomSheetViewController!
+    // Static self used to update UI
+    internal static var staticSelf: ScrollableBottomSheetViewController!
     
-    let fullView: CGFloat = 200
-    var partialView: CGFloat {
+    // Used for the scrollable view
+    internal let fullView: CGFloat = 200
+    internal var partialView: CGFloat {
         return UIScreen.main.bounds.height - 100
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set the delegate for the search bar
         searchBar.delegate = self
         
+        // Initialise and set the delegate for the table view
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsMultipleSelection = false
         tableView.register(UINib(nibName: "DefaultTableViewCell", bundle: nil), forCellReuseIdentifier: "default")
         
+        // Initialise and set the delegate for the picker view
         pickerView.delegate = self
         pickerView.dataSource = self
         
+        // Add pan gesture for for the scrollable view
         let panGesture = UIPanGestureRecognizer.init(target: self, action: #selector(ScrollableBottomSheetViewController.panGesture))
         panGesture.delegate = self
         view.addGestureRecognizer(panGesture)
         
+        // Initialise the static self
         ScrollableBottomSheetViewController.staticSelf = self
         
-        tableView.delaysContentTouches = false
-        
+        // Prepare the view
         prepareBackgroundView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Animate the view from the bottom
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             let frame = self?.view.frame
             let yComponent = self?.partialView
             self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height - 100)
-            })
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        })
     }
     
-    func prepareBackgroundView(){
-        view.backgroundColor = .clear
-        tableView.backgroundColor = .clear
-        headerView.backgroundColor = .clear
-        baseView.backgroundColor = .clear
-        
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0.5, height: 4)
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowRadius = 5.0
-        
-        baseView.frame = view.bounds
-        baseView.layer.cornerRadius = 10
-        baseView.layer.masksToBounds = true
-        
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blur.frame = baseView.bounds
-        blur.isUserInteractionEnabled = false
-        baseView.insertSubview(blur, at: 0)
-        
-        dragIndicatorView.layer.cornerRadius = 3
-        dragIndicatorView.layer.masksToBounds = true
-        
-        statusLabel.textColor = UIColor.gray
-        statusLabel.text = "Status"
-        
+    /**
+     Adds the dev button **+** that performs segue to the control panel for the floor and rooms.
+     Only executes if app mode is in dev.
+    */
+    fileprivate func addDevButton() {
         if RGSharedDataManager.appMode == .dev {
+            
             // add room button
             let addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
             addButton.setTitle("+", for: .normal)
             addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
             addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
-            
             addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchUpInside)
             
+            // Add it to the header view
             headerView.addSubview(addButton)
-
-            searchBarWidthConstraint.constant -= 44
+            
+            // Fix constraint for the search bar
+            searchBarWidthConstraint.constant -= (addButton.frame.width - 4)
         }
     }
     
+    /**
+     Performs segue to the room control view.
+    */
     @objc func addButtonTaped(_ sender: UIButton!) {
         parent?.performSegue(withIdentifier: "roomAdmin", sender: parent)
     }
     
+    /**
+     Initiliases the view with all the components and manipulates the style.
+    */
+    fileprivate func prepareBackgroundView() {
+        
+        // Make all views transparent
+        view.backgroundColor = .clear
+        tableView.backgroundColor = .clear
+        headerView.backgroundColor = .clear
+        baseView.backgroundColor = .clear
+        
+        // Add shadow to the main view
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0.5, height: 4)
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowRadius = 5.0
+        
+        // Round the corners
+        baseView.frame = view.bounds
+        baseView.layer.cornerRadius = 10
+        baseView.layer.masksToBounds = true
+        
+        // Add blur effect view
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blur.frame = baseView.bounds
+        blur.isUserInteractionEnabled = false
+        baseView.insertSubview(blur, at: 0)
+        
+        // Add the drag indicator
+        dragIndicatorView.layer.cornerRadius = 3
+        dragIndicatorView.layer.masksToBounds = true
+        
+        // Change status label style
+        statusLabel.textColor = UIColor.gray
+        statusLabel.text = "Status"
+        
+        // Add the dev button if in dev mode
+        addDevButton()
+    }
+    
+    /**
+     Updates the picker data with the data from the shared data manager and
+     selects the row for the current floor level.
+    */
     func updatePickerData() {
         if let floors = RGSharedDataManager.getFloors() {
             pickerData = floors.map({ Int($0.level) })
             
-            if let row = pickerData.index(of: RGSharedDataManager.floorLevel) {
+            if let row = pickerData.index(of: Int(RGSharedDataManager.floor.level)) {
                 pickerView.selectRow(row, inComponent: 0, animated: false)
             }
         }
     }
     
+    /**
+     Updates the table data with the data from the shared data manager.
+    */
     func updateTableData() {
         if let rooms = RGSharedDataManager.getRooms() {
             tableViewData = rooms.map({ (room) -> String in
                 return room.name!
-            })
-        }
-    }
-}
-
-extension ScrollableBottomSheetViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            isSearching = false
-        } else {
-            isSearching = true
-            tableViewFilteredData = tableViewData.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
-        }
-        
-        tableView.reloadData()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing(true)
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if self.view.frame.minY != self.fullView {
-            UIView.animate(withDuration: 0.24, animations: { [weak self] in
-                let frame = self?.view.frame
-                let yComponent = self?.fullView
-                self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height)
             })
         }
     }

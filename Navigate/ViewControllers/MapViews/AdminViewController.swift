@@ -39,9 +39,7 @@ class AdminViewController: UIViewController {
         setDelegates()
         
         // Display data for the label
-        if let selectedFloor = RGSharedDataManager.floorLevel {
-            selectedFloorLabel.text = "Selected floor: \(selectedFloor)"
-        }
+        selectedFloorLabel.text = "Selected floor: \(RGSharedDataManager.floor.level)"
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

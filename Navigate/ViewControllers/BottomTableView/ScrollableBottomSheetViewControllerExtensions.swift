@@ -10,27 +10,37 @@ import UIKit
 
 extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewDataSource {
     
+    // Number of sections for the table view
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    // Number of rows in the section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // If it is searching count the number of rows in the filtered data array
         if isSearching {
             return tableViewFilteredData.count
         }
+        
+        // Otherwise count the number of rows in the normal data array
         return tableViewData.count
     }
     
+    // Height for rows
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
+    // Reusable cell style and data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default")!
-        cell.selectionStyle = .default
         
+        // If it is searching get the data from the filtered data array
         if isSearching {
             cell.textLabel?.text = tableViewFilteredData[indexPath.row]
+        
+        // Otherwise get the data from the normal data array
         } else {
             cell.textLabel?.text = tableViewData[indexPath.row]
         }
@@ -38,29 +48,44 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
         return cell
     }
     
+    // Reset the selected row visual
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let selectedRow = self.indexPathForSelectedRow {
+            if let selectedCell = tableView.cellForRow(at: selectedRow) {
+                selectedCell.accessoryType = .none
+                tableView.deselectRow(at: selectedRow, animated: true)
+            }
+        }
+        
+        return indexPath
+    }
+    
+    // Select and update the model
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)!
 
+        // If it is searching get the data from the filtered data array
         if isSearching {
             RGSharedDataManager.selectedRoom = tableViewFilteredData[indexPath.row]
+            
+        // Otherwise get the data from the normal data array
         } else {
             RGSharedDataManager.selectedRoom = tableViewData[indexPath.row]
         }
         
+        // Add visual feedback for the selected cell
         selectedCell.accessoryType = .checkmark
+        self.indexPathForSelectedRow = indexPath
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
+        // Feedback to the log
         MapViewController.prodLog("\(RGSharedDataManager.selectedRoom ?? "N/A") selected")
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let deselectedCell = tableView.cellForRow(at: indexPath)!
-        deselectedCell.contentView.backgroundColor = .clear
     }
 }
 
 extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
     
+    // Disable simultaneously recognition of the gestures to allow scroll for the view
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         let gesture = (gestureRecognizer as! UIPanGestureRecognizer)
         let direction = gesture.velocity(in: view).y
@@ -113,33 +138,82 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
 
 extension ScrollableBottomSheetViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        
+        // Remove the picker view line separators
         pickerView.subviews.forEach({ $0.isHidden = $0.frame.height < 1.0 })
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        // Count the number of elements in the picker data array
         return pickerData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        // Return data from the picker data array
         return "\(pickerData[row])"
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if RGSharedDataManager.floorLevel != pickerData[row] {
-           RGSharedDataManager.floorLevel = pickerData[row]
+        
+        // Set the floor to the picked row
+        RGSharedDataManager.setFloor(level: pickerData[row])
+        
+        // Deselect row and room
+        if let selectedRow = self.indexPathForSelectedRow {
+            if let selectedCell = tableView.cellForRow(at: selectedRow) {
+                selectedCell.accessoryType = .none
+                tableView.deselectRow(at: selectedRow, animated: true)
+            }
         }
+        
+        // Update table data when floor is changed
+        updateTableData()
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var labelToReturn: UILabel!
         
+        // Set the label visually
         if let view = view as? UILabel { labelToReturn = view } else { labelToReturn = UILabel() }
-
         labelToReturn.text = "\(pickerData[row])"
         labelToReturn.textColor = .gray
         labelToReturn.textAlignment = .center
         
         return labelToReturn
+    }
+}
+
+extension ScrollableBottomSheetViewController: UISearchBarDelegate {
+    
+    // Set the filtered data
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            isSearching = false
+        } else {
+            isSearching = true
+        }
+        
+        // Filter the data lowercased
+        tableViewFilteredData = tableViewData.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
+    }
+    
+    // If the search bar button is clicked, dismiss the keyboard
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    // Move the view to top when editing started
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if self.view.frame.minY != self.fullView {
+            UIView.animate(withDuration: 0.24, animations: { [weak self] in
+                let frame = self?.view.frame
+                let yComponent = self?.fullView
+                self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height)
+            })
+        }
     }
 }

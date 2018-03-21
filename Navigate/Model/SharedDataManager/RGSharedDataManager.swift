@@ -15,13 +15,11 @@ class RGSharedDataManager: NSObject {
     
     // Room information
     static var selectedRoom: String?
-    static var mapImage: NSData!
     
     // Floor information
-    static var floorLevel: Int!
     static var floor: Floor! {
         didSet {
-            floorLevel = Int(floor.level)
+            selectedRoom = ""
         }
     }
     
@@ -42,17 +40,16 @@ class RGSharedDataManager: NSObject {
     /**
      Init data for when the application is open for the first time
      */
-    static func initData() {
+    static func initData(floorLevel: Int, mapImage: NSData) {
         do {
             // Get number of floors from CoreData
             let numberOfFloors = try PersistenceService.context.count(for: NSFetchRequest(entityName: "Floor"))
             
             // If there are no floors, create the initial one
             if numberOfFloors == 0 {
-                
                 // Create a new floor
                 addFloor(level: floorLevel, mapImage: mapImage)
-                floor = getFloor(level: floorLevel)
+                setFloor(level: floorLevel)
                 
                 for i in 0...numberOfRows - 1 {
                     for j in 0...numberOfColumns - 1 {
@@ -71,7 +68,8 @@ class RGSharedDataManager: NSObject {
                     }
                 }
             } else {
-                debugPrint("Data already created")
+                debugPrint("Data already created. Setting floor to default \(floorLevel).")
+                setFloor(level: floorLevel)
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")

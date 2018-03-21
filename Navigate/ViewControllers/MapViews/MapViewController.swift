@@ -145,13 +145,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         RGSharedDataManager.numberOfRows = MapViewController.map.numberOfRows
         RGSharedDataManager.numberOfColumns = MapViewController.map.numberOfRows
         
-        // Set the floor level to 6
-        RGSharedDataManager.floorLevel = 6
-        RGSharedDataManager.setFloor(level: 6)
-        RGSharedDataManager.mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
-        
         // Initiliase data model in CoreData
-        RGSharedDataManager.initData()
+        let mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
+        RGSharedDataManager.initData(floorLevel: 6, mapImage: mapImage!)
         
         // Set the app mode to dev to display log
         RGSharedDataManager.appMode = .dev

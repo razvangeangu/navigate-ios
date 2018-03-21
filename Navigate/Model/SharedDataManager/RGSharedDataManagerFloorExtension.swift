@@ -9,6 +9,10 @@
 import CoreData
 
 extension RGSharedDataManager {
+    
+    /**
+     Sets the current floor
+    */
     static func setFloor(level: Int) {
         guard let floor = getFloor(level: level) else { return }
         RGSharedDataManager.floor = floor

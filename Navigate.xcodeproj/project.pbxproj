@@ -29,7 +29,6 @@
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
 		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
-		18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B93D992052C3F600AD8B31 /* Extensions.swift */; };
 		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
 		18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGSharedDataManager.swift */; };
 		18D57721205C0225001C4B1C /* ScrollableBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5771F205C0225001C4B1C /* ScrollableBottomSheetViewController.swift */; };
@@ -99,7 +98,6 @@
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
-		18B93D992052C3F600AD8B31 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18C735662057164200B292B1 /* RGSharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManager.swift; sourceTree = "<group>"; };
 		18D5771F205C0225001C4B1C /* ScrollableBottomSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +190,7 @@
 				182519301FAF45750005F5F6 /* Navigate.entitlements */,
 				1816BE3B205EE7300057957F /* ApplicationDelegate */,
 				1825192C1FAF45650005F5F6 /* Model */,
-				185936721FBD9DA60016BF66 /* View */,
+				185936721FBD9DA60016BF66 /* ViewControllers */,
 				182518FE1FAF454A0005F5F6 /* art.scnassets */,
 				18C735622056F06500B292B1 /* Assets.xcassets */,
 				1825190A1FAF454A0005F5F6 /* Info.plist */,
@@ -224,10 +222,9 @@
 				18DCD756206069D40003644D /* SharedDataManager */,
 				18309F6120291EF8009F5CDD /* PiConnection */,
 				18309F5D20291EC2009F5CDD /* CoreData */,
-				18A2642B202B544E002EE7E9 /* Util.swift */,
-				18B93D992052C3F600AD8B31 /* Extensions.swift */,
-				18120B582057F46800BBF6C8 /* RGLocalisation.swift */,
+				183346712061FB6D001EA340 /* Localisation */,
 				1816BE38205EDC1B0057957F /* Navigation */,
+				183346702061FB60001EA340 /* Util */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -295,6 +292,41 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		183346702061FB60001EA340 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				18A2642B202B544E002EE7E9 /* Util.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		183346712061FB6D001EA340 /* Localisation */ = {
+			isa = PBXGroup;
+			children = (
+				18120B582057F46800BBF6C8 /* RGLocalisation.swift */,
+			);
+			path = Localisation;
+			sourceTree = "<group>";
+		};
+		183346722061FBA3001EA340 /* MapViews */ = {
+			isa = PBXGroup;
+			children = (
+				18309F6220291F30009F5CDD /* MapViewController.swift */,
+				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
+				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
+				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
+			);
+			path = MapViews;
+			sourceTree = "<group>";
+		};
+		183346732061FBB6001EA340 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				18DCD76020607CAA0003644D /* RGBackButton.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		18363B6D205C37C900FC17F4 /* AR */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,19 +335,16 @@
 			path = AR;
 			sourceTree = "<group>";
 		};
-		185936721FBD9DA60016BF66 /* View */ = {
+		185936721FBD9DA60016BF66 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				183346732061FBB6001EA340 /* Util */,
 				18309F6420291F43009F5CDD /* Scenes */,
 				18363B6D205C37C900FC17F4 /* AR */,
 				18D5771E205C0211001C4B1C /* BottomTableView */,
-				18309F6220291F30009F5CDD /* MapViewController.swift */,
-				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
-				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
-				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
-				18DCD76020607CAA0003644D /* RGBackButton.swift */,
+				183346722061FBA3001EA340 /* MapViews */,
 			);
-			path = View;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		18D5771E205C0211001C4B1C /* BottomTableView */ = {
@@ -513,7 +542,6 @@
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18DCD750206068A60003644D /* AccessPoint+CoreDataClass.swift in Sources */,
-				18B93D9A2052C3F600AD8B31 /* Extensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */,
 				18DCD754206068A70003644D /* Room+CoreDataClass.swift in Sources */,
