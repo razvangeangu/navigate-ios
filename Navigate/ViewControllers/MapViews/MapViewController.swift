@@ -11,7 +11,7 @@ import SpriteKit
 import CoreLocation
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
-    
+
     // A container view for visual effects
     @IBOutlet weak var containerView: UIView!
     
@@ -36,7 +36,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     let bottomSheetVC = ScrollableBottomSheetViewController()
     
     // Map control buttons
-    var mapButtonsView: MapButtonsView!
+    static var mapButtonsView: MapButtonsView!
     
     // The current location node
     static var locationNode: SKSpriteNode!
@@ -192,10 +192,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     */
     fileprivate func addMapButtonsView() {
         // Add the control buttons
-        mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
-        mapButtonsView.backgroundColor = .clear
-        mapButtonsView.parentVC = self
-        self.view.addSubview(mapButtonsView)
+        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
+        MapViewController.mapButtonsView.backgroundColor = .clear
+        MapViewController.mapButtonsView.parentVC = self
+        self.view.addSubview(MapViewController.mapButtonsView)
     }
     
     /**
@@ -263,6 +263,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter currentLocation: A pair that represents the row and column of the position.
     */
     static func showCurrentLocation(_ currentLocation: (Int, Int)) {
+        mapButtonsView.enableButtons()
+        
         // If the locationNode is hidden, change alpha to 1 to display it
         if locationNode.alpha < 1 {
             locationNode.alpha = 1

@@ -118,7 +118,7 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
             
             duration = duration > 1.3 ? 1 : duration
             
-            UIView.animate(withDuration: duration, delay: 0.0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+            UIView.animate(withDuration: duration, delay: 0.0, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
                     self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: self.view.frame.height)
                 } else {

@@ -1,5 +1,5 @@
 //
-//  MapViewControllerGestureRecognisers.swift
+//  MapViewControllerExtensions.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 12/03/2018.
@@ -87,9 +87,9 @@ extension MapViewController {
      - parameter pan: The pan gesture that has been recognised.
      */
     @objc func handlePan(pan: UIPanGestureRecognizer) {
-        if mapButtonsView.locationNumberOfTouches > 0 {
-            mapButtonsView.locationNumberOfTouches = -1
-            mapButtonsView.locationTaped()
+        if MapViewController.mapButtonsView.locationNumberOfTouches > 0 {
+            MapViewController.mapButtonsView.locationNumberOfTouches = -1
+            MapViewController.mapButtonsView.locationTaped()
         }
         
         // Only activate gesture if bottomSheetVC is closed
@@ -246,19 +246,19 @@ extension MapViewController: CLLocationManagerDelegate {
         let northAngle = CGFloat(newHeading.magneticHeading.toRadians)
         
         // Animate the location node
-        UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
-            let rotation = SKAction.rotate(toAngle: -angle, duration: 0.3, shortestUnitArc: true)
-            rotation.timingMode = .linear
-            MapViewController.locationNode.run(rotation, withKey: "rotatingLocationNodeBearing")
-        }, completion: nil)
+        let rotation = SKAction.rotate(toAngle: -angle, duration: 0.6, shortestUnitArc: true)
+        rotation.timingMode = .linear
+        MapViewController.locationNode.run(rotation, withKey: "rotatingLocationNodeBearing")
         
-        // Animate the camera node
         if MapViewController.shouldRotateMap {
-            UIView.animate(withDuration: 0.3, delay: 0.4, options: [.curveEaseOut, .allowUserInteraction], animations: {
-                self.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: -northAngle)
+            
+            // Animate the heading node
+            UIView.animate(withDuration: 0.6, delay: 0, options: [.allowUserInteraction], animations: {
+                MapViewController.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: northAngle)
                 
-                let rotation = SKAction.rotate(toAngle: -angle, duration: 0.3, shortestUnitArc: true)
-                rotation.timingMode = .linear
+                // Animate the camera node
+                let rotation = SKAction.rotate(toAngle: -angle, duration: 0.8, shortestUnitArc: true)
+                rotation.timingMode = .easeOut
                 MapViewController.scene.camera?.run(rotation, withKey: "rotatingCameraBearing")
             }, completion: nil)
         }
