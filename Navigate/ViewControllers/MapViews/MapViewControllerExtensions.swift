@@ -254,7 +254,7 @@ extension MapViewController: CLLocationManagerDelegate {
             
             // Animate the heading node
             UIView.animate(withDuration: 0.6, delay: 0, options: [.allowUserInteraction], animations: {
-                MapViewController.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: northAngle)
+                MapViewController.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: -northAngle)
                 
                 // Animate the camera node
                 let rotation = SKAction.rotate(toAngle: -angle, duration: 0.8, shortestUnitArc: true)

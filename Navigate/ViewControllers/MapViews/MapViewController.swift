@@ -189,6 +189,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         MapViewController.bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
         MapViewController.bottomSheetVC.updatePickerData()
         MapViewController.bottomSheetVC.updateTableData()
+        
+        if RGSharedDataManager.appMode == .dev {
+            MapViewController.bottomSheetVC.addDevButton()
+        }
     }
     
     /**
