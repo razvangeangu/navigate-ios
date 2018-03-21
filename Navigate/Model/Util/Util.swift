@@ -26,6 +26,11 @@ enum RGCommands: String {
     case restartServer = "cd /root/navigate-server && forever restartall"
 }
 
+enum CDTileType: String {
+    case space = "space"
+    case wall = "wall"
+}
+
 /**
  An enum used for tile types.
  */
@@ -34,6 +39,7 @@ enum RGTileType {
     case sample
     case location
     case none
+    case navigation
 }
 
 /**

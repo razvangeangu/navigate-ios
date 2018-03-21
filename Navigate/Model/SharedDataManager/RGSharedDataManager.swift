@@ -62,6 +62,7 @@ class RGSharedDataManager: NSObject {
                 // Set the location for the tile
                 tile.row = Int16(i)
                 tile.col = Int16(j)
+                tile.type = CDTileType.space.rawValue
                 
                 // Add tile to the floor
                 floor.addToTiles(tile)

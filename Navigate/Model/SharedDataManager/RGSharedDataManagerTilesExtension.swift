@@ -82,7 +82,7 @@ extension RGSharedDataManager {
      
      - Returns: A **Tile** object from the CoreData.
      */
-    fileprivate static func getTile(col: Int, row: Int) -> Tile? {
+    static func getTile(col: Int, row: Int) -> Tile? {
         // Get all the tiles
         for case let tile as Tile in floor.tiles! {
             // If the tile mathces

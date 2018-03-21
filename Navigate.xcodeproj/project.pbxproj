@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B582057F46800BBF6C8 /* RGLocalisation.swift */; };
 		18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B5A2057F47000BBF6C8 /* RGNavigation.swift */; };
-		1816BE3A205EDC280057957F /* TileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1816BE39205EDC280057957F /* TileExtensions.swift */; };
 		181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 181D01002053EB13001CB8BD /* MapTilemapScene.sks */; };
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
 		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
@@ -72,7 +71,6 @@
 /* Begin PBXFileReference section */
 		18120B582057F46800BBF6C8 /* RGLocalisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGLocalisation.swift; sourceTree = "<group>"; };
 		18120B5A2057F47000BBF6C8 /* RGNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGNavigation.swift; sourceTree = "<group>"; };
-		1816BE39205EDC280057957F /* TileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileExtensions.swift; sourceTree = "<group>"; };
 		181D01002053EB13001CB8BD /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTilemapScene.sks; sourceTree = "<group>"; };
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				18120B5A2057F47000BBF6C8 /* RGNavigation.swift */,
-				1816BE39205EDC280057957F /* TileExtensions.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -535,7 +532,6 @@
 				18DCD755206068A70003644D /* Room+CoreDataProperties.swift in Sources */,
 				18DCD75A20606A220003644D /* RGSharedDataManagerRoomsExtension.swift in Sources */,
 				18DCD751206068A60003644D /* AccessPoint+CoreDataProperties.swift in Sources */,
-				1816BE3A205EDC280057957F /* TileExtensions.swift in Sources */,
 				18D57728205C02C3001C4B1C /* ScrollableBottomSheetViewControllerExtensions.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,

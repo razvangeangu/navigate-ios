@@ -55,6 +55,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         return $0
     }(CLLocationManager())
     
+    // The navigation model
+    static var navigation: RGNavigation!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -124,7 +127,16 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            RGSharedDataManager.disconnect()
+            // RGSharedDataManager.disconnect()
+            let currentLocation = RGLocalisation.currentLocation
+            if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
+                if let toTile = RGSharedDataManager.getTile(col: 3, row: 3) {
+                    MapViewController.navigation.moveTo(fromTile: fromTile, toTile: toTile)
+                    if let path = MapViewController.navigation.shortestPath {
+                        MapViewController.showCurrentPath(path)
+                    }
+                }
+            }
         }
     }
     
@@ -148,11 +160,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Initiliase data model in CoreData
         let mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
         RGSharedDataManager.initData(floorLevel: 6, mapImage: mapImage!)
+        
+        // Init the navigation model
+        MapViewController.navigation = RGNavigation()
     }
     
     /**
      Add gesture recognisers to the scene.
-    */
+     */
     fileprivate func addGesturesRecognisers() {
         // Add pinch gesture for zoom
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.handlePinch))
@@ -174,7 +189,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     /**
      Initialises the bottom view and adds it to the view.
-    */
+     */
     fileprivate func addBottomSheetView() {
         self.addChildViewController(MapViewController.bottomSheetVC)
         self.view.addSubview(MapViewController.bottomSheetVC.view)
@@ -186,7 +201,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     /**
      Initialises the control buttons for the map and adds it to the view.
-    */
+     */
     fileprivate func addMapButtonsView() {
         // Add the control buttons
         MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
@@ -221,6 +236,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 tileGroup = map.tileSet.tileGroups.first(
                     where: {$0.name == "location"})
             }
+        case .navigation:
+            do {
+                tileGroup = map.tileSet.tileGroups.first(
+                    where: {$0.name == "navigation"})
+            }
         case .none:
             do {
                 tileGroup = SKTileGroup.empty()
@@ -232,7 +252,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     /**
      Display tiles for the developer view.
-    */
+     */
     fileprivate static func displayDevTiles(column: Int, row: Int) {
         if RGSharedDataManager.tileHasData(column: column, row: row) {
             setTileColor(column: column, row: row, type: .saved)
@@ -267,7 +287,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      A method that shows a node on the map that represents the location of the device.
      
      - parameter currentLocation: A pair that represents the row and column of the position.
-    */
+     */
     static func showCurrentLocation(_ currentLocation: (Int, Int)) {
         mapButtonsView.enableButtons()
         
@@ -298,7 +318,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      A method that displays development logs to the view and console.
      
      - parameter data: String containing data to be displayed.
-    */
+     */
     static func devLog(data: String) {
         if RGSharedDataManager.appMode == .dev {
             let date = Date()
@@ -314,14 +334,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Displays as a status label the current log for production mode.
      
      - parameter data: String containing data to be displayed.
-    */
+     */
     static func prodLog(_ data: String) {
         ScrollableBottomSheetViewController.status = data
     }
     
     /**
      Centers the camera view to the current location of the device.
-    */
+     */
     static func centerToLocation() {
         let tileLocation = RGLocalisation.currentLocation
         
@@ -356,7 +376,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Resets the view accordingly to the app mode.
      
      - parameter for: App mode to be switched to.
-    */
+     */
     static func resetView(for appMode: AppMode) {
         switch appMode {
         case .dev:
@@ -376,10 +396,23 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Changes the texture of the background node (which represents the map)
      
      - parameter to: The image data.
-    */
+     */
     static func changeMap(to imageData: NSData?) {
         if let image = UIImage(data: imageData! as Data) {
             backgroundNode.texture = SKTexture(cgImage: image.cgImage!)
+        }
+    }
+    
+    /**
+     Show current path on the view
+     
+     - parameter currentPath: The path that contains the tiles to display the navigation items.
+     */
+    static func showCurrentPath(_ currentPath: [Tile]) {
+        resetTiles()
+        
+        for tile in currentPath {
+            setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
         }
     }
 }
