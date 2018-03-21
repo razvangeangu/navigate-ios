@@ -48,6 +48,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var shouldCenterMap = false
     static var shouldRotateMap = false
     
+    // The location manager for the heading/bearing of the device
     let locationManager: CLLocationManager = {
         $0.requestWhenInUseAuthorization()
         $0.startUpdatingHeading()

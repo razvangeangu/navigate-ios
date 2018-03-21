@@ -105,4 +105,33 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: completion)
     }
+    
+    func presentDialog(title: String, message: String, handler: @escaping ((UIAlertAction) -> Void), completion: (() -> Void)?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: handler))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: handler))
+
+        self.present(alert, animated: true, completion: completion)
+    }
+}
+
+/**
+ Checks if text is one of the secret commands. See **SecretCommands** enum.
+ 
+ - parameter text: Represents the text to be verified.
+ - parameter completion: A void function that returns the secret command found.
+ */
+func checkForSecretCommands(text: String, completion: (SecretCommands) -> Void) {
+    switch text.lowercased() {
+    case SecretCommands.switchToDevMode.rawValue:
+        do {
+            completion(SecretCommands.switchToDevMode)
+        }
+    case SecretCommands.switchToProdMode.rawValue:
+        do {
+            completion(SecretCommands.switchToProdMode)
+        }
+    default:
+        break
+    }
 }

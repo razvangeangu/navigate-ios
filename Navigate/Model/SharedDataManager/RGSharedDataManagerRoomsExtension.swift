@@ -70,4 +70,20 @@ extension RGSharedDataManager {
     static func getRooms() -> [Room]? {
         return floor.rooms!.allObjects as? [Room]
     }
+    
+    /**
+     Removes a room that matches the name from the core data.
+     
+     - parameter with roomName: The room name to be removed
+     
+     - Returns: **true** if successfully removes the room, **false** otherwise
+     */
+    static func removeRoom(with roomName: String, floor: Floor) -> Bool {
+        if let foundRoom = getRoom(name: roomName, floor: floor) {
+            PersistenceService.context.delete(foundRoom)
+            return true
+        }
+        
+        return false
+    }
 }

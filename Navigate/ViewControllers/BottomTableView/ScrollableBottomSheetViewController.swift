@@ -111,25 +111,22 @@ class ScrollableBottomSheetViewController: UIViewController {
     */
     func addDevButton() {
         if viewIfLoaded != nil {
-            // add room button
-            addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
-            addButton.setTitle("+", for: .normal)
-            addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
-            addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
-            addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchUpInside)
+            if addButton.superview == nil {
+                // Add it to the header view
+                headerView.addSubview(addButton)
             
-            // Add it to the header view
-            headerView.addSubview(addButton)
-            
-            // Fix constraint for the search bar
-            searchBarWidthConstraint.constant -= (addButton.frame.width - 4)
+                // Fix constraint for the search bar
+                searchBarWidthConstraint.constant -= (addButton.frame.width - 4)
+            }
         }
     }
     
     func removeDevButton() {
         if viewIfLoaded != nil {
-            searchBarWidthConstraint.constant += (addButton.frame.width - 4)
-            addButton.removeFromSuperview()
+            if addButton.superview != nil {
+                searchBarWidthConstraint.constant += (addButton.frame.width - 4)
+                addButton.removeFromSuperview()
+            }
         }
     }
     
@@ -175,6 +172,13 @@ class ScrollableBottomSheetViewController: UIViewController {
         // Change status label style
         statusLabel.textColor = UIColor.gray
         statusLabel.text = "Status"
+        
+        // set style for room button
+        addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
+        addButton.setTitle("+", for: .normal)
+        addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
+        addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
+        addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchUpInside)
     }
     
     /**

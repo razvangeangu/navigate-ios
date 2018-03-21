@@ -12,7 +12,7 @@ extension RGSharedDataManager {
     
     /**
      Sets the current floor
-    */
+     */
     static func setFloor(level: Int) {
         guard let floor = getFloor(level: level) else { return }
         RGSharedDataManager.floor = floor
@@ -22,11 +22,14 @@ extension RGSharedDataManager {
      Add floor to the CoreData.
      
      - parameter level: The floor level.
+     - parameter mapImage: The image for the map as **NSData**.
+     
+     - Returns: **true** if floor has been created, **false** otherwise.
      */
-    static func addFloor(level: Int, mapImage: NSData) {
+    static func addFloor(level: Int, mapImage: NSData) -> Bool {
         
         // If the floor exists stop creating a new one
-        if let _ = getFloor(level: level) { return }
+        if let _ = getFloor(level: level) { return false }
         
         // Create new floor
         let floor = Floor(context: PersistenceService.context)
@@ -37,6 +40,8 @@ extension RGSharedDataManager {
         
         // Save the context for CoreData
         PersistenceService.saveContext()
+        
+        return true
     }
     
     /**
@@ -69,11 +74,11 @@ extension RGSharedDataManager {
      A method that gets all the floors from CoreData.
      
      - Returns: An array of **Floor** objects.
-    */
+     */
     static func getFloors() -> [Floor]? {
         var floors = [Floor]()
         
-        let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
+        let fetchRequest: NSFetchRequest<Floor> = Floor.fetchRequest()
         do {
             // Get all the floors from CoreData
             floors = try PersistenceService.context.fetch(fetchRequest) as [Floor]
@@ -82,5 +87,21 @@ extension RGSharedDataManager {
         }
         
         return floors
+    }
+    
+    /**
+     Removes a floor that matches the level from the core data.
+     
+     - parameter with floorLevel: The floor level to be removed
+     
+     - Returns: **true** if successfully removes the floor, **false** otherwise
+     */
+    static func removeFloor(with floorLevel: Int) -> Bool {
+        if let foundFloor = getFloor(level: floorLevel) {
+            PersistenceService.context.delete(foundFloor)
+            return true
+        }
+        
+        return false
     }
 }

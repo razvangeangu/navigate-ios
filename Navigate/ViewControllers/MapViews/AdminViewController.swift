@@ -92,15 +92,52 @@ class AdminViewController: UIViewController {
         if let floorLevelText = floorLevelTextField.text {
             if let floorLevel = Int(floorLevelText) {
                 if imagePicked {
-                    RGSharedDataManager.addFloor(level: floorLevel, mapImage: (UIImagePNGRepresentation(floorMapImageView.image!) as NSData?)!)
-                    
-                    MapViewController.bottomSheetVC.updatePickerData()
-                    presentAlert(title: "Success", message: "A floor has been created.", completion: {
-                        self.floorLevelTextField.text = ""
-                        self.floorMapImageView.contentMode = .scaleAspectFit
-                        self.floorMapImageView.image = UIImage(named: "addimage")
-                        self.imagePicked = false
-                    })
+                    if let imageData = UIImagePNGRepresentation(floorMapImageView.image!) as NSData? {
+                        
+                        // Add floor
+                        if RGSharedDataManager.addFloor(level: floorLevel, mapImage: imageData) {
+                            
+                            // Update the picker data
+                            MapViewController.bottomSheetVC.updatePickerData()
+                            
+                            // Feedback
+                            presentAlert(title: "Success", message: "A floor has been created.", completion: {
+                                self.floorLevelTextField.text = ""
+                                self.floorMapImageView.contentMode = .scaleAspectFit
+                                self.floorMapImageView.image = UIImage(named: "addimage")
+                                self.imagePicked = false
+                            })
+                        } else {
+
+                            presentDialog(title: "Error", message: "Floor already exists. Do you want to overwrite it?", handler: { (alertAction) in
+                                if alertAction.title == "Ok" {
+                                    
+                                    // Remove the current floor
+                                    if RGSharedDataManager.removeFloor(with: floorLevel) {
+                                    
+                                        // Add the floor
+                                        if RGSharedDataManager.addFloor(level: floorLevel, mapImage: imageData) {
+                                            
+                                            // Update picker data
+                                            MapViewController.bottomSheetVC.updatePickerData()
+                                            
+                                            // Feedback
+                                            self.presentAlert(title: "Success", message: "A floor has been created.", completion: {
+                                                self.floorLevelTextField.text = ""
+                                                self.floorMapImageView.contentMode = .scaleAspectFit
+                                                self.floorMapImageView.image = UIImage(named: "addimage")
+                                                self.imagePicked = false
+                                            })
+                                        } else {
+                                            self.presentAlert(title: "Error", message: "Cannot add floor.", completion: nil)
+                                        }
+                                    } else {
+                                        self.presentAlert(title: "Error", message: "Cannot remove floor.", completion: nil)
+                                    }
+                                }
+                            }, completion: nil)
+                        }
+                    }
                 } else {
                     presentAlert(title: "Error", message: "An image map must be selected.", completion: nil)
                 }
@@ -120,17 +157,47 @@ class AdminViewController: UIViewController {
     @IBAction func didPressAddRoom(_ sender: Any) {
         if let roomName = roomNameTextField.text {
             if !roomName.isEmpty {
+                
+                checkForSecretCommands(text: roomName) { (result) in
+                    self.presentAlert(title: "Error", message: "Cannot create room with special name.", completion: nil)
+                }
+                
                 if let _ = RGSharedDataManager.floor {
-                    if let _ = RGSharedDataManager.getRoom(name: roomName, floor: RGSharedDataManager.floor) {
-                        presentAlert(title: "Error", message: "Room name already exists.", completion: nil)
-                    } else {
-                        if RGSharedDataManager.addRoom(name: roomName) {
-                            
-                            MapViewController.bottomSheetVC.updateTableData()
-                            presentAlert(title: "Success", message: "A room has been created.") {
-                                self.roomNameTextField.text = ""
-                            }
+                    // Add room
+                    if RGSharedDataManager.addRoom(name: roomName) {
+                        
+                        // Update the table data
+                        MapViewController.bottomSheetVC.updateTableData()
+                        
+                        // Feedback
+                        presentAlert(title: "Success", message: "A room has been created.") {
+                            self.roomNameTextField.text = ""
                         }
+                    } else {
+                        presentDialog(title: "Error", message: "A room with the same name already exists. Do you want to overwrite it?", handler: { (alertAction) in
+                            if alertAction.title == "Ok" {
+                                
+                                // Remove room
+                                if RGSharedDataManager.removeRoom(with: roomName, floor: RGSharedDataManager.floor) {
+                                
+                                    // Add room
+                                    if RGSharedDataManager.addRoom(name: roomName) {
+                                        
+                                        // Update the table data
+                                        MapViewController.bottomSheetVC.updateTableData()
+                                        
+                                        // Feedback
+                                        self.presentAlert(title: "Success", message: "A room has been created.") {
+                                            self.roomNameTextField.text = ""
+                                        }
+                                    } else {
+                                        self.presentAlert(title: "Error", message: "Cannot add room.", completion: nil)
+                                    }
+                                } else {
+                                    self.presentAlert(title: "Error", message: "Cannot remove room.", completion: nil)
+                                }
+                            }
+                        }, completion: nil)
                     }
                 } else {
                     presentAlert(title: "Error", message: "Floor must be selected.", completion: nil)

@@ -188,40 +188,34 @@ extension ScrollableBottomSheetViewController: UIPickerViewDelegate, UIPickerVie
 
 extension ScrollableBottomSheetViewController: UISearchBarDelegate {
     
-    /**
-     Checks if text is one of the secret commands. See **SecretCommands** enum.
-     
-     - parameter text: Represents the text to be verified
-    */
-    func checkForSecretCommands(text: String) {
-        switch text.lowercased() {
-        case SecretCommands.switchToDevMode.rawValue:
-            do {
-                RGSharedDataManager.appMode = .dev
-            }
-        case SecretCommands.switchToProdMode.rawValue:
-            do {
-                RGSharedDataManager.appMode = .prod
-            }
-        default:
-            break
-        }
-    }
-    
     // Set the filtered data
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // Activate secret command if matches raw value
-        checkForSecretCommands(text: searchText)
-        
-        if searchText.isEmpty {
-            isSearching = false
-        } else {
-            isSearching = true
+        checkForSecretCommands(text: searchText) { (result) in
+            if result == .switchToProdMode {
+                RGSharedDataManager.appMode = .prod
+                searchBar.text = ""
+                isSearching = false
+                tableView.reloadData()
+            } else if result == .switchToDevMode {
+                RGSharedDataManager.appMode = .dev
+                searchBar.text = ""
+                isSearching = false
+                tableView.reloadData()
+            }
         }
         
-        // Filter the data lowercased
-        tableViewFilteredData = tableViewData.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
+        if searchText.isEmpty || (searchBar.text?.isEmpty)! {
+            isSearching = false
+            
+            tableView.reloadData()
+        } else {
+            isSearching = true
+            
+            // Filter the data lowercased
+            tableViewFilteredData = tableViewData.filter({ $0.lowercased().hasPrefix(searchText.lowercased()) })
+        }
     }
     
     // If the search bar button is clicked, dismiss the keyboard

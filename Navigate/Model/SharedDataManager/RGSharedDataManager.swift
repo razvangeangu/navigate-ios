@@ -24,6 +24,12 @@ class RGSharedDataManager: NSObject {
     static var floor: Floor! {
         didSet {
             selectedRoom = ""
+            
+            if floor.tiles?.count == 0 {
+                createTiles(for: floor)
+            }
+            
+            MapViewController.resetView(for: appMode)
             MapViewController.changeMap(to: floor.image)
         }
     }
@@ -43,6 +49,30 @@ class RGSharedDataManager: NSObject {
     }
     
     /**
+     Init tiles for the floor.
+     
+     - parameter floor: The current floor to create tiles for.
+    */
+    fileprivate static func createTiles(for floor: Floor) {
+        for i in 0...numberOfRows - 1 {
+            for j in 0...numberOfColumns - 1 {
+                // Create a new tile
+                let tile = Tile(context: PersistenceService.context)
+                
+                // Set the location for the tile
+                tile.row = Int16(i)
+                tile.col = Int16(j)
+                
+                // Add tile to the floor
+                floor.addToTiles(tile)
+                
+                // Save the context to CoreData
+                PersistenceService.saveContext()
+            }
+        }
+    }
+    
+    /**
      Init data for when the application is open for the first time
      */
     static func initData(floorLevel: Int, mapImage: NSData) {
@@ -53,25 +83,8 @@ class RGSharedDataManager: NSObject {
             // If there are no floors, create the initial one
             if numberOfFloors == 0 {
                 // Create a new floor
-                addFloor(level: floorLevel, mapImage: mapImage)
+                let _ = addFloor(level: floorLevel, mapImage: mapImage)
                 setFloor(level: floorLevel)
-                
-                for i in 0...numberOfRows - 1 {
-                    for j in 0...numberOfColumns - 1 {
-                        // Create a new tile
-                        let tile = Tile(context: PersistenceService.context)
-                        
-                        // Set the location for the tile
-                        tile.row = Int16(i)
-                        tile.col = Int16(j)
-                        
-                        // Add tile to the floor
-                        floor.addToTiles(tile)
-                        
-                        // Save the context to CoreData
-                        PersistenceService.saveContext()
-                    }
-                }
                 
                 // Set the app mode to dev to display log and develop app
                 RGSharedDataManager.appMode = .dev
