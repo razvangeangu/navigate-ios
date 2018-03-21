@@ -33,7 +33,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var map: SKTileMapNode!
     
     // The bottom view controller
-    let bottomSheetVC = ScrollableBottomSheetViewController()
+    static let bottomSheetVC = ScrollableBottomSheetViewController()
     
     // Map control buttons
     static var mapButtonsView: MapButtonsView!
@@ -130,7 +130,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? AdminViewController {
             destinationVC.modalPresentationStyle = .overFullScreen
-            destinationVC.parentVC = self
         }
     }
     
@@ -148,9 +147,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Initiliase data model in CoreData
         let mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
         RGSharedDataManager.initData(floorLevel: 6, mapImage: mapImage!)
-        
-        // Set the app mode to dev to display log
-        RGSharedDataManager.appMode = .dev
     }
     
     /**
@@ -179,12 +175,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Initialises the bottom view and adds it to the view.
     */
     fileprivate func addBottomSheetView() {
-        self.addChildViewController(bottomSheetVC)
-        self.view.addSubview(bottomSheetVC.view)
-        bottomSheetVC.didMove(toParentViewController: self)
-        bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
-        bottomSheetVC.updatePickerData()
-        bottomSheetVC.updateTableData()
+        self.addChildViewController(MapViewController.bottomSheetVC)
+        self.view.addSubview(MapViewController.bottomSheetVC.view)
+        MapViewController.bottomSheetVC.didMove(toParentViewController: self)
+        MapViewController.bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: view.frame.width, height: view.frame.height)
+        MapViewController.bottomSheetVC.updatePickerData()
+        MapViewController.bottomSheetVC.updateTableData()
     }
     
     /**
@@ -211,17 +207,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         switch type {
         case .sample:
             do {
-                tileGroup = MapViewController.map.tileSet.tileGroups.first(
+                tileGroup = map.tileSet.tileGroups.first(
                     where: {$0.name == "sample"})
             }
         case .saved:
             do {
-                tileGroup = MapViewController.map.tileSet.tileGroups.first(
+                tileGroup = map.tileSet.tileGroups.first(
                     where: {$0.name == "saved"})
             }
         case .location:
             do {
-                tileGroup = MapViewController.map.tileSet.tileGroups.first(
+                tileGroup = map.tileSet.tileGroups.first(
                     where: {$0.name == "location"})
             }
         case .none:
@@ -230,28 +226,37 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
-        MapViewController.map.setTileGroup(tileGroup, forColumn: column, row: row)
+        map.setTileGroup(tileGroup, forColumn: column, row: row)
     }
     
     /**
-     Display tiles for the developer.
+     Display tiles for the developer view.
     */
     fileprivate static func displayDevTiles(column: Int, row: Int) {
         if RGSharedDataManager.tileHasData(column: column, row: row) {
-            MapViewController.setTileColor(column: column, row: row, type: .saved)
+            setTileColor(column: column, row: row, type: .saved)
         } else {
-            MapViewController.setTileColor(column: column, row: row, type: .sample)
+            setTileColor(column: column, row: row, type: .sample)
         }
+    }
+    
+    /**
+     Remove tiles for production view.
+     */
+    fileprivate static func removeDevTiles(column: Int, row: Int) {
+        setTileColor(column: column, row: row, type: .none)
     }
     
     /**
      Reset all tiles to their color
      */
-    static func resetTiles() {
-        for row in 0...MapViewController.map.numberOfRows {
-            for column in 0...MapViewController.map.numberOfColumns {
+    fileprivate static func resetTiles() {
+        for row in 0...map.numberOfRows {
+            for column in 0...map.numberOfColumns {
                 if RGSharedDataManager.appMode == .dev {
                     displayDevTiles(column: column, row: row)
+                } else if RGSharedDataManager.appMode == .prod {
+                    removeDevTiles(column: column, row: row)
                 }
             }
         }
@@ -271,7 +276,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         // Get the location of the center of the tile that represents the current location
-        let location = MapViewController.map.centerOfTile(atColumn: currentLocation.1, row: currentLocation.0)
+        let location = map.centerOfTile(atColumn: currentLocation.1, row: currentLocation.0)
         
         // Animate moving from the last location to the new position in the number of seconds
         let move = SKAction.move(to: location, duration: 0.3)
@@ -332,17 +337,49 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         move.timingMode = .easeOut
         
         // Run the animation
-        MapViewController.scene.camera?.run(move, withKey: "localising")
+        scene.camera?.run(move, withKey: "localising")
     }
     
     /**
      Resets the camera rotation to initial angle (0) and stops the *shouldRotate* event.
      */
     static func resetCameraRotation() {
-        MapViewController.shouldRotateMap = false
+        shouldRotateMap = false
+        
         let rotation = SKAction.rotate(toAngle: 0, duration: 0.3, shortestUnitArc: true)
         rotation.timingMode = .linear
-        MapViewController.scene.camera?.run(rotation, withKey: "moving")
+        scene.camera?.run(rotation, withKey: "moving")
+    }
+    
+    /**
+     Resets the view accordingly to the app mode.
+     
+     - parameter for: App mode to be switched to.
+    */
+    static func resetView(for appMode: AppMode) {
+        switch appMode {
+        case .dev:
+            do {
+                resetTiles()
+                bottomSheetVC.addDevButton()
+            }
+        case .prod:
+            do{
+                resetTiles()
+                bottomSheetVC.removeDevButton()
+            }
+        }
+    }
+    
+    /**
+     Changes the texture of the background node (which represents the map)
+     
+     - parameter to: The image data.
+    */
+    static func changeMap(to imageData: NSData?) {
+        if let image = UIImage(data: imageData! as Data) {
+            backgroundNode.texture = SKTexture(cgImage: image.cgImage!)
+        }
     }
 }
 

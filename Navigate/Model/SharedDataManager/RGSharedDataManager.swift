@@ -11,7 +11,11 @@ import CoreData
 class RGSharedDataManager: NSObject {
     
     // App mode
-    static var appMode: AppMode = .prod
+    static var appMode: AppMode = .prod {
+        didSet {
+            MapViewController.resetView(for: appMode)
+        }
+    }
     
     // Room information
     static var selectedRoom: String?
@@ -20,6 +24,7 @@ class RGSharedDataManager: NSObject {
     static var floor: Floor! {
         didSet {
             selectedRoom = ""
+            MapViewController.changeMap(to: floor.image)
         }
     }
     
@@ -67,6 +72,9 @@ class RGSharedDataManager: NSObject {
                         PersistenceService.saveContext()
                     }
                 }
+                
+                // Set the app mode to dev to display log and develop app
+                RGSharedDataManager.appMode = .dev
             } else {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)

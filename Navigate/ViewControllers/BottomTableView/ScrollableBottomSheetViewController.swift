@@ -21,6 +21,8 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var devSeparatorView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
+    
+    var addButton: UIButton!
 
     // Tells if user is using the search bar to filter/search for data.
     internal var isSearching = false
@@ -106,13 +108,11 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     /**
      Adds the dev button **+** that performs segue to the control panel for the floor and rooms.
-     Only executes if app mode is in dev.
     */
-    fileprivate func addDevButton() {
-        if RGSharedDataManager.appMode == .dev {
-            
+    func addDevButton() {
+        if viewIfLoaded != nil {
             // add room button
-            let addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
+            addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
             addButton.setTitle("+", for: .normal)
             addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
             addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
@@ -123,6 +123,13 @@ class ScrollableBottomSheetViewController: UIViewController {
             
             // Fix constraint for the search bar
             searchBarWidthConstraint.constant -= (addButton.frame.width - 4)
+        }
+    }
+    
+    func removeDevButton() {
+        if viewIfLoaded != nil {
+            searchBarWidthConstraint.constant += (addButton.frame.width - 4)
+            addButton.removeFromSuperview()
         }
     }
     
@@ -168,9 +175,6 @@ class ScrollableBottomSheetViewController: UIViewController {
         // Change status label style
         statusLabel.textColor = UIColor.gray
         statusLabel.text = "Status"
-        
-        // Add the dev button if in dev mode
-        addDevButton()
     }
     
     /**

@@ -46,7 +46,7 @@ class MapButtonsView: UIView {
         addHeadingButton()
         
         // Disable the buttons
-        // disableButtons()
+        // disableButtons() TODO: should be disabled?
     }
     
     required init?(coder aDecoder: NSCoder) {

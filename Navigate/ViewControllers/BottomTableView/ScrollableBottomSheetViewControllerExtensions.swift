@@ -188,8 +188,31 @@ extension ScrollableBottomSheetViewController: UIPickerViewDelegate, UIPickerVie
 
 extension ScrollableBottomSheetViewController: UISearchBarDelegate {
     
+    /**
+     Checks if text is one of the secret commands. See **SecretCommands** enum.
+     
+     - parameter text: Represents the text to be verified
+    */
+    func checkForSecretCommands(text: String) {
+        switch text.lowercased() {
+        case SecretCommands.switchToDevMode.rawValue:
+            do {
+                RGSharedDataManager.appMode = .dev
+            }
+        case SecretCommands.switchToProdMode.rawValue:
+            do {
+                RGSharedDataManager.appMode = .prod
+            }
+        default:
+            break
+        }
+    }
+    
     // Set the filtered data
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // Activate secret command if matches raw value
+        checkForSecretCommands(text: searchText)
         
         if searchText.isEmpty {
             isSearching = false

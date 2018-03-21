@@ -41,7 +41,7 @@ extension MapViewController {
             let tapLocation = tap.location(in: view)
         
             // Only activate gesture if bottomSheetVC is closed
-            if tapLocation.y > bottomSheetVC.view.frame.minY {
+            if tapLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
                 return
             }
             
@@ -94,7 +94,7 @@ extension MapViewController {
         
         // Only activate gesture if bottomSheetVC is closed
         let panLocation = pan.location(in: self.view)
-        if panLocation.y > bottomSheetVC.view.frame.minY {
+        if panLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
             return
         }
         
@@ -183,7 +183,7 @@ extension MapViewController {
         
         // Only activate gesture if bottomSheetVC is closed
         let pinchLocation = pinch.location(in: self.view)
-        if pinchLocation.y > bottomSheetVC.view.frame.minY {
+        if pinchLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
             return
         }
         

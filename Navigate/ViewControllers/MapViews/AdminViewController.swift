@@ -25,9 +25,6 @@ class AdminViewController: UIViewController {
     // Boolean to check if image has been picked
     var imagePicked = false
     
-    // Parent View Controller
-    var parentVC: MapViewController!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +62,7 @@ class AdminViewController: UIViewController {
     */
     fileprivate func setDelegates() {
         imagePicker.delegate = self
+        floorLevelTextField.delegate = self
     }
     
     /**
@@ -96,8 +94,8 @@ class AdminViewController: UIViewController {
                 if imagePicked {
                     RGSharedDataManager.addFloor(level: floorLevel, mapImage: (UIImagePNGRepresentation(floorMapImageView.image!) as NSData?)!)
                     
-                    parentVC.bottomSheetVC.updatePickerData()
-                    presentAlert(title: "Success", message: "A floro has been created.", completion: {
+                    MapViewController.bottomSheetVC.updatePickerData()
+                    presentAlert(title: "Success", message: "A floor has been created.", completion: {
                         self.floorLevelTextField.text = ""
                         self.floorMapImageView.contentMode = .scaleAspectFit
                         self.floorMapImageView.image = UIImage(named: "addimage")
@@ -107,7 +105,7 @@ class AdminViewController: UIViewController {
                     presentAlert(title: "Error", message: "An image map must be selected.", completion: nil)
                 }
             } else {
-                presentAlert(title: "Error", message: "Floor level cannot be empty.", completion: nil)
+                presentAlert(title: "Error", message: "Floor level cannot be empty and must be a number.", completion: nil)
             }
         }
     }
@@ -128,7 +126,7 @@ class AdminViewController: UIViewController {
                     } else {
                         if RGSharedDataManager.addRoom(name: roomName) {
                             
-                            parentVC.bottomSheetVC.updateTableData()
+                            MapViewController.bottomSheetVC.updateTableData()
                             presentAlert(title: "Success", message: "A room has been created.") {
                                 self.roomNameTextField.text = ""
                             }
@@ -170,5 +168,29 @@ extension AdminViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         // Dismiss the image picker controller
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AdminViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // Check if contains a plus / minus
+        if range.location == 0 {
+            if string == "+" || string == "-" {
+                return true
+            }
+        }
+        
+        // Check if the replacement string is a digit
+        if let _ = Int(string) {
+            return true
+        }
+        
+        // Check for deletion
+        if string == "" {
+            return true
+        }
+        
+        return false
     }
 }

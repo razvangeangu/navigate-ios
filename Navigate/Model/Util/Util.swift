@@ -10,6 +10,14 @@ import Foundation
 import UIKit
 
 /**
+ Commands available from the search bar.
+ */
+enum SecretCommands: String {
+    case switchToDevMode = "chamber of secrets"
+    case switchToProdMode = "cowboy"
+}
+
+/**
  Commands available for the external bluetooth device.
  */
 enum RGCommands: String {

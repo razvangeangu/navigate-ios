@@ -21,7 +21,8 @@
 		18309F5A202918BE009F5CDD /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F59202918BE009F5CDD /* BLEService.swift */; };
 		18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F5B20291983009F5CDD /* BLEServiceProperties.swift */; };
 		18309F6320291F30009F5CDD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18309F6220291F30009F5CDD /* MapViewController.swift */; };
-		1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */; };
+		1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */; };
+		183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */; };
 		18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtonsView.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
@@ -90,7 +91,8 @@
 		18309F59202918BE009F5CDD /* BLEService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEService.swift; sourceTree = "<group>"; };
 		18309F5B20291983009F5CDD /* BLEServiceProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEServiceProperties.swift; sourceTree = "<group>"; };
 		18309F6220291F30009F5CDD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerGestureRecognisers.swift; sourceTree = "<group>"; };
+		1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerExtensions.swift; sourceTree = "<group>"; };
+		183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsViewExtensions.swift; sourceTree = "<group>"; };
 		18363B6E205C383700FC17F4 /* MapButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsView.swift; sourceTree = "<group>"; };
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -312,8 +314,9 @@
 			isa = PBXGroup;
 			children = (
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
-				1830E3EE205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift */,
+				1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */,
 				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
+				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
 				1858761F205D5CAC008CF624 /* AdminViewController.swift */,
 			);
 			path = MapViews;
@@ -542,6 +545,7 @@
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18DCD750206068A60003644D /* AccessPoint+CoreDataClass.swift in Sources */,
+				183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */,
 				18DCD754206068A70003644D /* Room+CoreDataClass.swift in Sources */,
@@ -552,7 +556,7 @@
 				18DCD758206069F50003644D /* RGSharedDataManagerTilesExtension.swift in Sources */,
 				18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
-				1830E3EF205717DE00F39ABA /* MapViewControllerGestureRecognisers.swift in Sources */,
+				1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */,
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */,
