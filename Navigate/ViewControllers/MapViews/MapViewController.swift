@@ -47,6 +47,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // Booleans for the visuals controlled by the map buttons
     static var shouldCenterMap = false
     static var shouldRotateMap = false
+    static var shouldShowPath = false
     
     // The location manager for the heading/bearing of the device
     let locationManager: CLLocationManager = {
@@ -127,16 +128,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            // RGSharedDataManager.disconnect()
-            let currentLocation = RGLocalisation.currentLocation
-            if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
-                if let toTile = RGSharedDataManager.getTile(col: 3, row: 3) {
-                    MapViewController.navigation.moveTo(fromTile: fromTile, toTile: toTile)
-                    if let path = MapViewController.navigation.shortestPath {
-                        MapViewController.showCurrentPath(path)
-                    }
-                }
-            }
+            RGSharedDataManager.disconnect()
         }
     }
     
@@ -312,6 +304,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         if shouldCenterMap {
             centerToLocation()
         }
+        
+        if shouldShowPath {
+            showPath(to: (RGNavigation.shortestPath?.last)!)
+        }
     }
     
     /**
@@ -413,6 +409,21 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         for tile in currentPath {
             setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
+        }
+    }
+    
+    /**
+     Show the shortest path to the tile on the map
+     
+     - parameter to: The destination location as a **Tile**.
+     */
+    static func showPath(to tile: Tile) {
+        let currentLocation = RGLocalisation.currentLocation
+        if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
+            RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
+            if let path = RGNavigation.shortestPath {
+                MapViewController.showCurrentPath(path)
+            }
         }
     }
 }

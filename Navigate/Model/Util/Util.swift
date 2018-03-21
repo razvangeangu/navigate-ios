@@ -26,9 +26,13 @@ enum RGCommands: String {
     case restartServer = "cd /root/navigate-server && forever restartall"
 }
 
+/**
+ An enum used for Tiles from Core Data.
+ */
 enum CDTileType: String {
     case space = "space"
     case wall = "wall"
+    case door = "door"
 }
 
 /**

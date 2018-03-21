@@ -92,7 +92,7 @@ extension RGSharedDataManager {
     /**
      Removes a floor that matches the level from the core data.
      
-     - parameter with floorLevel: The floor level to be removed
+     - parameter with: The floor level to be removed
      
      - Returns: **true** if successfully removes the floor, **false** otherwise
      */

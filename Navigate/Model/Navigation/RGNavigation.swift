@@ -8,14 +8,21 @@
 
 import Foundation
 
+// https://www.raywenderlich.com/105437/implement-pathfinding-swift
 class RGNavigation: NSObject, PathfinderDataSource {
-    private let pathFinder = AStarPathfinder()
-    var shortestPath: [Tile]?
+    private static let pathFinder = AStarPathfinder()
+    static var shortestPath: [Tile]? {
+        didSet {
+            if (shortestPath?.count)! > 0 {
+                MapViewController.showPath(to: (shortestPath?.last)!)
+            }
+        }
+    }
     
     override init() {
         super.init()
         
-        pathFinder.dataSource = self
+        RGNavigation.pathFinder.dataSource = self
     }
     
     internal func walkableAdjacentTilesForTile(tile: Tile) -> [Tile] {
@@ -27,8 +34,12 @@ class RGNavigation: NSObject, PathfinderDataSource {
         return 1
     }
     
-    func moveTo(fromTile: Tile, toTile: Tile) {
-        shortestPath = pathFinder.shortestPath(fromTile: fromTile, toTile: toTile)
+    static func moveTo(fromTile: Tile, toTile: Tile) {
+        RGNavigation.shortestPath = RGNavigation.pathFinder.shortestPath(fromTile: fromTile, toTile: toTile)
+    }
+    
+    static func getShortestPath(fromTile: Tile, toTile: Tile) -> [Tile]? {
+        return RGNavigation.pathFinder.shortestPath(fromTile: fromTile, toTile: toTile)
     }
 }
 

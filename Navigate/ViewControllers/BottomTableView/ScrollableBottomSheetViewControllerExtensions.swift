@@ -63,15 +63,40 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
     // Select and update the model
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)!
-
+        let selectedRoomName: String!
+        
         // If it is searching get the data from the filtered data array
         if isSearching {
-            RGSharedDataManager.selectedRoom = tableViewFilteredData[indexPath.row]
+            selectedRoomName = tableViewFilteredData[indexPath.row]
             
         // Otherwise get the data from the normal data array
         } else {
-            RGSharedDataManager.selectedRoom = tableViewData[indexPath.row]
+            selectedRoomName = tableViewData[indexPath.row]
         }
+        
+        
+        // TODO: move this logic from here?
+        guard let selectedRoom = RGSharedDataManager.getRoom(name: selectedRoomName!, floor: RGSharedDataManager.floor) else { return }
+        guard let doors = RGSharedDataManager.getDoors(for: selectedRoom) else { return }
+        guard let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) else { return }
+        
+        var maxCount = Int.max
+        var closestDoor: Tile?
+        for door in doors {
+            if let shortestPath = RGNavigation.getShortestPath(fromTile: fromTile, toTile: door) {
+                if shortestPath.count < maxCount {
+                    maxCount = shortestPath.count
+                    closestDoor = door
+                }
+            }
+        }
+        
+        if let door = closestDoor {
+            RGNavigation.moveTo(fromTile: fromTile, toTile: door)
+            MapViewController.shouldShowPath = true
+        }
+        
+        RGSharedDataManager.selectedRoom = selectedRoomName
         
         // Add visual feedback for the selected cell
         selectedCell.accessoryType = .checkmark

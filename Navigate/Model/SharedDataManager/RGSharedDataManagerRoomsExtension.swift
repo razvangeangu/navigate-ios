@@ -74,7 +74,7 @@ extension RGSharedDataManager {
     /**
      Removes a room that matches the name from the core data.
      
-     - parameter with roomName: The room name to be removed
+     - parameter with: The room name to be removed
      
      - Returns: **true** if successfully removes the room, **false** otherwise
      */
@@ -85,5 +85,21 @@ extension RGSharedDataManager {
         }
         
         return false
+    }
+    
+    /**
+     Get the doors for the room.
+     
+     - parameter for: The room for which the doors (as **Tile**) need to be fine.
+     */
+    static func getDoors(for room: Room) -> [Tile]? {
+        var doors = [Tile]()
+        for case let tile as Tile in room.tiles! {
+            if tile.type == CDTileType.door.rawValue {
+                doors.append(tile)
+            }
+        }
+        
+        return doors
     }
 }
