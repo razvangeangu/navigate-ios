@@ -59,6 +59,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // The navigation model
     static var navigation: RGNavigation!
     
+    static var mapTileEdit: MapTileEditViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,6 +109,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Add the bottom view
         addBottomSheetView()
         
+        // Add the map tile edit control buttons
+        addMapTileEditButton()
+        
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
         
@@ -128,6 +133,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
+            RGLocalisation.currentLocation = (-1, -1)
             RGSharedDataManager.disconnect()
         }
     }
@@ -206,40 +212,34 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         self.view.addSubview(MapViewController.mapButtonsView)
     }
     
+    fileprivate func addMapTileEditButton() {
+        // Add MapTileEdit
+        MapViewController.mapTileEdit = MapTileEditViewController(frame: CGRect(x: MapViewController.mapButtonsView.frame.minX, y: MapViewController.mapButtonsView.frame.maxY, width: 40, height: 40))
+        view.insertSubview(MapViewController.mapTileEdit, at: 0)
+        
+        if RGSharedDataManager.appMode == .prod {
+            MapViewController.mapTileEdit.isHidden = true
+        }
+    }
+    
     /**
      Set tile blue as "active"
      
      - parameter column: The column of the tile.
      - parameter row: The row of the tile.
-     - parameter type: The group type of the tile (as expressed by the RGTileType class)
+     - parameter type: The group type of the tile (as expressed by the CDTileType class)
      */
-    static func setTileColor(column: Int, row: Int, type: RGTileType) {
+    static func setTileColor(column: Int, row: Int, type: CDTileType) {
         var tileGroup: SKTileGroup!
         
         switch type {
-        case .sample:
-            do {
-                tileGroup = map.tileSet.tileGroups.first(
-                    where: {$0.name == "sample"})
-            }
-        case .saved:
-            do {
-                tileGroup = map.tileSet.tileGroups.first(
-                    where: {$0.name == "saved"})
-            }
-        case .location:
-            do {
-                tileGroup = map.tileSet.tileGroups.first(
-                    where: {$0.name == "location"})
-            }
-        case .navigation:
-            do {
-                tileGroup = map.tileSet.tileGroups.first(
-                    where: {$0.name == "navigation"})
-            }
         case .none:
             do {
                 tileGroup = SKTileGroup.empty()
+            }
+        default:
+            do {
+                tileGroup = map.tileSet.tileGroups.first(where: {$0.name == type.rawValue})
             }
         }
         
@@ -250,8 +250,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Display tiles for the developer view.
      */
     fileprivate static func displayDevTiles(column: Int, row: Int) {
-        if RGSharedDataManager.tileHasData(column: column, row: row) {
-            setTileColor(column: column, row: row, type: .saved)
+        guard let tile = RGSharedDataManager.getTile(col: column, row: row) else { return }
+        
+        if let type = tile.type {
+            guard let tileType = CDTileType(rawValue: type) else { return }
+            setTileColor(column: column, row: row, type: tileType)
         } else {
             setTileColor(column: column, row: row, type: .sample)
         }
@@ -307,10 +310,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Center the map if option is activated
         if shouldCenterMap {
             centerToLocation()
-        }
-        
-        if shouldShowPath {
-            showPath(to: (RGNavigation.shortestPath?.last)!)
         }
     }
     
@@ -383,11 +382,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             do {
                 resetTiles()
                 bottomSheetVC.addDevButton()
+                if MapViewController.mapTileEdit != nil {
+                    MapViewController.mapTileEdit.isHidden = false
+                }
             }
         case .prod:
             do{
                 resetTiles()
                 bottomSheetVC.removeDevButton()
+                
+                if MapViewController.mapTileEdit != nil {
+                    MapViewController.mapTileEdit.isHidden = true
+                }
             }
         }
     }
@@ -404,30 +410,33 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /**
-     Show current path on the view
-     
-     - parameter currentPath: The path that contains the tiles to display the navigation items.
-     */
-    static func showCurrentPath(_ currentPath: [Tile]) {
-        resetTiles()
-        
-        for tile in currentPath {
-            setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
-        }
-    }
-    
-    /**
      Show the shortest path to the tile on the map
      
      - parameter to: The destination location as a **Tile**.
      */
     static func showPath(to tile: Tile) {
-        let currentLocation = RGLocalisation.currentLocation
-        if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
-            RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
-            if let path = RGNavigation.shortestPath {
-                MapViewController.showCurrentPath(path)
+        if RGSharedDataManager.appMode != .dev {
+            let currentLocation = RGLocalisation.currentLocation
+            if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
+                RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
             }
+            
+            guard let currentPath = RGNavigation.shortestPath else { return }
+            
+            resetTiles()
+            
+            for tile in currentPath {
+                setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
+            }
+        }
+    }
+    
+    /**
+     Remove the location node from the view
+     */
+    static func removeLocationNode() {
+        if locationNode.alpha == 1 {
+            locationNode.alpha = 0
         }
     }
 }

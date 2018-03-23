@@ -17,14 +17,21 @@ extension RGSharedDataManager {
      */
     static func saveDataToTile(column: Int, row: Int) -> Bool {
         
-        // Get the APs from the BLE service
-        guard let accessPoints = getAccessPoints() else { return false }
-        
         // Get the tile from CoreData
         guard let tile = getTile(col: column, row: row) else { return false }
         
+        // If the tile needs to be overwritten
+        if tileType == .sample {
+            resetTile(column: column, row: row)
+            return true
+        }
+        
+        // Get the APs from the BLE service
+        guard let accessPoints = getAccessPoints() else { return false }
+        
         // Add the room to the tile
         if let tileRoom = getRoom(name: selectedRoom!, floor: self.floor) {
+            // Set the room for this tile
             tile.room = tileRoom
         } else {
             // Create new room
@@ -45,6 +52,9 @@ extension RGSharedDataManager {
         
         // Add the APs data
         tile.accessPoints = accessPoints
+        
+        // Set the type of the tile
+        tile.type = tileType.rawValue
         
         // Add tile to APs
         for accessPoint in accessPoints {
@@ -131,5 +141,40 @@ extension RGSharedDataManager {
         }
         
         return adjacentTiles
+    }
+    
+    static func resetTile(column: Int, row: Int) {
+        guard let tile = getTile(col: column, row: row) else { return }
+        
+        tile.accessPoints = nil
+        tile.type = CDTileType.sample.rawValue
+        
+        // Save the context to CoreData
+        PersistenceService.saveContext()
+    }
+    
+    /**
+     Init tiles for the floor.
+     
+     - parameter floor: The current floor to create tiles for.
+     */
+    static func createTiles(for floor: Floor) {
+        for i in 0...numberOfRows - 1 {
+            for j in 0...numberOfColumns - 1 {
+                // Create a new tile
+                let tile = Tile(context: PersistenceService.context)
+                
+                // Set the location for the tile
+                tile.row = Int16(i)
+                tile.col = Int16(j)
+                tile.type = CDTileType.sample.rawValue
+                
+                // Add tile to the floor
+                floor.addToTiles(tile)
+                
+                // Save the context to CoreData
+                PersistenceService.saveContext()
+            }
+        }
     }
 }

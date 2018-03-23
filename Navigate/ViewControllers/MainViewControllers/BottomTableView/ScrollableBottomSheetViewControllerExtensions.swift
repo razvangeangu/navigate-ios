@@ -2,6 +2,7 @@
 //  ScrollableBottomSheetViewControllerExtensions.swift
 //  Navigate
 //
+//  https://github.com/AhmedElassuty/BottomSheetController
 //  Modified by Răzvan-Gabriel Geangu on 16/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
@@ -125,7 +126,6 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
         return false
     }
     
-    // https://github.com/AhmedElassuty/BottomSheetController
     @objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         let velocity = recognizer.velocity(in: self.view)

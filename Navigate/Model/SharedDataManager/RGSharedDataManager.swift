@@ -48,30 +48,7 @@ class RGSharedDataManager: NSObject {
         }
     }
     
-    /**
-     Init tiles for the floor.
-     
-     - parameter floor: The current floor to create tiles for.
-    */
-    fileprivate static func createTiles(for floor: Floor) {
-        for i in 0...numberOfRows - 1 {
-            for j in 0...numberOfColumns - 1 {
-                // Create a new tile
-                let tile = Tile(context: PersistenceService.context)
-                
-                // Set the location for the tile
-                tile.row = Int16(i)
-                tile.col = Int16(j)
-                tile.type = CDTileType.space.rawValue
-                
-                // Add tile to the floor
-                floor.addToTiles(tile)
-                
-                // Save the context to CoreData
-                PersistenceService.saveContext()
-            }
-        }
-    }
+    static var tileType: CDTileType!
     
     /**
      Init data for when the application is open for the first time

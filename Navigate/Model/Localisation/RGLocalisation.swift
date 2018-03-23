@@ -26,7 +26,13 @@ class RGLocalisation: NSObject {
                     
                     // Show the current location
                     MapViewController.showCurrentLocation(currentLocation)
+                    
+                    // Show the current path
+                    if let _ = RGNavigation.destinationTile {
+                        MapViewController.showPath(to: RGNavigation.destinationTile)
+                    }
                 } else {
+                    MapViewController.removeLocationNode()
                     MapViewController.devLog(data: "Location not found..")
                 }
             }
@@ -39,7 +45,10 @@ class RGLocalisation: NSObject {
      and the one saved in the database.
      */
     static func detectLocation() {
-        let currentAccessPoints = RGSharedDataManager.getAccessPoints()!
+        guard let currentAccessPoints = RGSharedDataManager.getAccessPoints() else {
+            currentLocation = (-1, -1)
+            return
+        }
         
         DispatchQueue.global(qos: .background).async {
             // A 2D array that holds the data of the APs

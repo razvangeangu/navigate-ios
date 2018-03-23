@@ -35,7 +35,10 @@ extension MapViewController {
             if tap.state != .ended { return }
         
             // If external device is not connected then do not try to execute tap functions
-            if !BLEService.isConnected { return }
+            if !BLEService.isConnected {
+                MapViewController.devLog(data: "The external device must be connected")
+                return
+            }
         
             // Get the row and column of the taped square/tile
             let tapLocation = tap.location(in: view)
@@ -49,7 +52,7 @@ extension MapViewController {
             guard let _ = RGSharedDataManager.selectedRoom else {
                 
                 // Give feedback to the admin
-                MapViewController.devLog(data: "A room needs to be selected")
+                MapViewController.devLog(data: "A room must to be selected")
                 return
             }
         
@@ -65,19 +68,38 @@ extension MapViewController {
         
             // Dev data
             MapViewController.devLog(data: "Touched Tile(\(column),\(row))")
-        
-            // If the model has not got any data for the specified location proceed
-            if !RGSharedDataManager.tileHasData(column: column, row: row) {
                 
-                // If the model has been able to save data for the specific column and row
-                if RGSharedDataManager.saveDataToTile(column: column, row: row) {
-                    
-                    // Save the tile (visually)
-                    MapViewController.setTileColor(column: column, row: row, type: .saved)
-                }
-            } else {
-                MapViewController.devLog(data: "AccessPoint already has data")
+            // If the model has been able to save data for the specific column and row
+            if RGSharedDataManager.saveDataToTile(column: column, row: row) {
+                
+                // Save the tile (visually)
+                MapViewController.setTileColor(column: column, row: row, type: RGSharedDataManager.tileType)
             }
+        } else if RGSharedDataManager.appMode == .prod {
+            if tap.state != .ended { return }
+            
+            // If external device is not connected then do not try to execute tap functions
+            if !BLEService.isConnected { return }
+            
+            // Get the row and column of the taped square/tile
+            let tapLocation = tap.location(in: view)
+            
+            // Only activate gesture if bottomSheetVC is closed
+            if tapLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
+                return
+            }
+            
+            if RGLocalisation.currentLocation == (-1, -1) { return }
+            
+            // Detect the location from the view in the scene
+            let location = MapViewController.scene.convertPoint(fromView: tapLocation)
+            
+            // Row and Column for the tapped location
+            let column = MapViewController.map.tileColumnIndex(fromPosition: location)
+            let row = MapViewController.map.tileRowIndex(fromPosition: location)
+            
+            guard let destinationTile = RGSharedDataManager.getTile(col: column, row: row) else { return }
+            RGNavigation.destinationTile = destinationTile
         }
     }
     
@@ -240,10 +262,10 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Get the angle of Bush House relative to magnetic north
-        let angle = CGFloat((newHeading.magneticHeading - 60).toRadians)
+        let angle = CGFloat((newHeading.trueHeading - 7).toRadians)
         
         // Get the heading for North
-        let northAngle = CGFloat(newHeading.magneticHeading.toRadians)
+        let northAngle = CGFloat(newHeading.trueHeading.toRadians)
         
         // Animate the location node
         let rotation = SKAction.rotate(toAngle: -angle, duration: 0.6, shortestUnitArc: true)
@@ -254,7 +276,7 @@ extension MapViewController: CLLocationManagerDelegate {
             
             // Animate the heading node
             UIView.animate(withDuration: 0.6, delay: 0, options: [.allowUserInteraction], animations: {
-                MapViewController.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: -northAngle)
+                MapViewController.mapButtonsView.headingView.transform = CGAffineTransform(rotationAngle: northAngle)
                 
                 // Animate the camera node
                 let rotation = SKAction.rotate(toAngle: -angle, duration: 0.8, shortestUnitArc: true)

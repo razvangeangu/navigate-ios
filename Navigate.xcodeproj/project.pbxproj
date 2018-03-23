@@ -49,6 +49,7 @@
 		18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */; };
 		18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */; };
 		18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD76020607CAA0003644D /* RGBackButton.swift */; };
+		18DFE2252062EB6400B42175 /* MapTileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerFloorExtension.swift; sourceTree = "<group>"; };
 		18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerBLEExtension.swift; sourceTree = "<group>"; };
 		18DCD76020607CAA0003644D /* RGBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBackButton.swift; sourceTree = "<group>"; };
+		18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTileEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +318,7 @@
 				1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */,
 				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
 				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
+				18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */,
 			);
 			path = MainViewControllers;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				18DCD753206068A60003644D /* Floor+CoreDataProperties.swift in Sources */,
+				18DFE2252062EB6400B42175 /* MapTileEditViewController.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,

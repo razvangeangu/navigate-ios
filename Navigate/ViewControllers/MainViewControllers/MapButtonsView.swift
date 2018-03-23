@@ -96,7 +96,7 @@ class MapButtonsView: UIView {
     fileprivate func addSeparator() {
         
         // Initialise the separator view
-        let separator = UIView(frame: CGRect(x: 0, y: cameraButton.frame.height, width: 40, height: 1))
+        let separator = UIView(frame: CGRect(x: 0, y: cameraButton.frame.height, width: cameraButton.frame.width, height: 1))
         separator.backgroundColor = .init(red: 216, green: 216, blue: 216, a: 1.0)
         
         // Add the separator to the buttons view

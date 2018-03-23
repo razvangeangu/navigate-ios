@@ -30,20 +30,13 @@ enum RGCommands: String {
  An enum used for Tiles from Core Data.
  */
 enum CDTileType: String {
+    case sample = "sample"
     case space = "space"
     case wall = "wall"
     case door = "door"
-}
-
-/**
- An enum used for tile types.
- */
-enum RGTileType {
-    case saved
-    case sample
-    case location
-    case none
-    case navigation
+    case none = "none"
+    case location = "location"
+    case navigation = "navigation"
 }
 
 /**
