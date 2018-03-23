@@ -20,6 +20,11 @@ extension RGSharedDataManager {
         // Get the tile from CoreData
         guard let tile = getTile(col: column, row: row) else { return false }
         
+        guard let tileType = tileType else {
+            MapViewController.devLog(data: "A tile type must be selected.")
+            return false
+        }
+        
         // If the tile needs to be overwritten
         if tileType == .sample {
             resetTile(column: column, row: row)

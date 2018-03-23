@@ -118,6 +118,13 @@ extension UIViewController {
     }
 }
 
+extension Float {
+    // http://texnotes.me/post/5/
+    static func randomBetween(_ first: Float, and second: Float) -> Float {
+        return (Float(arc4random()) / Float(UInt32.max)) * (first - second) + second
+    }
+}
+
 /**
  Checks if text is one of the secret commands. See **SecretCommands** enum.
  

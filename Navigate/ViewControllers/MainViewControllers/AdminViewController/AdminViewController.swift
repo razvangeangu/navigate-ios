@@ -18,6 +18,7 @@ class AdminViewController: UIViewController {
     @IBOutlet weak var loadFloorMapButton: UIButton!
     @IBOutlet weak var floorMapImageView: UIImageView!
     @IBOutlet weak var selectedFloorLabel: UILabel!
+    @IBOutlet weak var updateDataOnlineButton: UIButton!
     
     // Image Picker Controller
     let imagePicker = UIImagePickerController()
@@ -214,6 +215,13 @@ class AdminViewController: UIViewController {
     @IBAction func didPressLoadFloorMap(_ sender: Any) {
         imagePicker.sourceType = .photoLibrary
         self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    /**
+     Updates the data of the map to the online server.
+     */
+    @IBAction func didPressUpdateDataButton(_ sender: Any) {
+        
     }
 }
 

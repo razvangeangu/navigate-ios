@@ -73,7 +73,7 @@ extension MapViewController {
             if RGSharedDataManager.saveDataToTile(column: column, row: row) {
                 
                 // Save the tile (visually)
-                MapViewController.setTileColor(column: column, row: row, type: RGSharedDataManager.tileType)
+                MapViewController.setTileColor(column: column, row: row, type: RGSharedDataManager.tileType!)
             }
         } else if RGSharedDataManager.appMode == .prod {
             if tap.state != .ended { return }
@@ -266,6 +266,8 @@ extension MapViewController: CLLocationManagerDelegate {
         
         // Get the heading for North
         let northAngle = CGFloat(newHeading.trueHeading.toRadians)
+        
+        RGSharedDataManager.heading = Float(-angle)
         
         // Animate the location node
         let rotation = SKAction.rotate(toAngle: -angle, duration: 0.6, shortestUnitArc: true)

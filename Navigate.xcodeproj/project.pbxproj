@@ -50,6 +50,7 @@
 		18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */; };
 		18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD76020607CAA0003644D /* RGBackButton.swift */; };
 		18DFE2252062EB6400B42175 /* MapTileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */; };
+		18E0E4042065442300C173AC /* ARRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0E4032065442300C173AC /* ARRing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,7 @@
 		18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerBLEExtension.swift; sourceTree = "<group>"; };
 		18DCD76020607CAA0003644D /* RGBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBackButton.swift; sourceTree = "<group>"; };
 		18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTileEditViewController.swift; sourceTree = "<group>"; };
+		18E0E4032065442300C173AC /* ARRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				182519001FAF454A0005F5F6 /* ARViewController.swift */,
+				18E0E4032065442300C173AC /* ARRing.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				18DFE2252062EB6400B42175 /* MapTileEditViewController.swift in Sources */,
 				182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */,
 				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
+				18E0E4042065442300C173AC /* ARRing.swift in Sources */,
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
 				18DCD750206068A60003644D /* AccessPoint+CoreDataClass.swift in Sources */,
@@ -742,6 +746,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razvangeangu.Navigate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -760,6 +765,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9Y67R9P3DN;
 				INFOPLIST_FILE = Navigate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razvangeangu.Navigate;
 				PRODUCT_NAME = "$(TARGET_NAME)";

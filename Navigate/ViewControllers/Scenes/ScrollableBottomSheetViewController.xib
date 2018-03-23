@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +16,7 @@
                 <outlet property="headerView" destination="Jqb-lC-sL5" id="2Bt-iO-hyv"/>
                 <outlet property="pickerView" destination="eR3-Ez-Vae" id="1nn-UZ-IHj"/>
                 <outlet property="searchBar" destination="lCb-mm-wKD" id="kw1-PU-tqZ"/>
-                <outlet property="searchBarWidthConstraint" destination="stC-GH-Xew" id="WMB-0b-rJu"/>
+                <outlet property="searchBarLeadingConstraint" destination="BYb-Bb-z2b" id="Nyh-ij-xjt"/>
                 <outlet property="stackView" destination="Erf-d4-QVB" id="cTQ-bW-CwH"/>
                 <outlet property="statusLabel" destination="tFQ-3b-8bG" id="Zv0-CG-qUo"/>
                 <outlet property="tableView" destination="GSW-2o-otm" id="qZN-2R-jqt"/>
@@ -67,9 +66,6 @@
                                         </pickerView>
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for room" translatesAutoresizingMaskIntoConstraints="NO" id="lCb-mm-wKD">
                                             <rect key="frame" x="48" y="22" width="319" height="56"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="319" id="stC-GH-Xew"/>
-                                            </constraints>
                                             <color key="barTintColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                             <scopeButtonTitles>
@@ -81,12 +77,13 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="pir-hd-Exb" firstAttribute="centerX" secondItem="Jqb-lC-sL5" secondAttribute="centerX" id="3Nt-2u-s40"/>
-                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" constant="48" id="AIW-JB-h3M"/>
+                                        <constraint firstAttribute="trailing" secondItem="lCb-mm-wKD" secondAttribute="trailing" constant="8" id="BYb-Bb-z2b"/>
+                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="top" secondItem="Jqb-lC-sL5" secondAttribute="top" constant="22" id="OdU-vC-csz"/>
                                         <constraint firstAttribute="bottom" secondItem="tFQ-3b-8bG" secondAttribute="bottom" constant="12" id="SkR-hy-avd"/>
                                         <constraint firstAttribute="height" constant="100" id="UmJ-Zr-fpg"/>
+                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="leading" secondItem="eR3-Ez-Vae" secondAttribute="trailing" id="ZLg-HR-hId"/>
                                         <constraint firstItem="B7q-0T-Git" firstAttribute="centerX" secondItem="Jqb-lC-sL5" secondAttribute="centerX" id="bhR-fj-Vb1"/>
                                         <constraint firstItem="eR3-Ez-Vae" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" id="hg7-sa-WkR"/>
-                                        <constraint firstItem="lCb-mm-wKD" firstAttribute="centerY" secondItem="Jqb-lC-sL5" secondAttribute="centerY" id="mPY-5d-pek"/>
                                         <constraint firstAttribute="bottom" secondItem="pir-hd-Exb" secondAttribute="bottom" constant="82" id="oci-P9-DSE"/>
                                         <constraint firstItem="pir-hd-Exb" firstAttribute="top" secondItem="Jqb-lC-sL5" secondAttribute="top" constant="12" id="onz-53-EKy"/>
                                         <constraint firstItem="B7q-0T-Git" firstAttribute="leading" secondItem="Jqb-lC-sL5" secondAttribute="leading" id="qYM-Rb-wA9"/>

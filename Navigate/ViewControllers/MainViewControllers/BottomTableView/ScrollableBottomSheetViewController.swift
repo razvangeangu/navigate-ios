@@ -20,7 +20,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var devSeparatorView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var searchBarWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchBarLeadingConstraint: NSLayoutConstraint!
     
     var addButton: UIButton!
 
@@ -116,7 +116,7 @@ class ScrollableBottomSheetViewController: UIViewController {
                 headerView.addSubview(addButton)
             
                 // Fix constraint for the search bar
-                searchBarWidthConstraint.constant -= (addButton.frame.width - 4)
+                searchBarLeadingConstraint.constant += (addButton.frame.width - 4)
             }
         }
     }
@@ -124,7 +124,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     func removeDevButton() {
         if viewIfLoaded != nil {
             if addButton.superview != nil {
-                searchBarWidthConstraint.constant += (addButton.frame.width - 4)
+                searchBarLeadingConstraint.constant -= (addButton.frame.width - 4)
                 addButton.removeFromSuperview()
             }
         }
@@ -155,13 +155,13 @@ class ScrollableBottomSheetViewController: UIViewController {
         view.layer.shadowRadius = 5.0
         
         // Round the corners
-        baseView.frame = view.bounds
+        baseView.frame = view.frame
         baseView.layer.cornerRadius = 10
         baseView.layer.masksToBounds = true
         
         // Add blur effect view
         let blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blur.frame = baseView.bounds
+        blur.frame = CGRect(x: 0, y: 0, width: (parent?.view.frame.width)!, height: baseView.frame.height)
         blur.isUserInteractionEnabled = false
         baseView.insertSubview(blur, at: 0)
         
@@ -174,7 +174,7 @@ class ScrollableBottomSheetViewController: UIViewController {
         statusLabel.text = "Status"
         
         // set style for room button
-        addButton = UIButton(frame: CGRect(x: searchBar.frame.maxX - 48, y: 24, width: 48, height: 48))
+        addButton = UIButton(frame: CGRect(x: (parent?.view!.frame.width)! - 48 - searchBarLeadingConstraint.constant / 2, y: 24, width: 48, height: 48))
         addButton.setTitle("+", for: .normal)
         addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
         addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)

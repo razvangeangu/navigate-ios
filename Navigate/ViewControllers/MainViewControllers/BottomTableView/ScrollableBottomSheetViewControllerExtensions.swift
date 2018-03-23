@@ -94,7 +94,6 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
         
         if let door = closestDoor {
             RGNavigation.moveTo(fromTile: fromTile, toTile: door)
-            MapViewController.shouldShowPath = true
         }
         
         RGSharedDataManager.selectedRoom = selectedRoomName

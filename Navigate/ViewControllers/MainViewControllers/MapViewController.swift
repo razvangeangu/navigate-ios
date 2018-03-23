@@ -133,14 +133,22 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            RGLocalisation.currentLocation = (-1, -1)
-            RGSharedDataManager.disconnect()
+            // RGLocalisation.currentLocation = (-1, -1)
+            // RGSharedDataManager.disconnect()
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? AdminViewController {
             destinationVC.modalPresentationStyle = .overFullScreen
+        }
+        
+        if let destinationVC = segue.destination as? ARViewController {
+            if MapViewController.shouldShowPath {
+                if let shortestPath = RGNavigation.shortestPath {
+                    destinationVC.updatePath(to: shortestPath)
+                }
+            }
         }
     }
     
@@ -206,7 +214,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addMapButtonsView() {
         // Add the control buttons
-        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.bounds.maxX - 60, y: view.bounds.minY + 60, width: 40, height: 131))
+        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.frame.width - 60, y: 60, width: 40, height: 131))
         MapViewController.mapButtonsView.backgroundColor = .clear
         MapViewController.mapButtonsView.parentVC = self
         self.view.addSubview(MapViewController.mapButtonsView)
@@ -422,6 +430,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
             guard let currentPath = RGNavigation.shortestPath else { return }
+            
+            MapViewController.shouldShowPath = true
             
             resetTiles()
             

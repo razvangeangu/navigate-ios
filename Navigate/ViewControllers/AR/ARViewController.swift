@@ -14,6 +14,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
+    var ringNode: ARRing!
+    
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
+    
+    var xs: [Float]!
+    var zs: [Float]!
+    var pos: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,13 +30,21 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = false
+        sceneView.isUserInteractionEnabled = true
+        
+        // Init the ring node
+        ringNode = ARRing()
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
         
+        // Set ourselfs as a delegate for the session
+        sceneView.session.delegate = self
+        
+        // Init the navigation elements
         initBackButton()
     }
     
@@ -49,39 +65,42 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-    
-    // MARK: - ARSCNViewDelegate
-    
-    /*
-     // Override to create and configure nodes for anchors added to the view's session.
-     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-     let node = SCNNode()
-     
-     return node
-     }
-     */
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+    func updatePath(to path: [Tile]) {
+        var xs = [Float]()
+        var zs = [Float]()
+        let distance = RGSharedDataManager.tileLength
         
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
+        for step in path {
+            let x = Float(step.col)
+            let _ = Float(step.row)
+            
+            if xs.isEmpty {
+                xs.append(0)
+            }
+            
+            if zs.isEmpty {
+                zs.append(0)
+            }
+            
+            if x < xs.last! {
+                xs.append(-distance)
+                zs.append(0)
+            } else if x > xs.last! {
+                xs.append(distance)
+                zs.append(0)
+            } else {
+                xs.append(0)
+                zs.append(distance)
+            }
+        }
         
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        self.xs = xs
+        self.zs = zs
     }
 }
 
 extension ARViewController {
+    
     fileprivate func initBackButton() {
         let backButton = RGBackButton(frame: CGRect(x: view.frame.minX + 20, y: view.frame.minY + 40, width: 40, height: 40))
         backButton.addTarget(self, action: #selector(ARViewController.didPressBackButton), for: .touchUpInside)
@@ -90,5 +109,93 @@ extension ARViewController {
     
     @objc func didPressBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ARViewController {
+    
+    internal func moveRing(to position: SCNVector3) {
+        ringNode.position = position
+        sceneView.scene.rootNode.addChildNode(ringNode)
+    }
+    
+    internal func removeRing() {
+        if ringNode.parent != nil {
+            ringNode.removeFromParentNode()
+        }
+    }
+}
+
+extension ARViewController: ARSessionDelegate {
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        // Get the transform from the frame and the current ring node
+        let cameraTransform = frame.camera.transform
+        let nodeTransform = ringNode.transform
+        
+        // Get the position in x y z in the scene view of the device
+        var cameraPosition = SCNVector3(
+            cameraTransform.columns.3.x,
+            cameraTransform.columns.3.y,
+            cameraTransform.columns.3.z
+        )
+        
+        if pos == 0 {
+            if let heading = RGSharedDataManager.heading {
+                let headingDegrees = CGFloat(heading).toDegrees
+                let degrees: [CGFloat] = [0, 90, 180, 270]
+                let degreesDifferences = degrees.map({abs($0 - headingDegrees)})
+                let angle = degrees[degreesDifferences.index(of: degreesDifferences.min()!)!]
+                var x = 0
+
+                switch angle {
+                case 0:
+                    do {
+                        x = 0
+                    }
+                case 90:
+                    do {
+                        x = -1
+                    }
+                case 180:
+                    do {
+                        x = 0
+                    }
+                case 270:
+                    do {
+                        x = 1
+                    }
+                default:
+                    break
+                }
+
+                cameraPosition.x = Float(x)
+            }
+        }
+        
+        // Get the position in x y z in the scene view of the ring
+        let nodePosition = SCNVector3(
+            nodeTransform.m41,
+            nodeTransform.m42,
+            nodeTransform.m43
+        )
+        
+        if xs != nil && zs != nil && !xs.isEmpty && !zs.isEmpty && pos != xs.count {
+            if isInLimits(nodePosition: nodePosition, cameraPosition: cameraPosition, offset: 0.5) {
+                
+                // Give haptic feedback to the user
+                generator.impactOccurred()
+                
+                moveRing(to: SCNVector3(x: cameraPosition.x + xs[pos], y: 0, z: cameraPosition.z + zs[pos]))
+                pos += 1
+            }
+        }
+    }
+    
+    internal func isInLimits(nodePosition: SCNVector3, cameraPosition: SCNVector3, offset: Float) -> Bool {
+        return isInLimits(nodePosition.x, cameraPosition.x, offset) && isInLimits(nodePosition.y, cameraPosition.y, offset) && isInLimits(nodePosition.z, cameraPosition.z, offset)
+    }
+    
+    internal func isInLimits(_ val1: Float, _ val2: Float, _ offset: Float) -> Bool {
+        return val1 - offset < val2 && val1 + offset > val2
     }
 }
