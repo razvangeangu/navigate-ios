@@ -59,21 +59,25 @@ class RGLocalisation: NSObject {
             // Loop through all the tiles
             for case let tile as Tile in RGSharedDataManager.floor.tiles! {
                 
-                // Loop through all the APs from the each tile
-                for case let accessPoint as AccessPoint in tile.accessPoints! {
+                // If tile contains APs
+                if let accessPoints = tile.accessPoints {
                     
-                    // Loop thorugh all the APs from the current scan
-                    for case let currentAccessPoint as AccessPoint in currentAccessPoints {
+                    // Loop through all the APs from the each tile
+                    for case let accessPoint as AccessPoint in accessPoints {
                         
-                        // Compare their unique id
-                        if accessPoint.uuid == currentAccessPoint.uuid {
+                        // Loop thorugh all the APs from the current scan
+                        for case let currentAccessPoint as AccessPoint in currentAccessPoints {
                             
-                            // Compare their strength
-                            if accessPoint.strength > currentAccessPoint.strength - 5 {
-                                if accessPoint.strength < currentAccessPoint.strength + 5 {
-                                    
-                                    // Increase the similarity value of the AP / Tile
-                                    matrix[Int(tile.row)][Int(tile.col)] += 1
+                            // Compare their unique id
+                            if accessPoint.uuid == currentAccessPoint.uuid {
+                                
+                                // Compare their strength
+                                if accessPoint.strength > currentAccessPoint.strength - 5 {
+                                    if accessPoint.strength < currentAccessPoint.strength + 5 {
+                                        
+                                        // Increase the similarity value of the AP / Tile
+                                        matrix[Int(tile.row)][Int(tile.col)] += 1
+                                    }
                                 }
                             }
                         }

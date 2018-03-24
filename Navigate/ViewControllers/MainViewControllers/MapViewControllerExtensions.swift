@@ -262,10 +262,10 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         // Get the angle of Bush House relative to magnetic north
-        let angle = CGFloat((newHeading.trueHeading - 7).toRadians)
+        let angle = CGFloat((newHeading.magneticHeading - 7).toRadians)
         
         // Get the heading for North
-        let northAngle = CGFloat(newHeading.trueHeading.toRadians)
+        let northAngle = CGFloat(newHeading.magneticHeading.toRadians)
         
         RGLocalisation.heading = Float(-angle)
         

@@ -9,6 +9,21 @@
 import Foundation
 import UIKit
 
+enum RGCardinals: Float {
+    case north = 0
+    case east = 90
+    case south = 180
+    case west = 270
+}
+
+enum RGTurn {
+    case front
+    case back
+    case right
+    case left
+    case none
+}
+
 /**
  Commands available from the search bar.
  */
@@ -100,6 +115,11 @@ extension Double {
 extension CGFloat {
     var toRadians: CGFloat { return self * .pi / 180 }
     var toDegrees: CGFloat { return self * 180 / .pi }
+}
+
+extension Float {
+    var toRadians: Float { return self * .pi / 180 }
+    var toDegrees: Float { return self * 180 / .pi }
 }
 
 extension UIViewController {
