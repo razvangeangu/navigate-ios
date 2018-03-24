@@ -32,7 +32,11 @@ class MapTileEditViewController: UIView {
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 5.0
         
+        // Add base view
         addBaseView()
+        
+        // Add tile types buttons
+        addTileTypes(tileTypes: tileTypes)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,9 +64,6 @@ class MapTileEditViewController: UIView {
         
         // Add it to the view
         self.addSubview(baseView)
-        
-        // Add tile types buttons
-        addTileTypes(tileTypes: tileTypes)
     }
     
     /**

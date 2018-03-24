@@ -28,6 +28,7 @@
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
+		18AE77722066B29A008E0EC9 /* MapTimeAndDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */; };
 		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
 		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
 		18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGSharedDataManager.swift */; };
@@ -99,6 +100,7 @@
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTimeAndDistanceView.swift; sourceTree = "<group>"; };
 		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
 		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18C735662057164200B292B1 /* RGSharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManager.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
 				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
 				18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */,
+				18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */,
 			);
 			path = MainViewControllers;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */,
 				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
+				18AE77722066B29A008E0EC9 /* MapTimeAndDistanceView.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */,
 			);

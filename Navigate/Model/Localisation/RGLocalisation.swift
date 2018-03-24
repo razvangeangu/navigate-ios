@@ -28,8 +28,10 @@ class RGLocalisation: NSObject {
                     MapViewController.showCurrentLocation(currentLocation)
                     
                     // Show the current path
-                    if let _ = RGNavigation.destinationTile {
-                        MapViewController.showPath(to: RGNavigation.destinationTile)
+                    if let destination = RGNavigation.destinationTile {
+                        MapViewController.showPath(to: destination)
+                    } else {
+                        MapViewController.resetView(for: RGSharedDataManager.appMode)
                     }
                 } else {
                     MapViewController.removeLocationNode()

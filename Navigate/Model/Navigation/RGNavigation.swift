@@ -12,8 +12,7 @@ import Foundation
 class RGNavigation: NSObject, PathfinderDataSource {
     private static let pathFinder = AStarPathfinder()
     static var shortestPath: [Tile]?
-    
-    static var destinationTile: Tile!
+    static var destinationTile: Tile?
     
     override init() {
         super.init()
@@ -21,12 +20,12 @@ class RGNavigation: NSObject, PathfinderDataSource {
         RGNavigation.pathFinder.dataSource = self
     }
     
-    internal func walkableAdjacentTilesForTile(tile: Tile) -> [Tile] {
+    func walkableAdjacentTilesForTile(tile: Tile) -> [Tile] {
         let adjacentTiles = RGSharedDataManager.getAdjacentTiles(column: Int(tile.col), row: Int(tile.row))
         return adjacentTiles.filter { $0.type != CDTileType.wall.rawValue }
     }
     
-    internal func costToMoveFromTile(fromTile: Tile, toAdjacentTile toTile: Tile) -> Int {
+    func costToMoveFromTile(fromTile: Tile, toAdjacentTile toTile: Tile) -> Int {
         return 1
     }
     

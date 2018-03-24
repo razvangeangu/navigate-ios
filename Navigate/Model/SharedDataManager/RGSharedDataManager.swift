@@ -48,7 +48,7 @@ class RGSharedDataManager: NSObject {
         }
     }
     
-    static var tileLength: Float = 2
+    static var tileLength: Float = 3
     
     static var tileType: CDTileType?
     

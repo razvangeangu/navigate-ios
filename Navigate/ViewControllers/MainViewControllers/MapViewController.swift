@@ -11,7 +11,7 @@ import SpriteKit
 import CoreLocation
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
-
+    
     // A container view for visual effects
     @IBOutlet weak var containerView: UIView!
     
@@ -38,6 +38,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // Map control buttons
     static var mapButtonsView: MapButtonsView!
     
+    // Map information view
+    static var mapTimeAndDistanceView: MapTimeAndDistanceView!
+    
     // The current location node
     static var locationNode: SKSpriteNode!
     
@@ -47,7 +50,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // Booleans for the visuals controlled by the map buttons
     static var shouldCenterMap = false
     static var shouldRotateMap = false
-    static var shouldShowPath = false
+    static var shouldShowPath = false {
+        didSet {
+            if shouldShowPath {
+                MapViewController.mapTimeAndDistanceView.isHidden = false
+            } else {
+                MapViewController.mapTimeAndDistanceView.isHidden = true
+                
+                // Stop showing the path
+                RGNavigation.destinationTile = nil
+            }
+        }
+    }
     
     // The location manager for the heading/bearing of the device
     let locationManager: CLLocationManager = {
@@ -103,14 +117,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Init the core model
         initModel()
         
-        // Add the map control buttons
-        addMapButtonsView()
-        
         // Add the bottom view
         addBottomSheetView()
-        
-        // Add the map tile edit control buttons
-        addMapTileEditButton()
         
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
@@ -121,6 +129,15 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // Add the map control buttons
+        addMapButtonsView()
+        
+        // Add the map tile edit control buttons
+        addMapTileEditButton()
+        
+        // Add time and distance view
+        addTimeAndDistanceView()
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -133,8 +150,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            // RGLocalisation.currentLocation = (-1, -1)
-            // RGSharedDataManager.disconnect()
+            if RGSharedDataManager.appMode == .dev {
+                RGSharedDataManager.disconnect()
+            }
         }
     }
     
@@ -214,12 +232,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addMapButtonsView() {
         // Add the control buttons
-        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.frame.width - 60, y: 60, width: 40, height: 131))
+        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.safeAreaLayoutGuide.layoutFrame.width - 40 - 20, y: view.safeAreaLayoutGuide.layoutFrame.minY, width: 40, height: 131))
         MapViewController.mapButtonsView.backgroundColor = .clear
         MapViewController.mapButtonsView.parentVC = self
         self.view.addSubview(MapViewController.mapButtonsView)
     }
     
+    /**
+     Initiliases the map tile edit button and adds it to the view.
+     
+     Makes it hidden if the app mode is *.prod*
+     */
     fileprivate func addMapTileEditButton() {
         // Add MapTileEdit
         MapViewController.mapTileEdit = MapTileEditViewController(frame: CGRect(x: MapViewController.mapButtonsView.frame.minX, y: MapViewController.mapButtonsView.frame.maxY, width: 40, height: 40))
@@ -228,6 +251,16 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         if RGSharedDataManager.appMode == .prod {
             MapViewController.mapTileEdit.isHidden = true
         }
+    }
+    
+    /**
+     
+     */
+    fileprivate func addTimeAndDistanceView() {
+        MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top, width: 120, height: 50))
+        view.insertSubview(MapViewController.mapTimeAndDistanceView, at: 0)
+        
+        MapViewController.mapTimeAndDistanceView.isHidden = true
     }
     
     /**
@@ -296,11 +329,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter currentLocation: A pair that represents the row and column of the position.
      */
     static func showCurrentLocation(_ currentLocation: (Int, Int)) {
-        mapButtonsView.enableButtons()
-        
         // If the locationNode is hidden, change alpha to 1 to display it
         if locationNode.alpha < 1 {
             locationNode.alpha = 1
+            
+            // Enable buttons
+            mapButtonsView.enableButtons()
         }
         
         // Get the location of the center of the tile that represents the current location
@@ -424,14 +458,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     static func showPath(to tile: Tile) {
         if RGSharedDataManager.appMode != .dev {
-            let currentLocation = RGLocalisation.currentLocation
-            if let fromTile = RGSharedDataManager.getTile(col: currentLocation.1, row: currentLocation.0) {
+            if let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) {
                 RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
             }
             
             guard let currentPath = RGNavigation.shortestPath else { return }
             
-            MapViewController.shouldShowPath = true
+            MapViewController.mapTimeAndDistanceView.distance = Float(currentPath.count - 1) * RGSharedDataManager.tileLength
             
             resetTiles()
             

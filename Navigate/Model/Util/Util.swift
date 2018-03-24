@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+extension Float {
+    static var humanWalkingSpeed: Float = 1.39
+}
+
 enum RGCardinals: Float {
     case north = 0
     case east = 90
@@ -164,4 +168,9 @@ func checkForSecretCommands(text: String, completion: (SecretCommands) -> Void) 
     default:
         break
     }
+}
+
+// https://stackoverflow.com/questions/26794703/swift-integer-conversion-to-hours-minutes-seconds
+func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+    return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
