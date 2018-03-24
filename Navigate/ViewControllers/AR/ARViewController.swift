@@ -68,34 +68,48 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     func updatePath(to path: [Tile]) {
         var xs = [Float]()
         var zs = [Float]()
+        xs.append(0)
+        zs.append(0)
+        
         let distance = RGSharedDataManager.tileLength
         
+        var xLast: Float?
+        var zLast: Float?
         for step in path {
             let x = Float(step.col)
-            let _ = Float(step.row)
+            let z = Float(step.row)
             
-            if xs.isEmpty {
-                xs.append(0)
+            if xLast == nil || zLast == nil {
+                xLast = x
+                zLast = z
             }
             
-            if zs.isEmpty {
-                zs.append(0)
-            }
-            
-            if x < xs.last! {
+            if x < xLast! {
                 xs.append(-distance)
                 zs.append(0)
-            } else if x > xs.last! {
+            } else if x > xLast! {
                 xs.append(distance)
                 zs.append(0)
             } else {
-                xs.append(0)
-                zs.append(distance)
+                if z < zLast! {
+                    zs.append(-distance)
+                    xs.append(0)
+                } else if x > zLast! {
+                    zs.append(distance)
+                    xs.append(0)
+                }
             }
+            
+            xLast = x
+            zLast = z
         }
         
         self.xs = xs
         self.zs = zs
+    }
+    
+    func turn(from currentLocation: (Int, Int), to step: (Int, Int)) {
+        
     }
 }
 
@@ -140,7 +154,7 @@ extension ARViewController: ARSessionDelegate {
         )
         
         if pos == 0 {
-            if let heading = RGSharedDataManager.heading {
+            if let heading = RGLocalisation.heading {
                 let headingDegrees = CGFloat(heading).toDegrees
                 let degrees: [CGFloat] = [0, 90, 180, 270]
                 let degreesDifferences = degrees.map({abs($0 - headingDegrees)})

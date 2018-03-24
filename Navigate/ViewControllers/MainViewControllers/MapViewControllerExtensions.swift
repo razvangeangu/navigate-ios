@@ -267,7 +267,7 @@ extension MapViewController: CLLocationManagerDelegate {
         // Get the heading for North
         let northAngle = CGFloat(newHeading.trueHeading.toRadians)
         
-        RGSharedDataManager.heading = Float(-angle)
+        RGLocalisation.heading = Float(-angle)
         
         // Animate the location node
         let rotation = SKAction.rotate(toAngle: -angle, duration: 0.6, shortestUnitArc: true)

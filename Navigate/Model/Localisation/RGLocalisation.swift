@@ -39,6 +39,8 @@ class RGLocalisation: NSObject {
         }
     }
     
+    static var heading: Float?
+    
     /**
      A function that detects the location of the iOS device
      by checking the strength of the APs around the device

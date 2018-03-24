@@ -52,8 +52,6 @@ class RGSharedDataManager: NSObject {
     
     static var tileType: CDTileType?
     
-    static var heading: Float?
-    
     /**
      Init data for when the application is open for the first time
      */
