@@ -26,6 +26,7 @@
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
+		188CDB392066DA5100945BF5 /* FloorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CDB382066DA5100945BF5 /* FloorCodable.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
 		18AE77722066B29A008E0EC9 /* MapTimeAndDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */; };
@@ -98,6 +99,7 @@
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		188CDB382066DA5100945BF5 /* FloorCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorCodable.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTimeAndDistanceView.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 		18309F5D20291EC2009F5CDD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				188CDB372066DA4300945BF5 /* Codables */,
 				187E32992024953D0053853D /* PersistenceService.swift */,
 				18309F6020291EE7009F5CDD /* Models */,
 				18309F5E20291ED1009F5CDD /* ClassAndProperties */,
@@ -354,6 +357,14 @@
 				183346722061FBA3001EA340 /* MainViewControllers */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		188CDB372066DA4300945BF5 /* Codables */ = {
+			isa = PBXGroup;
+			children = (
+				188CDB382066DA5100945BF5 /* FloorCodable.swift */,
+			);
+			path = Codables;
 			sourceTree = "<group>";
 		};
 		18D5771E205C0211001C4B1C /* BottomTableView */ = {
@@ -550,6 +561,7 @@
 				18DCD75A20606A220003644D /* RGSharedDataManagerRoomsExtension.swift in Sources */,
 				18DCD751206068A60003644D /* AccessPoint+CoreDataProperties.swift in Sources */,
 				18D57728205C02C3001C4B1C /* ScrollableBottomSheetViewControllerExtensions.swift in Sources */,
+				188CDB392066DA5100945BF5 /* FloorCodable.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
 				18DCD753206068A60003644D /* Floor+CoreDataProperties.swift in Sources */,

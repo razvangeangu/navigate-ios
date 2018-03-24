@@ -48,12 +48,17 @@ class RGSharedDataManager: NSObject {
         }
     }
     
+    // The tile size in meters
     static var tileLength: Float = 3
     
+    // The selected tileType
     static var tileType: CDTileType?
     
     /**
-     Init data for when the application is open for the first time
+     Init data for when the application is open for the first time.
+     
+     - parameter floorLevel: The level of the floor.
+     - parameter mapImage: The image of the map for the floor level.
      */
     static func initData(floorLevel: Int, mapImage: NSData) {
         do {
@@ -71,9 +76,32 @@ class RGSharedDataManager: NSObject {
             } else {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
+                
+                getData()
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")
+        }
+    }
+    
+    /**
+     Get map data from another device that stored the APs.
+     */
+    static func getData() {
+//        let encodedData = try? JSONEncoder().encode(floor)
+        
+//        let context = PersistenceService.context
+//        let decoder = JSONDecoder()
+//        decoder.userInfo[CodingUserInfoKey.context!] = context
+//        let decodedData = try? decoder.decode(Floor.self, from: encodedData!)
+        
+//        print(encodedData ?? "")
+        if let floor = getFloor(level: 6) {
+            var keys = Array(floor.entity.attributesByName.keys)
+            keys.append(contentsOf: Array(floor.entity.relationshipsByName.keys))
+            let dict = floor.dictionaryWithValues(forKeys: keys)
+            
+            print(dict)
         }
     }
 }

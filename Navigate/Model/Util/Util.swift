@@ -174,3 +174,7 @@ func checkForSecretCommands(text: String, completion: (SecretCommands) -> Void) 
 func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
+
+extension CodingUserInfoKey {
+    static let context = CodingUserInfoKey(rawValue: "context")
+}

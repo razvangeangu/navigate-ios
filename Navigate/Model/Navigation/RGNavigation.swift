@@ -12,7 +12,13 @@ import Foundation
 class RGNavigation: NSObject, PathfinderDataSource {
     private static let pathFinder = AStarPathfinder()
     static var shortestPath: [Tile]?
-    static var destinationTile: Tile?
+    static var destinationTile: Tile? {
+        didSet {
+            if destinationTile == nil {
+                MapViewController.resetView(for: RGSharedDataManager.appMode)
+            }
+        }
+    }
     
     override init() {
         super.init()
