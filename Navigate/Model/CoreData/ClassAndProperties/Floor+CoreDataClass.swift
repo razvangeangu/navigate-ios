@@ -6,10 +6,11 @@
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
-// https://stackoverflow.com/questions/44450114/how-to-use-swift-4-codable-in-core-data/46917019 For Codable/Decodable
+// https://stackoverflow.com/questions/44450114/how-to-use-swift-4-codable-in-core-data/46917019 For Encodable, Decodable
 
 import Foundation
 import CoreData
+import CloudKit
 
 @objc(Floor)
 public class Floor: NSManagedObject, Encodable, Decodable {
@@ -50,7 +51,7 @@ public class Floor: NSManagedObject, Encodable, Decodable {
         } else {
             try container.encode("", forKey: .image)
         }
-        try container.encode(tiles?.allObjects as? [Tile] ?? nil, forKey: .tiles)
+        try container.encode(tiles?.allObjects as? [Tile], forKey: .tiles)
         try container.encode(rooms?.allObjects as? [Room], forKey: .rooms)
     }
 }

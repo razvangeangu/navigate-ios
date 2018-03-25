@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+enum DataClasses: String {
+    case Tile = "Tile"
+    case AccessPoint = "AccessPoint"
+    case Floor = "Floor"
+    case Room = "Room"
+}
+
 extension Float {
     static var humanWalkingSpeed: Float = 1.39
 }

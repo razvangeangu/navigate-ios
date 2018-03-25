@@ -18,7 +18,6 @@ public class Tile: NSManagedObject, Encodable, Decodable {
         case row
         case type
         case accessPoints
-        case floor
         case room
     }
     
@@ -29,8 +28,8 @@ public class Tile: NSManagedObject, Encodable, Decodable {
     required convenience public init(from decoder: Decoder) throws {
         guard let contextUserInfoKey = CodingUserInfoKey.context,
             let managedObjectContext = decoder.userInfo[contextUserInfoKey] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Floor", in: managedObjectContext) else {
-                fatalError("Failed to decode Floor!")
+            let entity = NSEntityDescription.entity(forEntityName: "Tile", in: managedObjectContext) else {
+                fatalError("Failed to decode Tile!")
         }
         self.init(entity: entity, insertInto: nil)
         
@@ -39,7 +38,6 @@ public class Tile: NSManagedObject, Encodable, Decodable {
         row = try values.decode(Int16.self, forKey: .row)
         type = try values.decode(String.self, forKey: .type)
         accessPoints = NSSet(array: try values.decode([AccessPoint].self, forKey: .accessPoints))
-        floor = try values.decode(Floor.self, forKey: .floor)
         room = try values.decode(Room.self, forKey: .room)
     }
     
@@ -49,7 +47,7 @@ public class Tile: NSManagedObject, Encodable, Decodable {
         try container.encode(row, forKey: .row)
         try container.encode(type, forKey: .type)
         try container.encode(accessPoints?.allObjects as? [AccessPoint], forKey: .accessPoints)
-        // try container.encode(room, forKey: .room)
+        try container.encode(room, forKey: .room)
     }
 }
 

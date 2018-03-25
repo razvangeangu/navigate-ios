@@ -150,6 +150,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
+            RGSharedDataManager.saveToCloud()
             if RGSharedDataManager.appMode == .dev {
                 RGSharedDataManager.disconnect()
             }
@@ -446,8 +447,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter to: The image data.
      */
     static func changeMap(to imageData: NSData?) {
-        if let image = UIImage(data: imageData! as Data) {
-            backgroundNode.texture = SKTexture(cgImage: image.cgImage!)
+        if let imageData = imageData as Data? {
+            if let image = UIImage(data: imageData) {
+                backgroundNode.texture = SKTexture(cgImage: image.cgImage!)
+            }
         }
     }
     

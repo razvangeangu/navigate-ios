@@ -77,32 +77,24 @@ class RGSharedDataManager: NSObject {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
                 
-                getData()
+                // Get the data from the cloud
+                getFromCloud()
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")
         }
     }
     
-    /**
-     Get map data from another device that stored the APs.
-     */
-    static func getData() {
-//        let encodedData = try? JSONEncoder().encode(floor)
-        
-//        let context = PersistenceService.context
-//        let decoder = JSONDecoder()
-//        decoder.userInfo[CodingUserInfoKey.context!] = context
-//        let decodedData = try? decoder.decode(Floor.self, from: encodedData!)
-        
-//        print(encodedData ?? "")
-        if let floor = getFloor(level: 6) {
-            var keys = Array(floor.entity.attributesByName.keys)
-            keys.append(contentsOf: Array(floor.entity.relationshipsByName.keys))
-            let dict = floor.dictionaryWithValues(forKeys: keys)
-            
-            print(dict)
+    static func encodeData() -> String? {
+        let encodedData = try? JSONEncoder().encode(floor).base64EncodedString(options: .endLineWithLineFeed)
+        return encodedData
+    }
+    
+    static func decodeData() {
+        DispatchQueue.main.async {
+            MapViewController.devLog(data: "Error in getting data from the cloud.")
         }
+        
+        return
     }
 }
-
