@@ -14,34 +14,11 @@ extension RGSharedDataManager {
     
     static let publicCloudDatabase = CKContainer.default().publicCloudDatabase
     
-    static func getFromCloud() {
-        let query = CKQuery(recordType: "Floor", predicate: NSPredicate(value: true))
-        publicCloudDatabase.perform(query, inZoneWith: nil) { (records, error) in
-            guard error == nil else {
-                MapViewController.devLog(data: "Error in getting data from the cloud.")
-                
-                return
-            }
-            
-            guard records != nil else {
-                MapViewController.devLog(data: "No records found on the cloud.")
-                
-                return
-            }
-            
-            for record in records! {
-                print(record.value(forKey: "data") ?? "")
-            }
-            
-            MapViewController.devLog(data: "Data downloaded from the Cloud.")
-        }
-    }
-    
     static func uploadChangedObjects(savedIDs: [NSManagedObjectID], deletedIDs: [CKRecordID]?) {
         var savedObjects = [CloudKitManagedObject]()
         
         for savedID in savedIDs {
-            let savedObject = PersistenceService.context.object(with: savedID) as! CloudKitManagedObject
+            let savedObject = PersistenceService.viewContext.object(with: savedID) as! CloudKitManagedObject
             savedObjects.append(savedObject)
         }
         
@@ -65,5 +42,9 @@ extension RGSharedDataManager {
             }
             publicCloudDatabase.add(operation)
         }
+    }
+    
+    static func uploadCachedRecords(objects: [NSManagedObject]) {
+        let _ = objects.map({ ($0 as! CloudKitManagedObject).managedObjectToRecord() }).chunks(30) // TODO: delete
     }
 }

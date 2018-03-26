@@ -8,6 +8,10 @@
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tile" inverseName="accessPoints" inverseEntity="Tile" syncable="YES"/>
     </entity>
+    <entity name="CachedRecords" representedClassName="CachedRecords" syncable="YES">
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Floor" representedClassName="Floor" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -41,5 +45,6 @@
         <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="148"/>
         <element name="Room" positionX="-11000" positionY="-4284" width="128" height="133"/>
         <element name="Tile" positionX="-10613" positionY="-4329" width="128" height="178"/>
+        <element name="CachedRecords" positionX="-10809" positionY="-4284" width="128" height="75"/>
     </elements>
 </model>

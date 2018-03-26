@@ -32,7 +32,7 @@ extension RGSharedDataManager {
         if let _ = getFloor(level: level) { return false }
         
         // Create new floor
-        let floor = Floor(context: PersistenceService.context)
+        let floor = Floor(context: PersistenceService.viewContext)
         floor.prepareForCloudKit()
         
         // Set the level
@@ -41,7 +41,7 @@ extension RGSharedDataManager {
         floor.lastUpdate = NSDate()
         
         // Save the context for CoreData
-        PersistenceService.saveContext()
+        PersistenceService.saveViewContext()
         
         return true
     }
@@ -57,7 +57,7 @@ extension RGSharedDataManager {
         let fetchRequest : NSFetchRequest<Floor> = Floor.fetchRequest()
         do {
             // Get all the floors from CoreData
-            let floors = try PersistenceService.context.fetch(fetchRequest)
+            let floors = try PersistenceService.viewContext.fetch(fetchRequest)
             for floor in floors {
                 
                 // Find the floor for the specified level
@@ -83,7 +83,7 @@ extension RGSharedDataManager {
         let fetchRequest: NSFetchRequest<Floor> = Floor.fetchRequest()
         do {
             // Get all the floors from CoreData
-            floors = try PersistenceService.context.fetch(fetchRequest) as [Floor]
+            floors = try PersistenceService.viewContext.fetch(fetchRequest) as [Floor]
         } catch {
             debugPrint("Error in Floor fetchRequest")
         }
@@ -100,7 +100,7 @@ extension RGSharedDataManager {
      */
     static func removeFloor(with floorLevel: Int) -> Bool {
         if let foundFloor = getFloor(level: floorLevel) {
-            PersistenceService.context.delete(foundFloor)
+            PersistenceService.viewContext.delete(foundFloor)
             return true
         }
         

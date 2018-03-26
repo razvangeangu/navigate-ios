@@ -15,6 +15,7 @@ import CloudKit
     var lastUpdate: NSDate? { get set }
     
     func managedObjectToRecord() -> CKRecord
+    func update(with record: CKRecord)
 }
 
 extension CloudKitManagedObject {

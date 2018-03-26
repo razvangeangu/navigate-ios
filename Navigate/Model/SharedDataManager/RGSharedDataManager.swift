@@ -86,7 +86,7 @@ class RGSharedDataManager: NSObject {
     static func initData(floorLevel: Int, mapImage: NSData) {
         do {
             // Get number of floors from CoreData
-            let numberOfFloors = try PersistenceService.context.count(for: NSFetchRequest(entityName: "Floor"))
+            let numberOfFloors = try PersistenceService.viewContext.count(for: NSFetchRequest(entityName: "Floor"))
             
             // If there are no floors, create the initial one
             if numberOfFloors == 0 {

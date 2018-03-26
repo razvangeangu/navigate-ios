@@ -21,4 +21,12 @@ extension Floor: CloudKitManagedObject {
         
         return floorRecord
     }
+    
+    func update(with record: CKRecord) {
+        level = record["level"] as! Int16
+        image = record["image"] as? NSData
+        lastUpdate = record["lastUpdate"] as? NSDate
+        recordName = record.recordID.recordName
+        recordID = NSKeyedArchiver.archivedData(withRootObject: record.recordID) as NSData
+    }
 }

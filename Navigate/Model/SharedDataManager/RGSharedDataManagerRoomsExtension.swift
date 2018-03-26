@@ -22,7 +22,7 @@ extension RGSharedDataManager {
         if let _ = getRoom(name: name, floor: self.floor) { return false }
         
         // Create new room
-        let room = Room(context: PersistenceService.context)
+        let room = Room(context: PersistenceService.viewContext)
         room.prepareForCloudKit()
         
         // Set the room name
@@ -35,7 +35,7 @@ extension RGSharedDataManager {
         room.lastUpdate = NSDate()
         
         // Save the context for CoreData
-        PersistenceService.saveContext()
+        PersistenceService.saveViewContext()
         
         return true
     }
@@ -55,7 +55,7 @@ extension RGSharedDataManager {
         let fetchRequest : NSFetchRequest<Room> = Room.fetchRequest()
         do {
             // Get all the rooms from CoreData
-            let rooms = try PersistenceService.context.fetch(fetchRequest)
+            let rooms = try PersistenceService.viewContext.fetch(fetchRequest)
             for room in rooms {
                 // Find the room for the specified name
                 if room.name == name && room.floor == floor {
@@ -87,7 +87,7 @@ extension RGSharedDataManager {
      */
     static func removeRoom(with roomName: String, floor: Floor) -> Bool {
         if let foundRoom = getRoom(name: roomName, floor: floor) {
-            PersistenceService.context.delete(foundRoom)
+            PersistenceService.viewContext.delete(foundRoom)
             return true
         }
         

@@ -8,15 +8,22 @@
 
 import Foundation
 import CoreData
-import CloudKit
 
 class PersistenceService {
-    private init() {
-        
+    private init() { }
+    
+    static var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
     }
     
-    static var context: NSManagedObjectContext {
-        return persistentContainer.viewContext
+    static var cacheContext: NSManagedObjectContext {
+        return persistentContainer.newBackgroundContext()
+    }
+    
+    static var updateContext: NSManagedObjectContext {
+        let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        _updateContext.parent = self.viewContext
+        return _updateContext
     }
     
     // MARK: - Core Data stack
@@ -47,16 +54,14 @@ class PersistenceService {
     
     // MARK: - Core Data Saving support
     
-    static func saveContext() {
-        let context = persistentContainer.viewContext
-        
-        if context.hasChanges {
-            let insertedObjects = context.insertedObjects
-            let modifiedObjects = context.updatedObjects
-            let deletedRecordIDs = context.deletedObjects.map { ($0 as! CloudKitManagedObject).cloudKitRecordID() }
+    static func saveViewContext() {
+        if viewContext.hasChanges {
+            let insertedObjects = viewContext.insertedObjects
+            let modifiedObjects = viewContext.updatedObjects
+            let deletedRecordIDs = viewContext.deletedObjects.map { ($0 as! CloudKitManagedObject).cloudKitRecordID() }
             
             do {
-                try context.save()
+                try viewContext.save()
             } catch {
                 MapViewController.devLog(data: "Could not save context to CoreData")
             }
@@ -64,6 +69,26 @@ class PersistenceService {
             let insertedObjectIDs = insertedObjects.map { $0.objectID }
             let modifiedObjectIDs = modifiedObjects.map { $0.objectID }
             RGSharedDataManager.uploadChangedObjects(savedIDs: insertedObjectIDs + modifiedObjectIDs, deletedIDs: deletedRecordIDs)
+        }
+    }
+    
+    static func saveUpdateContext() {
+        if updateContext.hasChanges {
+            do {
+                try updateContext.save()
+            } catch {
+                MapViewController.devLog(data: "Could not save update context.")
+            }
+        }
+    }
+    
+    static func saveCacheContext() {
+        if cacheContext.hasChanges {
+            do {
+                try cacheContext.save()
+            } catch {
+                MapViewController.devLog(data: "Could not save cache context.")
+            }
         }
     }
 }

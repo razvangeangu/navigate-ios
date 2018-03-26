@@ -66,7 +66,7 @@ extension RGSharedDataManager {
     
     static func createAccessPoint(address: String, strength: Int64, tile: Tile) -> AccessPoint {
         // Create a new access point
-        let accessPoint = AccessPoint(context: PersistenceService.context)
+        let accessPoint = AccessPoint(context: PersistenceService.viewContext)
         accessPoint.prepareForCloudKit()
         accessPoint.uuid = address
         accessPoint.strength = strength

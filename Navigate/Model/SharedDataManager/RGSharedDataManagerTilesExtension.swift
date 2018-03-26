@@ -54,7 +54,7 @@ extension RGSharedDataManager {
             tile.lastUpdate = NSDate()
             
             // Save the context for CoreData
-            PersistenceService.saveContext()
+            PersistenceService.saveViewContext()
             
             return true
         } else {
@@ -144,10 +144,10 @@ extension RGSharedDataManager {
         
         // Remove tile from Core Data
         guard let tileToRemove = getTile(col: column, row: row) else { return }
-        PersistenceService.context.delete(tileToRemove)
+        PersistenceService.viewContext.delete(tileToRemove)
         
         // Create a new tile
-        let tile = Tile(context: PersistenceService.context)
+        let tile = Tile(context: PersistenceService.viewContext)
         tile.prepareForCloudKit()
         tile.row = Int16(row)
         tile.col = Int16(column)
@@ -157,7 +157,7 @@ extension RGSharedDataManager {
         floor.addToTiles(tile)
         
         // Save the context to CoreData
-        PersistenceService.saveContext()
+        PersistenceService.saveViewContext()
     }
     
     /**
@@ -172,7 +172,7 @@ extension RGSharedDataManager {
             for i in 0...numberOfRows - 1 {
                 for j in 0...numberOfColumns - 1 {
                     // Create a new tile
-                    let tile = Tile(context: PersistenceService.context)
+                    let tile = Tile(context: PersistenceService.viewContext)
                     tile.prepareForCloudKit()
                     
                     // Set the location for the tile
@@ -190,6 +190,6 @@ extension RGSharedDataManager {
             }
         }
         
-        PersistenceService.saveContext()
+        PersistenceService.saveViewContext()
     }
 }

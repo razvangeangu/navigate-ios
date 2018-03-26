@@ -38,6 +38,9 @@
 		183F1CF62068486700199D51 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CEE2068486700199D51 /* Tile+CoreDataProperties.swift */; };
 		183F1CF72068486700199D51 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CEF2068486700199D51 /* Floor+CoreDataClass.swift */; };
 		183F1CF82068486700199D51 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */; };
+		183F1CFC20688D7300199D51 /* PersistenceServiceCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */; };
+		183F1CFF2068956800199D51 /* CachedRecords+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CFD2068956800199D51 /* CachedRecords+CoreDataClass.swift */; };
+		183F1D002068956800199D51 /* CachedRecords+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CFE2068956800199D51 /* CachedRecords+CoreDataProperties.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
@@ -117,6 +120,9 @@
 		183F1CEE2068486700199D51 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		183F1CEF2068486700199D51 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceCloudExtension.swift; sourceTree = "<group>"; };
+		183F1CFD2068956800199D51 /* CachedRecords+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedRecords+CoreDataClass.swift"; sourceTree = "<group>"; };
+		183F1CFE2068956800199D51 /* CachedRecords+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedRecords+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
@@ -263,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				187E32992024953D0053853D /* PersistenceService.swift */,
+				183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */,
 				18309F6020291EE7009F5CDD /* Models */,
 				18309F5E20291ED1009F5CDD /* ClassAndProperties */,
 			);
@@ -272,6 +279,8 @@
 		18309F5E20291ED1009F5CDD /* ClassAndProperties */ = {
 			isa = PBXGroup;
 			children = (
+				183F1CFD2068956800199D51 /* CachedRecords+CoreDataClass.swift */,
+				183F1CFE2068956800199D51 /* CachedRecords+CoreDataProperties.swift */,
 				183F1CE92068486700199D51 /* AccessPoint+CoreDataClass.swift */,
 				183F1CEA2068486700199D51 /* AccessPoint+CoreDataProperties.swift */,
 				183F1CEB2068486700199D51 /* Room+CoreDataClass.swift */,
@@ -589,15 +598,18 @@
 				183F1C8E2068386100199D51 /* CloudKitManagedObject.swift in Sources */,
 				18309F6320291F30009F5CDD /* MapViewController.swift in Sources */,
 				18E0E4042065442300C173AC /* ARRing.swift in Sources */,
+				183F1D002068956800199D51 /* CachedRecords+CoreDataProperties.swift in Sources */,
 				183F1CF82068486700199D51 /* Floor+CoreDataProperties.swift in Sources */,
 				183F1CD62068433700199D51 /* RoomCloudExtension.swift in Sources */,
 				183F1CD2206841BA00199D51 /* FloorCloudExtension.swift in Sources */,
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
+				183F1CFC20688D7300199D51 /* PersistenceServiceCloudExtension.swift in Sources */,
 				183F1CF52068486700199D51 /* Tile+CoreDataClass.swift in Sources */,
 				183F1C8B20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift in Sources */,
 				183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
+				183F1CFF2068956800199D51 /* CachedRecords+CoreDataClass.swift in Sources */,
 				18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */,
 				183F1CF22068486700199D51 /* AccessPoint+CoreDataProperties.swift in Sources */,
 				18A2642C202B544E002EE7E9 /* Util.swift in Sources */,
