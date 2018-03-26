@@ -9,10 +9,10 @@
 import CloudKit
 
 @objc protocol CloudKitManagedObject {
-    var recordID: Data? { get set }
+    var recordID: NSData? { get set }
     var recordName: String? { get set }
     var recordType: String { get }
-    var lastUpdate: Data? { get set }
+    var lastUpdate: NSDate? { get set }
     
     func managedObjectToRecord() -> CKRecord
 }
@@ -24,7 +24,7 @@ extension CloudKitManagedObject {
         let uuid = UUID()
         recordName = recordType + "." + uuid.uuidString
         let _recordID = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
-        recordID = NSKeyedArchiver.archivedData(withRootObject: _recordID)
+        recordID = NSKeyedArchiver.archivedData(withRootObject: _recordID) as NSData?
     }
     
     func cloudKitRecord() -> CKRecord {
@@ -32,6 +32,6 @@ extension CloudKitManagedObject {
     }
     
     func cloudKitRecordID() -> CKRecordID {
-        return NSKeyedUnarchiver.unarchiveObject(with: recordID!) as! CKRecordID
+        return NSKeyedUnarchiver.unarchiveObject(with: recordID! as Data) as! CKRecordID
     }
 }

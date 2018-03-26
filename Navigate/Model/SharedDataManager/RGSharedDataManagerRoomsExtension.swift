@@ -23,12 +23,16 @@ extension RGSharedDataManager {
         
         // Create new room
         let room = Room(context: PersistenceService.context)
+        room.prepareForCloudKit()
         
         // Set the room name
         room.name = name
         
-        // Set the room floor
-        room.floor = self.floor
+        // Add floor to room
+        floor.addToRooms(room)
+        
+        // Set the last update time
+        room.lastUpdate = NSDate()
         
         // Save the context for CoreData
         PersistenceService.saveContext()
@@ -45,6 +49,9 @@ extension RGSharedDataManager {
      - Returns: A Room object if it finds the room in CoreData
      */
     static func getRoom(name: String, floor: Floor) -> Room? {
+        // Check if name is empty.
+        if name.isEmpty { return nil }
+        
         let fetchRequest : NSFetchRequest<Room> = Room.fetchRequest()
         do {
             // Get all the rooms from CoreData

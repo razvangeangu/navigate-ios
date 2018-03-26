@@ -40,11 +40,11 @@ extension RGSharedDataManager {
      
      - Returns: An **NSSet?** containing the APs.
      */
-    static func getAccessPoints() -> NSSet? {
-        let accessPoints = NSMutableSet()
-        
+    static func getAccessPoints() -> [AccessPoint]? {
         // Get the APs from the external device as an Array of Any
-        guard let jsonObject = jsonData as? [[Any]] else { return accessPoints }
+        guard let jsonObject = jsonData as? [[Any]] else { return nil }
+        
+        var accessPoints = [AccessPoint]()
         
         // Get every AP from the Array
         for accessPoint in jsonObject {
@@ -53,13 +53,26 @@ extension RGSharedDataManager {
             let address = String.init(describing: accessPoint[0])
             let strength = Int64.init(exactly: accessPoint[1] as! NSNumber)!
             
-            // Create a new access point and save it to the CoreData context
-            let ap = AccessPoint(context: PersistenceService.context)
+            // Create a new access point
+            let ap = AccessPoint(entity: AccessPoint.entity(), insertInto: nil)
             ap.uuid = address
             ap.strength = strength
-            accessPoints.add(ap)
+            ap.lastUpdate = NSDate()
+            accessPoints.append(ap)
         }
         
         return accessPoints
+    }
+    
+    static func createAccessPoint(address: String, strength: Int64, tile: Tile) -> AccessPoint {
+        // Create a new access point
+        let accessPoint = AccessPoint(context: PersistenceService.context)
+        accessPoint.prepareForCloudKit()
+        accessPoint.uuid = address
+        accessPoint.strength = strength
+        accessPoint.lastUpdate = NSDate()
+        tile.addToAccessPoints(accessPoint)
+        
+        return accessPoint
     }
 }

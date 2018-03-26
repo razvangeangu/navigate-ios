@@ -75,27 +75,7 @@ extension ScrollableBottomSheetViewController: UITableViewDelegate, UITableViewD
             selectedRoomName = tableViewData[indexPath.row]
         }
         
-        
-        // TODO: move this logic from here?
-        guard let selectedRoom = RGSharedDataManager.getRoom(name: selectedRoomName!, floor: RGSharedDataManager.floor) else { return }
-        guard let doors = RGSharedDataManager.getDoors(for: selectedRoom) else { return }
-        guard let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) else { return }
-        
-        var maxCount = Int.max
-        var closestDoor: Tile?
-        for door in doors {
-            if let shortestPath = RGNavigation.getShortestPath(fromTile: fromTile, toTile: door) {
-                if shortestPath.count < maxCount {
-                    maxCount = shortestPath.count
-                    closestDoor = door
-                }
-            }
-        }
-        
-        if let door = closestDoor {
-            RGNavigation.moveTo(fromTile: fromTile, toTile: door)
-        }
-        
+        // Select the room and move to the location
         RGSharedDataManager.selectedRoom = selectedRoomName
         
         // Add visual feedback for the selected cell

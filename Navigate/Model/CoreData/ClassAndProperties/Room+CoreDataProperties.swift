@@ -2,7 +2,7 @@
 //  Room+CoreDataProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 19/03/2018.
+//  Created by Răzvan-Gabriel Geangu on 25/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
@@ -18,8 +18,11 @@ extension Room {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var tiles: NSSet?
+    @NSManaged public var recordID: NSData?
+    @NSManaged public var recordName: String?
+    @NSManaged public var lastUpdate: NSDate?
     @NSManaged public var floor: Floor?
+    @NSManaged public var tiles: NSSet?
 
 }
 

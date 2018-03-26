@@ -6,6 +6,8 @@
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 
+import Foundation
+
 extension RGSharedDataManager {
     /**
      Saves the data for the tile at the specified location.
@@ -28,7 +30,6 @@ extension RGSharedDataManager {
         // If the tile needs to be overwritten
         if tileType == .sample {
             resetTile(column: column, row: row)
-            return true
         }
         
         // Get the APs from the BLE service
@@ -36,40 +37,31 @@ extension RGSharedDataManager {
         
         // Add the room to the tile
         if let tileRoom = getRoom(name: selectedRoom!, floor: self.floor) {
+            
+            // Create APs in this context and add relationship to tile
+            for accessPoint in accessPoints {
+                let _ = createAccessPoint(address: accessPoint.uuid!, strength: accessPoint.strength, tile: tile)
+            }
+            
             // Set the room for this tile
-            tile.room = tileRoom
+            tileRoom.addToTiles(tile)
+            tileRoom.lastUpdate = NSDate()
+            
+            // Set the type of the tile
+            tile.type = tileType.rawValue
+            
+            // Set the last update time
+            tile.lastUpdate = NSDate()
+            
+            // Save the context for CoreData
+            PersistenceService.saveContext()
+            
+            return true
         } else {
-            // Create new room
-            let room = Room(context: PersistenceService.context)
-            
-            // Set the room name
-            room.name = selectedRoom
-            
-            // Set the room floor
-            room.floor = floor
-            
-            // Add tiles to the room
-            room.addToTiles(tile)
-            
-            // Set the room for this tile
-            tile.room = room
+            MapViewController.devLog(data: "A room must be selected.")
         }
         
-        // Add the APs data
-        tile.accessPoints = accessPoints
-        
-        // Set the type of the tile
-        tile.type = tileType.rawValue
-        
-        // Add tile to APs
-        for accessPoint in accessPoints {
-            (accessPoint as! AccessPoint).addToTiles(tile)
-        }
-        
-        // Save the context for CoreData
-        PersistenceService.saveContext()
-        
-        return true
+        return false
     }
     
     /**
@@ -149,10 +141,20 @@ extension RGSharedDataManager {
     }
     
     static func resetTile(column: Int, row: Int) {
-        guard let tile = getTile(col: column, row: row) else { return }
         
-        tile.accessPoints = nil
+        // Remove tile from Core Data
+        guard let tileToRemove = getTile(col: column, row: row) else { return }
+        PersistenceService.context.delete(tileToRemove)
+        
+        // Create a new tile
+        let tile = Tile(context: PersistenceService.context)
+        tile.prepareForCloudKit()
+        tile.row = Int16(row)
+        tile.col = Int16(column)
         tile.type = CDTileType.sample.rawValue
+        tile.lastUpdate = NSDate()
+        
+        floor.addToTiles(tile)
         
         // Save the context to CoreData
         PersistenceService.saveContext()
@@ -164,22 +166,30 @@ extension RGSharedDataManager {
      - parameter floor: The current floor to create tiles for.
      */
     static func createTiles(for floor: Floor) {
-        for i in 0...numberOfRows - 1 {
-            for j in 0...numberOfColumns - 1 {
-                // Create a new tile
-                let tile = Tile(context: PersistenceService.context)
-                
-                // Set the location for the tile
-                tile.row = Int16(i)
-                tile.col = Int16(j)
-                tile.type = CDTileType.sample.rawValue
-                
-                // Add tile to the floor
-                floor.addToTiles(tile)
-                
-                // Save the context to CoreData
-                PersistenceService.saveContext()
+        if addRoom(name: "SAMPLE") {
+            guard let room = getRoom(name: "SAMPLE", floor: floor) else { return }
+            
+            for i in 0...numberOfRows - 1 {
+                for j in 0...numberOfColumns - 1 {
+                    // Create a new tile
+                    let tile = Tile(context: PersistenceService.context)
+                    tile.prepareForCloudKit()
+                    
+                    // Set the location for the tile
+                    tile.row = Int16(i)
+                    tile.col = Int16(j)
+                    tile.type = CDTileType.sample.rawValue
+                    tile.lastUpdate = NSDate()
+                    
+                    // Add room to tile
+                    room.addToTiles(tile)
+                    
+                    // Add floor to the tile
+                    floor.addToTiles(tile)
+                }
             }
         }
+        
+        PersistenceService.saveContext()
     }
 }

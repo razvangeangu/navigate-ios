@@ -54,16 +54,20 @@ class ScrollableBottomSheetViewController: UIViewController {
     static var status: String = "" {
         // Reload the view when the status is changed
         didSet {
-            staticSelf.statusLabel.text = status
+            if staticSelf != nil && staticSelf.statusLabel != nil {
+                DispatchQueue.main.async {
+                    staticSelf.statusLabel.text = status
+                }
+            }
         }
     }
     
     // Static self used to update UI
-    internal static var staticSelf: ScrollableBottomSheetViewController!
+    private static var staticSelf: ScrollableBottomSheetViewController!
     
     // Used for the scrollable view
-    internal let fullView: CGFloat = 200
-    internal var partialView: CGFloat {
+    let fullView: CGFloat = 200
+    var partialView: CGFloat {
         return UIScreen.main.bounds.height - 100
     }
 

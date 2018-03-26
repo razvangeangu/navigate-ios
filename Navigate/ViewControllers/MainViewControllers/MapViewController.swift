@@ -150,7 +150,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            RGSharedDataManager.saveToCloud()
             if RGSharedDataManager.appMode == .dev {
                 RGSharedDataManager.disconnect()
             }

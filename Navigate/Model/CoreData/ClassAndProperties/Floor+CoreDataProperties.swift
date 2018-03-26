@@ -2,7 +2,7 @@
 //  Floor+CoreDataProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 19/03/2018.
+//  Created by Răzvan-Gabriel Geangu on 25/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
@@ -19,25 +19,11 @@ extension Floor {
 
     @NSManaged public var image: NSData?
     @NSManaged public var level: Int16
-    @NSManaged public var tiles: NSSet?
+    @NSManaged public var recordID: NSData?
+    @NSManaged public var recordName: String?
+    @NSManaged public var lastUpdate: NSDate?
     @NSManaged public var rooms: NSSet?
-
-}
-
-// MARK: Generated accessors for tiles
-extension Floor {
-
-    @objc(addTilesObject:)
-    @NSManaged public func addToTiles(_ value: Tile)
-
-    @objc(removeTilesObject:)
-    @NSManaged public func removeFromTiles(_ value: Tile)
-
-    @objc(addTiles:)
-    @NSManaged public func addToTiles(_ values: NSSet)
-
-    @objc(removeTiles:)
-    @NSManaged public func removeFromTiles(_ values: NSSet)
+    @NSManaged public var tiles: NSSet?
 
 }
 
@@ -55,5 +41,22 @@ extension Floor {
 
     @objc(removeRooms:)
     @NSManaged public func removeFromRooms(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for tiles
+extension Floor {
+
+    @objc(addTilesObject:)
+    @NSManaged public func addToTiles(_ value: Tile)
+
+    @objc(removeTilesObject:)
+    @NSManaged public func removeFromTiles(_ value: Tile)
+
+    @objc(addTiles:)
+    @NSManaged public func addToTiles(_ values: NSSet)
+
+    @objc(removeTiles:)
+    @NSManaged public func removeFromTiles(_ values: NSSet)
 
 }

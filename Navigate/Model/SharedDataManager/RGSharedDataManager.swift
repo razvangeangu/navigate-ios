@@ -18,7 +18,30 @@ class RGSharedDataManager: NSObject {
     }
     
     // Room information
-    static var selectedRoom: String?
+    static var selectedRoom: String? {
+        didSet {
+            if RGSharedDataManager.appMode == .prod {
+                guard let selectedRoomObject = RGSharedDataManager.getRoom(name: selectedRoom!, floor: RGSharedDataManager.floor) else { return }
+                guard let doors = RGSharedDataManager.getDoors(for: selectedRoomObject) else { return }
+                guard let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) else { return }
+                
+                var maxCount = Int.max
+                var closestDoor: Tile?
+                for door in doors {
+                    if let shortestPath = RGNavigation.getShortestPath(fromTile: fromTile, toTile: door) {
+                        if shortestPath.count < maxCount {
+                            maxCount = shortestPath.count
+                            closestDoor = door
+                        }
+                    }
+                }
+                
+                if let door = closestDoor {
+                    RGNavigation.moveTo(fromTile: fromTile, toTile: door)
+                }
+            }
+        }
+    }
     
     // Floor information
     static var floor: Floor! {
@@ -76,25 +99,9 @@ class RGSharedDataManager: NSObject {
             } else {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
-                
-                // Get the data from the cloud
-                getFromCloud()
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")
         }
-    }
-    
-    static func encodeData() -> String? {
-        let encodedData = try? JSONEncoder().encode(floor).base64EncodedString(options: .endLineWithLineFeed)
-        return encodedData
-    }
-    
-    static func decodeData() {
-        DispatchQueue.main.async {
-            MapViewController.devLog(data: "Error in getting data from the cloud.")
-        }
-        
-        return
     }
 }

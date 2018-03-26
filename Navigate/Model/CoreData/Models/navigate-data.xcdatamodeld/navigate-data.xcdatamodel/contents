@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14124.1" systemVersion="17D102" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AccessPoint" representedClassName="AccessPoint" syncable="YES">
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="strength" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="accessPoints" inverseEntity="Tile" syncable="YES"/>
+        <relationship name="tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tile" inverseName="accessPoints" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Floor" representedClassName="Floor" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="floor" inverseEntity="Room" syncable="YES"/>
         <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="floor" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES">
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="floor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Floor" inverseName="rooms" inverseEntity="Floor" syncable="YES"/>
         <relationship name="tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tile" inverseName="room" inverseEntity="Tile" syncable="YES"/>
     </entity>
     <entity name="Tile" representedClassName="Tile" syncable="YES">
         <attribute name="col" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="recordID" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="recordName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="accessPoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccessPoint" inverseName="tiles" inverseEntity="AccessPoint" syncable="YES"/>
+        <relationship name="accessPoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccessPoint" inverseName="tile" inverseEntity="AccessPoint" syncable="YES"/>
         <relationship name="floor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Floor" inverseName="tiles" inverseEntity="Floor" syncable="YES"/>
         <relationship name="room" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="tiles" inverseEntity="Room" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AccessPoint" positionX="-10845" positionY="-4194" width="99" height="88"/>
-        <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="103"/>
-        <element name="Room" positionX="-11009" positionY="-4329" width="128" height="88"/>
-        <element name="Tile" positionX="-10658" positionY="-4336" width="128" height="133"/>
+        <element name="AccessPoint" positionX="-10818" positionY="-4122" width="99" height="133"/>
+        <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="148"/>
+        <element name="Room" positionX="-11000" positionY="-4284" width="128" height="133"/>
+        <element name="Tile" positionX="-10613" positionY="-4329" width="128" height="178"/>
     </elements>
 </model>

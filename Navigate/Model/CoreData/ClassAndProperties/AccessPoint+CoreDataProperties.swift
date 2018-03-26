@@ -2,7 +2,7 @@
 //  AccessPoint+CoreDataProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 19/03/2018.
+//  Created by Răzvan-Gabriel Geangu on 25/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
@@ -19,23 +19,9 @@ extension AccessPoint {
 
     @NSManaged public var strength: Int64
     @NSManaged public var uuid: String?
-    @NSManaged public var tiles: NSSet?
-
-}
-
-// MARK: Generated accessors for tiles
-extension AccessPoint {
-
-    @objc(addTilesObject:)
-    @NSManaged public func addToTiles(_ value: Tile)
-
-    @objc(removeTilesObject:)
-    @NSManaged public func removeFromTiles(_ value: Tile)
-
-    @objc(addTiles:)
-    @NSManaged public func addToTiles(_ values: NSSet)
-
-    @objc(removeTiles:)
-    @NSManaged public func removeFromTiles(_ values: NSSet)
+    @NSManaged public var recordID: NSData?
+    @NSManaged public var recordName: String?
+    @NSManaged public var lastUpdate: NSDate?
+    @NSManaged public var tile: Tile?
 
 }

@@ -67,7 +67,7 @@ class RGLocalisation: NSObject {
                     for case let accessPoint as AccessPoint in accessPoints {
                         
                         // Loop thorugh all the APs from the current scan
-                        for case let currentAccessPoint as AccessPoint in currentAccessPoints {
+                        for currentAccessPoint in currentAccessPoints {
                             
                             // Compare their unique id
                             if accessPoint.uuid == currentAccessPoint.uuid {

@@ -33,10 +33,12 @@ extension RGSharedDataManager {
         
         // Create new floor
         let floor = Floor(context: PersistenceService.context)
+        floor.prepareForCloudKit()
         
         // Set the level
         floor.level = Int16(level)
         floor.image = mapImage
+        floor.lastUpdate = NSDate()
         
         // Save the context for CoreData
         PersistenceService.saveContext()

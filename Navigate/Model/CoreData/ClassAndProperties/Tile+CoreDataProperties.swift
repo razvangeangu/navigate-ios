@@ -2,7 +2,7 @@
 //  Tile+CoreDataProperties.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 19/03/2018.
+//  Created by Răzvan-Gabriel Geangu on 25/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
 //
@@ -20,6 +20,9 @@ extension Tile {
     @NSManaged public var col: Int16
     @NSManaged public var row: Int16
     @NSManaged public var type: String?
+    @NSManaged public var recordID: NSData?
+    @NSManaged public var recordName: String?
+    @NSManaged public var lastUpdate: NSDate?
     @NSManaged public var accessPoints: NSSet?
     @NSManaged public var floor: Floor?
     @NSManaged public var room: Room?

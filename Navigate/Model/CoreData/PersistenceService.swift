@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 class PersistenceService {
     private init() {
@@ -30,9 +31,6 @@ class PersistenceService {
         let container = NSPersistentContainer(name: "navigate-data")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -41,7 +39,7 @@ class PersistenceService {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                MapViewController.devLog(data: "Error with the persistent container")
             }
         })
         return container
@@ -49,18 +47,23 @@ class PersistenceService {
     
     // MARK: - Core Data Saving support
     
-    static func saveContext () {
+    static func saveContext() {
         let context = persistentContainer.viewContext
+        
         if context.hasChanges {
+            let insertedObjects = context.insertedObjects
+            let modifiedObjects = context.updatedObjects
+            let deletedRecordIDs = context.deletedObjects.map { ($0 as! CloudKitManagedObject).cloudKitRecordID() }
+            
             do {
                 try context.save()
-                // print("Saved")
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                MapViewController.devLog(data: "Could not save context to CoreData")
             }
+            
+            let insertedObjectIDs = insertedObjects.map { $0.objectID }
+            let modifiedObjectIDs = modifiedObjects.map { $0.objectID }
+            RGSharedDataManager.uploadChangedObjects(savedIDs: insertedObjectIDs + modifiedObjectIDs, deletedIDs: deletedRecordIDs)
         }
     }
 }

@@ -182,6 +182,10 @@ func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
 
-extension CodingUserInfoKey {
-    static let context = CodingUserInfoKey(rawValue: "context")
+extension Array {
+    func chunks(_ chunkSize: Int) -> [[Element]] {
+        return stride(from: 0, to: self.count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
+        }
+    }
 }
