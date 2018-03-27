@@ -90,12 +90,16 @@ extension RGSharedDataManager {
      - Returns: A **Tile** object from the CoreData.
      */
     static func getTile(col: Int, row: Int) -> Tile? {
-        // Get all the tiles
-        for case let tile as Tile in floor.tiles! {
-            // If the tile mathces
-            if tile.row == row && tile.col == col {
-                // Return the tile
-                return tile
+        if let floor = floor {
+            if let tiles = floor.tiles {
+                // Get all the tiles
+                for case let tile as Tile in tiles {
+                    // If the tile mathces
+                    if tile.row == row && tile.col == col {
+                        // Return the tile
+                        return tile
+                    }
+                }
             }
         }
         
@@ -165,7 +169,7 @@ extension RGSharedDataManager {
      
      - parameter floor: The current floor to create tiles for.
      */
-    static func createTiles(for floor: Floor) {
+    static func createTiles(for floor: Floor) {        
         if addRoom(name: "SAMPLE") {
             guard let room = getRoom(name: "SAMPLE", floor: floor) else { return }
             

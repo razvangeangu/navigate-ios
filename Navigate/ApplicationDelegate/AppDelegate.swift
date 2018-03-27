@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.        
+        // Override point for customization after application launch.
         return true
     }
     
@@ -41,6 +42,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         PersistenceService.saveViewContext()
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let dict = userInfo as! [String: NSObject]
+        let notification = CKNotification(fromRemoteNotificationDictionary: dict)
+        
+        if (notification.subscriptionID == "CachedRecordsSubscriptionID") {
+            RGSharedDataManager.fetchDataFromTheCloud(completion: nil)
+            completionHandler(.newData)
+        }
     }
 }
 

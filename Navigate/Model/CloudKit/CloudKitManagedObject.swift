@@ -5,6 +5,7 @@
 //  Created by Răzvan-Gabriel Geangu on 25/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
+// https://tongtian.wordpress.com/2017/02/26/sync-core-data-with-cloudkit-part-1/
 
 import CloudKit
 

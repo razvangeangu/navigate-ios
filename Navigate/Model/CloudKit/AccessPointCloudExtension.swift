@@ -32,12 +32,12 @@ extension AccessPoint: CloudKitManagedObject {
         uuid = record["uuid"] as? String
         lastUpdate = record["lastUpdate"] as? NSDate
         
-        if let tileReference = record["floorReference"] as? CKReference {
-            let tileName = tileReference.recordID.recordName
-            if let _tile = PersistenceService.object(from: "Tile", in: PersistenceService.updateContext, withRecordName: tileName) as? Tile {
+        if let tileReference = record["tileReference"] as? CKReference {
+            let tileName = tileReference.recordID.recordName 
+            if let _tile = PersistenceService.object(in: RGSharedDataManager.updateContext, recordName: tileName) as? Tile {
                 tile = _tile
             } else {
-                if let _newTile = NSEntityDescription.insertNewObject(forEntityName: "Tile", into: PersistenceService.updateContext) as? Tile {
+                if let _newTile = NSEntityDescription.insertNewObject(forEntityName: "Tile", into: RGSharedDataManager.updateContext) as? Tile {
                     _newTile.recordName = tileName
                     tile = _newTile
                 }

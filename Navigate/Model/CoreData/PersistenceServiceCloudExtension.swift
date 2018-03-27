@@ -5,22 +5,27 @@
 //  Created by Răzvan-Gabriel Geangu on 26/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
+// https://tongtian.wordpress.com/2017/03/04/sync-core-data-with-cloudkit-part-2/
 
 import CoreData
 import CloudKit
 
 extension PersistenceService {
     
-    static func object(from entityName: String, in context: NSManagedObjectContext, withRecordName name: String) -> NSManagedObject? {
-        do {
-            let entities = try context.fetch(NSFetchRequest(entityName: entityName))
-            for case let entity as CloudKitManagedObject in entities {
-                if entity.recordName == name {
-                    return entity as? NSManagedObject
+    static func object(in context: NSManagedObjectContext, recordName: String) -> NSManagedObject? {
+        if let dotIndex = recordName.index(of: ".") {
+            let entityName = String(recordName[...recordName.index(before: dotIndex)])
+            
+            do {
+                let entities = try context.fetch(NSFetchRequest(entityName: entityName))
+                for case let entity as CloudKitManagedObject in entities {
+                    if entity.recordName == recordName {
+                        return entity as? NSManagedObject
+                    }
                 }
+            } catch {
+                debugPrint("Error in Floor fetchRequest")
             }
-        } catch {
-            debugPrint("Error in Floor fetchRequest")
         }
         
         return nil
@@ -66,19 +71,29 @@ extension PersistenceService {
         return nil
     }
     
-    static func updateLocalRecords(changedRecords: [CKRecord], deletedRecordIDs: [CKRecordID]) {
-        updateContext.perform {
-            let deletedRecordNames = deletedRecordIDs.map { $0.recordName }
+    static func updateLocalRecords(changedRecords: [CKRecord], deletedRecordIDs: [CKRecordID]?) {
+        RGSharedDataManager.updateContext.perform {
             self.updateObject(for: changedRecords)
-            self.deleteObject(for: deletedRecordNames)
-            self.saveUpdateContext()
+            
+            if let deletedRecordIDs = deletedRecordIDs, deletedRecordIDs.count > 0 {
+                let deletedRecordNames = deletedRecordIDs.map { $0.recordName }
+                self.deleteObject(for: deletedRecordNames)
+            }
+            
+            if RGSharedDataManager.updateContext.hasChanges {
+                do {
+                    try RGSharedDataManager.updateContext.save()
+                } catch {
+                    print("Error in saving updateContext while updating local records.")
+                }
+            }
         }
     }
     
     static func deleteObject(for recordNames: [String]) {
         for recordName in recordNames {
-            if let object = retrieveObject(fromRecordName: recordName, context: updateContext) {
-                updateContext.delete(object)
+            if let object = object(in: updateContext, recordName: recordName) {
+                RGSharedDataManager.updateContext.delete(object)
             }
         }
     }
@@ -86,16 +101,17 @@ extension PersistenceService {
     static func updateObject(for records: [CKRecord]) {
         for record in records {
             let recordName = record.recordID.recordName
-            if let managedObject = retrieveObject(fromRecordName: recordName, context: viewContext) as? CloudKitManagedObject {
-                if let lastUpdate = record["lastUpdate"] as? NSDate {
-                    if managedObject.lastUpdate != lastUpdate {
+
+            if let managedObject = object(in: RGSharedDataManager.updateContext, recordName: recordName) as? CloudKitManagedObject {
+                if let lastUpdate = record["lastUpdate"] as? Date {
+                    if lastUpdate.compare(managedObject.lastUpdate! as Date) == .orderedDescending {
                         managedObject.update(with: record)
                     }
                 }
             } else {
                 if let dotIndex = recordName.index(of: ".") {
-                    let entityName = String(recordName[...dotIndex])
-                    let newObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: updateContext)
+                    let entityName = String(recordName[...recordName.index(before: dotIndex)])
+                    let newObject = NSEntityDescription.insertNewObject(forEntityName: entityName, into: RGSharedDataManager.updateContext)
                     if let cloudManagedObject = newObject as? CloudKitManagedObject {
                         cloudManagedObject.update(with: record)
                     }
@@ -104,38 +120,27 @@ extension PersistenceService {
         }
     }
     
-    static func retrieveObject(fromRecordName: String, context: NSManagedObjectContext) -> NSManagedObject? {
-        guard let dotIndex = fromRecordName.index(of: ".") else { return nil }
-        let entityName = String(fromRecordName[...dotIndex])
-        return object(from: entityName, in: context, withRecordName: fromRecordName)
-    }
-    
-    static func persistUploadFailedRecords(recordNames: [String]) {
-        cacheContext.perform {
-            for name in recordNames {
-                let record = CachedRecords(context: cacheContext)
-                record.recordName = name
-                record.modificationDate = NSDate()
-            }
-            saveCacheContext()
-        }
-    }
-    
-    static func clearCachedRecords(recordNames: [String]) {
-        cacheContext.perform {
+    static func clearCachedRecords(recordNames: [String], completion: (([NSManagedObjectID]) -> Void)?) {
+        RGSharedDataManager.cachedContext.perform {
             for recordName in recordNames {
-                if let objects = objects(from: "CachedRecords", in: cacheContext, withRecordName: recordName) {
+                if let objects = objects(from: "CachedRecords", in: RGSharedDataManager.cachedContext, withRecordName: recordName) {
                     for object in objects {
-                        cacheContext.delete(object!)
+                        RGSharedDataManager.cachedContext.delete(object!)
                     }
                 }
             }
             
-            saveCacheContext()
+            if RGSharedDataManager.cachedContext.hasChanges {
+                do {
+                    try RGSharedDataManager.cachedContext.save()
+                } catch {
+                    print("Error saving cached context while trying to clear cached records.")
+                }
+            }
             
-            let cachedRecords = objects(for: "CachedRecords", context: cacheContext)
+            let cachedRecords = objects(for: "CachedRecords", context: RGSharedDataManager.cachedContext)
             if let objects = cachedRecords, objects.count > 0 {
-                RGSharedDataManager.uploadCachedRecords(objects: cachedRecords!)
+                completion?(objects.map({ $0.objectID }))
             }
         }
     }

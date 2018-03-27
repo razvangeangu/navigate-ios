@@ -15,7 +15,15 @@ extension RGSharedDataManager {
      */
     static func setFloor(level: Int) {
         guard let floor = getFloor(level: level) else { return }
+        
+        // Set the current floor
         RGSharedDataManager.floor = floor
+        
+        // Create tiles for floor
+        createTiles(for: floor)
+        
+        // Reload the data in the view
+        MapViewController.reloadData()
     }
     
     /**

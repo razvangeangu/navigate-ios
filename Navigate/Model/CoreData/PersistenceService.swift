@@ -55,11 +55,11 @@ class PersistenceService {
     // MARK: - Core Data Saving support
     
     static func saveViewContext() {
+        let insertedObjects = viewContext.insertedObjects
+        let modifiedObjects = viewContext.updatedObjects
+        let deletedRecordIDs = viewContext.deletedObjects.map { ($0 as! CloudKitManagedObject).cloudKitRecordID() }
+        
         if viewContext.hasChanges {
-            let insertedObjects = viewContext.insertedObjects
-            let modifiedObjects = viewContext.updatedObjects
-            let deletedRecordIDs = viewContext.deletedObjects.map { ($0 as! CloudKitManagedObject).cloudKitRecordID() }
-            
             do {
                 try viewContext.save()
             } catch {
@@ -69,26 +69,6 @@ class PersistenceService {
             let insertedObjectIDs = insertedObjects.map { $0.objectID }
             let modifiedObjectIDs = modifiedObjects.map { $0.objectID }
             RGSharedDataManager.uploadChangedObjects(savedIDs: insertedObjectIDs + modifiedObjectIDs, deletedIDs: deletedRecordIDs)
-        }
-    }
-    
-    static func saveUpdateContext() {
-        if updateContext.hasChanges {
-            do {
-                try updateContext.save()
-            } catch {
-                MapViewController.devLog(data: "Could not save update context.")
-            }
-        }
-    }
-    
-    static func saveCacheContext() {
-        if cacheContext.hasChanges {
-            do {
-                try cacheContext.save()
-            } catch {
-                MapViewController.devLog(data: "Could not save cache context.")
-            }
         }
     }
 }

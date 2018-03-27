@@ -19,7 +19,7 @@ extension RGSharedDataManager {
      */
     static func addRoom(name: String) -> Bool {
         // If the room exists stop
-        if let _ = getRoom(name: name, floor: self.floor) { return false }
+        if let _ = getRoom(name: name, floor: floor) { return false }
         
         // Create new room
         let room = Room(context: PersistenceService.viewContext)
@@ -75,7 +75,11 @@ extension RGSharedDataManager {
      - Returns: An array of strings that represent the rooms for the current floor.
      */
     static func getRooms() -> [Room]? {
-        return floor.rooms!.allObjects as? [Room]
+        if let floor = floor {
+            return floor.rooms!.allObjects as? [Room]
+        } else {
+            return nil
+        }
     }
     
     /**

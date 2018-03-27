@@ -32,10 +32,10 @@ extension Room: CloudKitManagedObject {
         
         if let floorReference = record["floorReference"] as? CKReference {
             let floorName = floorReference.recordID.recordName
-            if let _floor = PersistenceService.object(from: "Floor", in: PersistenceService.updateContext, withRecordName: floorName) as? Floor {
+            if let _floor = PersistenceService.object(in: RGSharedDataManager.updateContext, recordName: floorName) as? Floor {
                 floor = _floor
             } else {
-                if let _newFloor = NSEntityDescription.insertNewObject(forEntityName: "Floor", into: PersistenceService.updateContext) as? Floor {
+                if let _newFloor = NSEntityDescription.insertNewObject(forEntityName: "Floor", into: RGSharedDataManager.updateContext) as? Floor {
                     _newFloor.recordName = floorName
                     floor = _newFloor
                 }

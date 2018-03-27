@@ -45,6 +45,6 @@
         <element name="Floor" positionX="-10820" positionY="-4440" width="128" height="148"/>
         <element name="Room" positionX="-11000" positionY="-4284" width="128" height="133"/>
         <element name="Tile" positionX="-10613" positionY="-4329" width="128" height="178"/>
-        <element name="CachedRecords" positionX="-10809" positionY="-4284" width="128" height="75"/>
+        <element name="CachedRecords" positionX="-10998" positionY="-4068" width="128" height="75"/>
     </elements>
 </model>

@@ -34,7 +34,6 @@ class RGLocalisation: NSObject {
                     }
                 } else {
                     MapViewController.removeLocationNode()
-                    MapViewController.devLog(data: "Location not found..")
                 }
             }
         }
@@ -56,53 +55,59 @@ class RGLocalisation: NSObject {
         DispatchQueue.global(qos: .background).async {
             // A 2D array that holds the data of the APs
             var matrix = [[Int]](repeating: [Int](repeating: 0, count: RGSharedDataManager.numberOfColumns), count: RGSharedDataManager.numberOfRows)
-            
-            // Loop through all the tiles
-            for case let tile as Tile in RGSharedDataManager.floor.tiles! {
+    
+            if let floor = RGSharedDataManager.floor {
                 
-                // If tile contains APs
-                if let accessPoints = tile.accessPoints {
-                    
-                    // Loop through all the APs from the each tile
-                    for case let accessPoint as AccessPoint in accessPoints {
+                if let tiles = floor.tiles {
+                
+                    // Loop through all the tiles
+                    for case let tile as Tile in tiles {
                         
-                        // Loop thorugh all the APs from the current scan
-                        for currentAccessPoint in currentAccessPoints {
+                        // If tile contains APs
+                        if let accessPoints = tile.accessPoints {
                             
-                            // Compare their unique id
-                            if accessPoint.uuid == currentAccessPoint.uuid {
+                            // Loop through all the APs from the each tile
+                            for case let accessPoint as AccessPoint in accessPoints {
                                 
-                                // Compare their strength
-                                if accessPoint.strength > currentAccessPoint.strength - 5 {
-                                    if accessPoint.strength < currentAccessPoint.strength + 5 {
+                                // Loop thorugh all the APs from the current scan
+                                for currentAccessPoint in currentAccessPoints {
+                                    
+                                    // Compare their unique id
+                                    if accessPoint.uuid == currentAccessPoint.uuid {
                                         
-                                        // Increase the similarity value of the AP / Tile
-                                        matrix[Int(tile.row)][Int(tile.col)] += 1
+                                        // Compare their strength
+                                        if accessPoint.strength > currentAccessPoint.strength - 5 {
+                                            if accessPoint.strength < currentAccessPoint.strength + 5 {
+                                                
+                                                // Increase the similarity value of the AP / Tile
+                                                matrix[Int(tile.row)][Int(tile.col)] += 1
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            }
-            
-            // Current location local value to find the maximum in the matrix
-            var currentLocation = self.currentLocation
-            var max = 0
-            
-            // Loop through all the tiles
-            for i in 0...RGSharedDataManager.numberOfRows - 1 {
-                for j in 0...RGSharedDataManager.numberOfColumns - 1 {
                     
-                    // Find maximum and save it
-                    if matrix[i][j] > max {
-                        currentLocation = (i, j)
-                        max = matrix[i][j]
+                    // Current location local value to find the maximum in the matrix
+                    var currentLocation = self.currentLocation
+                    var max = 0
+                    
+                    // Loop through all the tiles
+                    for i in 0...RGSharedDataManager.numberOfRows - 1 {
+                        for j in 0...RGSharedDataManager.numberOfColumns - 1 {
+                            
+                            // Find maximum and save it
+                            if matrix[i][j] > max {
+                                currentLocation = (i, j)
+                                max = matrix[i][j]
+                            }
+                        }
                     }
+                    
+                    self.currentLocation = currentLocation
                 }
             }
-            
-            self.currentLocation = currentLocation
         }
     }
 }

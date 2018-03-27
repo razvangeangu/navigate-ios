@@ -46,14 +46,13 @@ class RGSharedDataManager: NSObject {
     // Floor information
     static var floor: Floor! {
         didSet {
-            selectedRoom = ""
-            
-            if floor.tiles?.count == 0 {
-                createTiles(for: floor)
+            DispatchQueue.main.async {
+                
+                // UIChanges on the main thread
+                selectedRoom = ""
+                MapViewController.changeMap(to: floor.image)
+                MapViewController.reloadData()
             }
-            
-            MapViewController.resetView(for: appMode)
-            MapViewController.changeMap(to: floor.image)
         }
     }
     
@@ -90,18 +89,62 @@ class RGSharedDataManager: NSObject {
             
             // If there are no floors, create the initial one
             if numberOfFloors == 0 {
-                // Create a new floor
-                let _ = addFloor(level: floorLevel, mapImage: mapImage)
-                setFloor(level: floorLevel)
+                fetchDataFromTheCloud {
+                    if let floors = getFloors(), floors.count > 0 {
+                        debugPrint("Data already created. Setting floor to default \(floorLevel).")
+                        setFloor(level: floorLevel)
+                    } else {
+                        // Set the app mode to dev to display log and develop app
+                        RGSharedDataManager.appMode = .dev
+                        
+                        // Create a new floor
+                        let _ = addFloor(level: floorLevel, mapImage: mapImage)
+                        setFloor(level: floorLevel)
+                        
+                        // Update UI
+                        MapViewController.resetView(for: RGSharedDataManager.appMode)
+                    }
+                }
                 
-                // Set the app mode to dev to display log and develop app
-                RGSharedDataManager.appMode = .dev
+                // Subscribe to iCloud
+                createSubscription()
             } else {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")
+        }
+    }
+    
+    static func fetchDataFromTheCloud(completion: (() -> Void)?) {
+        let recordTypes = ["Floor", "Room", "Tile", "AccessPoint", "CachedRecords"]
+        
+        // Floor
+        query(recordType: recordTypes[0]) { (_) in
+            print("Fetching completed for: \(recordTypes[0])")
+            completion?()
+            
+            // Room
+//            query(recordType: recordTypes[1]) { (_) in
+//                print("Fetching completed for: \(recordTypes[1])")
+//
+//                // Tile
+//                query(recordType: recordTypes[2]) { (completed) in
+//                    print("Fetching completed for: \(recordTypes[2])")
+//
+//                    // AccessPoint
+//                    query(recordType: recordTypes[3]) { (completed) in
+//                        print("Fetching completed for: \(recordTypes[3])")
+//
+//                        // CachedRecords
+//                        query(recordType: recordTypes[4]) { (completed) in
+//                            print("Fetching completed for: \(recordTypes[4])")
+//                            // completion?()
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }

@@ -419,22 +419,24 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter for: App mode to be switched to.
      */
     static func resetView(for appMode: AppMode) {
-        switch appMode {
-        case .dev:
-            do {
-                resetTiles()
-                bottomSheetVC.addDevButton()
-                if MapViewController.mapTileEdit != nil {
-                    MapViewController.mapTileEdit.isHidden = false
+        DispatchQueue.main.async {
+            switch appMode {
+            case .dev:
+                do {
+                    resetTiles()
+                    bottomSheetVC.addDevButton()
+                    if MapViewController.mapTileEdit != nil {
+                        MapViewController.mapTileEdit.isHidden = false
+                    }
                 }
-            }
-        case .prod:
-            do{
-                resetTiles()
-                bottomSheetVC.removeDevButton()
-                
-                if MapViewController.mapTileEdit != nil {
-                    MapViewController.mapTileEdit.isHidden = true
+            case .prod:
+                do{
+                    resetTiles()
+                    bottomSheetVC.removeDevButton()
+                    
+                    if MapViewController.mapTileEdit != nil {
+                        MapViewController.mapTileEdit.isHidden = true
+                    }
                 }
             }
         }
@@ -482,6 +484,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static func removeLocationNode() {
         if locationNode.alpha == 1 {
             locationNode.alpha = 0
+            MapViewController.devLog(data: "Location not found..")
+        }
+    }
+    
+    static func reloadData() {
+        DispatchQueue.main.async {
+            bottomSheetVC.updatePickerData()
+            bottomSheetVC.updateTableData()
         }
     }
 }
