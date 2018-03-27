@@ -162,11 +162,13 @@ extension RGSharedDataManager {
         for records in recordsChunks {
             let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? recordIDsToDelete : nil)
             operation.savePolicy = .allKeys
+            
             operation.perRecordCompletionBlock = { record, error in
                 if let error = error as? CKError {
                     print(error.localizedDescription)
                 }
             }
+            
             operation.modifyRecordsCompletionBlock = { record, recordID, error in
                 if let error = error as? CKError {
                     if error.code == CKError.limitExceeded {
@@ -176,6 +178,11 @@ extension RGSharedDataManager {
                     print("Uploaded block of cached records")
                 }
             }
+            
+            operation.completionBlock = {
+                print("Finished uploading cached records to the cloud.")
+            }
+            
             publicCloudDatabase.add(operation)
         }
     }
@@ -188,15 +195,22 @@ extension RGSharedDataManager {
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.zoneID = publicZone.zoneID
         queryOperation.resultsLimit = 500
+        
         queryOperation.recordFetchedBlock = { record in
             records.append(record)
         }
+        
         queryOperation.queryCompletionBlock = { cursor, error in
             self.fetchRecords(with: cursor, error: error, records: records, completion: { (records) in
                 PersistenceService.updateLocalRecords(changedRecords: records, deletedRecordIDs: nil)
                 completion?(records.count > 0)
             })
         }
+        
+        queryOperation.completionBlock = {
+            print("Finished query for \(recordType)")
+        }
+        
         publicCloudDatabase.add(queryOperation)
     }
     

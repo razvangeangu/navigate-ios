@@ -122,22 +122,18 @@ class RGSharedDataManager: NSObject {
         
         // Floor
         query(recordType: recordTypes[0]) { (_) in
-            print("Fetching completed for: \(recordTypes[0])")
             
             // Room
             query(recordType: recordTypes[1]) { (_) in
-                print("Fetching completed for: \(recordTypes[1])")
 
                 // Tile
                 query(recordType: recordTypes[2]) { (completed) in
-                    print("Fetching completed for: \(recordTypes[2])")
+                    
                     // AccessPoint
                     query(recordType: recordTypes[3]) { (completed) in
-                        print("Fetching completed for: \(recordTypes[3])")
 
                         // CachedRecords
                         query(recordType: recordTypes[4]) { (completed) in
-                            print("Fetching completed for: \(recordTypes[4])")
                             completion?()
                         }
                     }
