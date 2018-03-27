@@ -140,7 +140,7 @@ extension RGSharedDataManager {
                                 })
                             }
                         } catch {
-                            print("Error in fetchRequest for CachedRecords")
+                            print("Error in fetchRequest for CachedRecords.")
                         }
                     } else {
                         print(error.localizedDescription)
@@ -172,10 +172,10 @@ extension RGSharedDataManager {
             operation.modifyRecordsCompletionBlock = { record, recordID, error in
                 if let error = error as? CKError {
                     if error.code == CKError.limitExceeded {
-                        print("Modify limit exceeded")
+                        print("Modify limit exceeded.")
+                    } else {
+                        print(error.localizedDescription)
                     }
-                } else {
-                    print("Uploaded block of cached records")
                 }
             }
             
@@ -223,6 +223,10 @@ extension RGSharedDataManager {
                 currentRecords.append(record)
             }
             queryOperation.queryCompletionBlock = { cursor, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
                 print("\(records.count)")
                 self.fetchRecords(with: cursor, error: error, records: currentRecords, completion: completion)
             }
