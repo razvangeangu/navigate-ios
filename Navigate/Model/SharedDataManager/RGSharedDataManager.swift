@@ -131,17 +131,16 @@ class RGSharedDataManager: NSObject {
                 // Tile
                 query(recordType: recordTypes[2]) { (completed) in
                     print("Fetching completed for: \(recordTypes[2])")
-                    completion?()
                     // AccessPoint
-//                    query(recordType: recordTypes[3]) { (completed) in
-//                        print("Fetching completed for: \(recordTypes[3])")
-//
-//                        // CachedRecords
-//                        query(recordType: recordTypes[4]) { (completed) in
-//                            print("Fetching completed for: \(recordTypes[4])")
-//                            // completion?()
-//                        }
-//                    }
+                    query(recordType: recordTypes[3]) { (completed) in
+                        print("Fetching completed for: \(recordTypes[3])")
+
+                        // CachedRecords
+                        query(recordType: recordTypes[4]) { (completed) in
+                            print("Fetching completed for: \(recordTypes[4])")
+                            completion?()
+                        }
+                    }
                 }
             }
         }

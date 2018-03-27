@@ -44,9 +44,6 @@ extension RGSharedDataManager {
             // Create a new modify records operation
             let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? deletedIDs : nil)
             
-            // Set the name of the operation for completion handler
-            operation.name = String(recordsChunks.index(of: records)!)
-            
             // Set completion block per record
             operation.perRecordCompletionBlock = { record, error in
                 // If there is an error
@@ -148,16 +145,37 @@ extension RGSharedDataManager {
                     } else {
                         print(error.localizedDescription)
                     }
-                } else {
-                    
-                    // If this is the end of the operation
-                    if operation.name == String(recordsChunks.endIndex) {
-                        print("Finished uploading changed objects to the cloud.")
-                    }
                 }
             }
             
+            operation.completionBlock = {
+                print("Finished uploading changed objects to the cloud.")
+            }
+            
             // Add operation to the public database
+            publicCloudDatabase.add(operation)
+        }
+    }
+    
+    static func uploadCachedRecords(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecordID]) {
+        let recordsChunks = recordsToSave.chunks(400)
+        for records in recordsChunks {
+            let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? recordIDsToDelete : nil)
+            operation.savePolicy = .allKeys
+            operation.perRecordCompletionBlock = { record, error in
+                if let error = error as? CKError {
+                    print(error.localizedDescription)
+                }
+            }
+            operation.modifyRecordsCompletionBlock = { record, recordID, error in
+                if let error = error as? CKError {
+                    if error.code == CKError.limitExceeded {
+                        print("Modify limit exceeded")
+                    }
+                } else {
+                    print("Uploaded block of cached records")
+                }
+            }
             publicCloudDatabase.add(operation)
         }
     }
@@ -197,30 +215,6 @@ extension RGSharedDataManager {
             publicCloudDatabase.add(queryOperation)
         } else {
             completion?(records)
-        }
-    }
-    
-    static func uploadCachedRecords(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecordID]) {
-        let recordsChunks = recordsToSave.chunks(400)
-        for records in recordsChunks {
-            let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? recordIDsToDelete : nil)
-            operation.name = String(recordsChunks.index(of: recordsToSave)!)
-            operation.savePolicy = .changedKeys
-            operation.perRecordCompletionBlock = { record, error in
-                if let error = error as? CKError {
-                    print(error.localizedDescription)
-                }
-            }
-            operation.modifyRecordsCompletionBlock = { record, recordID, error in
-                if let error = error as? CKError {
-                    if error.code == CKError.limitExceeded {
-                        print("Modify limit exceeded")
-                    }
-                } else {
-                    print("Uploaded block of cached records")
-                }
-            }
-            publicCloudDatabase.add(operation)
         }
     }
     
