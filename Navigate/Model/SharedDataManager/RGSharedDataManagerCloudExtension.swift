@@ -169,7 +169,7 @@ extension RGSharedDataManager {
         let query = CKQuery(recordType: recordType, predicate: NSPredicate(value: true))
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.zoneID = publicZone.zoneID
-        queryOperation.resultsLimit = 400
+        queryOperation.resultsLimit = 500
         queryOperation.recordFetchedBlock = { record in
             records.append(record)
         }
@@ -186,7 +186,7 @@ extension RGSharedDataManager {
         var currentRecords = records
         if let cursor = cursor, error == nil {
             let queryOperation = CKQueryOperation(cursor: cursor)
-            queryOperation.resultsLimit = 400
+            queryOperation.resultsLimit = 500
             queryOperation.recordFetchedBlock = { record in
                 currentRecords.append(record)
             }
