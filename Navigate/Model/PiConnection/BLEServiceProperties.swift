@@ -105,14 +105,14 @@ extension BLEService: CBPeripheralDelegate {
                 do {
                     json = try JSONSerialization.jsonObject(with: data.data(using: .utf8)!)
                 } catch {
-                    print(error)
+                    debugPrint(error)
                 }
                 data = ""
             } else {
                 data.append(chunkData)
             }
         default:
-            print("Unhandled Characteristic UUID: \(characteristic.uuid)")
+            debugPrint("Unhandled Characteristic UUID: \(characteristic.uuid)")
         }
     }
 }

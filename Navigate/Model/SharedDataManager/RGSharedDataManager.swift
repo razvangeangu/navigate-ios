@@ -105,9 +105,6 @@ class RGSharedDataManager: NSObject {
                         MapViewController.resetView(for: RGSharedDataManager.appMode)
                     }
                 }
-                
-                // Subscribe to iCloud
-                createSubscription()
             } else {
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
@@ -140,5 +137,9 @@ class RGSharedDataManager: NSObject {
                 }
             }
         }
+    }
+    
+    static func fetchCloudChanges(completion: @escaping () -> Void) {
+        RGSharedDataManager.fetchDatabaseChanges(database: RGSharedDataManager.sharedCloudDatabase, completion: completion)
     }
 }

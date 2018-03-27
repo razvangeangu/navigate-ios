@@ -14,11 +14,26 @@ import CloudKit
 extension RGSharedDataManager {
     
     static let publicCloudDatabase = CKContainer.default().publicCloudDatabase
+    static let sharedCloudDatabase = CKContainer.default().sharedCloudDatabase
     static let privateCloudDatabase = CKContainer.default().privateCloudDatabase
-    static let publicZone = CKRecordZone.default()
+    
+    static var customSharedZone: CKRecordZone!
+    
+    static var identities: [CKUserIdentity]!
     
     static var cachedContext = PersistenceService.cacheContext
     static var updateContext = PersistenceService.updateContext
+    
+    static var serverChangeToken: CKServerChangeToken? {
+        let changeTokenData = UserDefaults.standard.value(forKey: "\(customSharedZone.zoneID.zoneName) zoneChangeToken") as? Data
+        var zoneChangeToken:CKServerChangeToken?
+        
+        if (changeTokenData != nil){
+            zoneChangeToken = NSKeyedUnarchiver.unarchiveObject(with: changeTokenData!)as! CKServerChangeToken?
+        }
+        
+        return zoneChangeToken
+    }
     
     /**
      
@@ -29,20 +44,29 @@ extension RGSharedDataManager {
     static func uploadChangedObjects(savedIDs: [NSManagedObjectID], deletedIDs: [CKRecordID]?) {
         
         // Create var for the saved objects as cloud managed objects
-        var savedObjects = [CloudKitManagedObject]()
+        var savedObjects = [CKRecord]()
+        var sharedObjects = [CKShare]()
 
         // Get all the to save cloud managed objects
         for savedID in savedIDs {
             let savedObject = PersistenceService.viewContext.object(with: savedID) as! CloudKitManagedObject
-            savedObjects.append(savedObject)
+            let record = savedObject.managedObjectToRecord()
+            savedObjects.append(record)
+            
+            let share = CKShare(rootRecord: record)
+            share[CKShareTitleKey] = record.recordID.recordName as CKRecordValue?
+            share[CKShareTypeKey] = "com.razvangeangu.Navigate" as CKRecordValue?
+            sharedObjects.append(share)
         }
         
         // Split into maximum number of chunks allowed by CloudKit
-        let recordsChunks = savedObjects.map({ $0.managedObjectToRecord() }).chunks(400)
-        for records in recordsChunks {
+        let recordsChunks = savedObjects.chunks(400)
+        let sharedChunks = sharedObjects.chunks(400)
+        
+        for chunkID in 0..<recordsChunks.count {
             
             // Create a new modify records operation
-            let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? deletedIDs : nil)
+            let operation = CKModifyRecordsOperation(recordsToSave: recordsChunks[chunkID] + sharedChunks[chunkID], recordIDsToDelete: chunkID == 0 ? deletedIDs : nil)
             
             // Set completion block per record
             operation.perRecordCompletionBlock = { record, error in
@@ -72,9 +96,9 @@ extension RGSharedDataManager {
                                         if cachedContext.hasChanges {
                                             do {
                                                 try cachedContext.save()
-                                                print("Saved to cache context, remember to update cloud.")
+                                                debugPrint("Saved to cache context, remember to update cloud.")
                                             } catch {
-                                                print("Could not save \(cachedRecord.recordName ?? "cachedRecord")")
+                                                debugPrint("Could not save \(cachedRecord.recordName ?? "cachedRecord")")
                                             }
                                         }
                                     }
@@ -82,6 +106,8 @@ extension RGSharedDataManager {
                             }
                         }
                     }
+                } else {
+                    debugPrint(error ?? "Error in upload changed objects")
                 }
             }
             
@@ -92,7 +118,7 @@ extension RGSharedDataManager {
                 if let error = error as? CKError {
                     
                     if error.code == .limitExceeded {
-                        print("Modify limit exceeded")
+                        debugPrint("Modify limit exceeded")
                         
                     // If app had partial failure, update the cached records to overwrite the changes
                     } else if error.code == .partialFailure {
@@ -127,7 +153,7 @@ extension RGSharedDataManager {
                                     } else {
                                         
                                         // If the record is existent anymore, we want to delete it from the cloud
-                                        let recordID = CKRecordID(recordName: recordName, zoneID: publicZone.zoneID)
+                                        let recordID = CKRecordID(recordName: recordName, zoneID: customSharedZone.zoneID)
                                         recordIDsToDelete.append(recordID)
                                     }
                                 }
@@ -140,20 +166,20 @@ extension RGSharedDataManager {
                                 })
                             }
                         } catch {
-                            print("Error in fetchRequest for CachedRecords.")
+                            debugPrint("Error in fetchRequest for CachedRecords.")
                         }
                     } else {
-                        print(error.localizedDescription)
+                        debugPrint(error)
                     }
                 }
             }
             
             operation.completionBlock = {
-                print("Finished uploading changed objects to the cloud.")
+                debugPrint("Finished uploading changed objects to the cloud.")
             }
             
             // Add operation to the public database
-            publicCloudDatabase.add(operation)
+            privateCloudDatabase.add(operation)
         }
     }
     
@@ -165,25 +191,25 @@ extension RGSharedDataManager {
             
             operation.perRecordCompletionBlock = { record, error in
                 if let error = error as? CKError {
-                    print(error.localizedDescription)
+                    debugPrint(error)
                 }
             }
             
             operation.modifyRecordsCompletionBlock = { record, recordID, error in
                 if let error = error as? CKError {
                     if error.code == CKError.limitExceeded {
-                        print("Modify limit exceeded.")
+                        debugPrint("Modify limit exceeded.")
                     } else {
-                        print(error.localizedDescription)
+                        debugPrint(error)
                     }
                 }
             }
             
             operation.completionBlock = {
-                print("Finished uploading cached records to the cloud.")
+                debugPrint("Finished uploading cached records to the cloud.")
             }
             
-            publicCloudDatabase.add(operation)
+            privateCloudDatabase.add(operation)
         }
     }
     
@@ -193,7 +219,7 @@ extension RGSharedDataManager {
         
         let query = CKQuery(recordType: recordType, predicate: NSPredicate(value: true))
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.zoneID = publicZone.zoneID
+        queryOperation.zoneID = customSharedZone.zoneID
         queryOperation.resultsLimit = 500
         
         queryOperation.recordFetchedBlock = { record in
@@ -208,10 +234,92 @@ extension RGSharedDataManager {
         }
         
         queryOperation.completionBlock = {
-            print("Finished query for \(recordType)")
+            debugPrint("Finished query for \(recordType)")
         }
         
-        publicCloudDatabase.add(queryOperation)
+        privateCloudDatabase.add(queryOperation)
+    }
+    
+    // https://developer.apple.com/library/content/documentation/DataManagement/Conceptual/CloudKitQuickStart/MaintainingaLocalCacheofCloudKitRecords/MaintainingaLocalCacheofCloudKitRecords.html
+    static func fetchDatabaseChanges(database: CKDatabase, completion: @escaping () -> Void) {
+        var changedZoneIDs: [CKRecordZoneID] = []
+        
+        let previousServerChangeToken = RGSharedDataManager.serverChangeToken!
+        let operation = CKFetchDatabaseChangesOperation(previousServerChangeToken: previousServerChangeToken)
+        
+        operation.recordZoneWithIDChangedBlock = { (zoneID) in
+            changedZoneIDs.append(zoneID)
+        }
+        
+        operation.recordZoneWithIDWasDeletedBlock = { (zoneID) in
+            // Write this zone deletion to memory
+        }
+        
+        operation.changeTokenUpdatedBlock = { (token) in
+            // Flush zone deletions for this database to disk
+            // Write this new database change token to memory
+        }
+        
+        operation.fetchDatabaseChangesCompletionBlock = { (token, moreComing, error) in
+            if let error = error {
+                debugPrint("Error during fetch shared database changes operation", error)
+                completion()
+                return
+            }
+            // Flush zone deletions for this database to disk
+            // Write this new database change token to memory
+            
+            self.fetchZoneChanges(database: database, previousServerChangeToken: previousServerChangeToken, zoneIDs: changedZoneIDs) {
+                // Flush in-memory database change token to disk
+                completion()
+            }
+        }
+        operation.qualityOfService = .userInitiated
+        
+        database.add(operation)
+    }
+    
+    static func fetchZoneChanges(database: CKDatabase, previousServerChangeToken: CKServerChangeToken, zoneIDs: [CKRecordZoneID], completion: @escaping () -> Void) {
+        
+        var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
+        let options = CKFetchRecordZoneChangesOptions()
+        options.previousServerChangeToken = previousServerChangeToken
+        optionsByRecordZoneID[customSharedZone.zoneID] = options
+
+        let operation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [RGSharedDataManager.customSharedZone.zoneID], optionsByRecordZoneID: optionsByRecordZoneID)
+        
+        operation.recordChangedBlock = { (record) in
+            debugPrint("Record changed:", record)
+            // Write this record change to memory
+        }
+        
+        operation.recordWithIDWasDeletedBlock = { (recordId, _) in
+            debugPrint("Record deleted:", recordId)
+            // Write this record deletion to memory
+        }
+        
+        operation.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
+            // Flush record changes and deletions for this zone to disk
+            // Write this new zone change token to disk
+        }
+        
+        operation.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
+            if let error = error {
+                debugPrint("Error fetching zone changes for database:", error)
+                return
+            }
+            // Flush record changes and deletions for this zone to disk
+            // Write this new zone change token to disk
+        }
+        
+        operation.fetchRecordZoneChangesCompletionBlock = { (error) in
+            if let error = error {
+                debugPrint("Error fetching zone changes for database:", error)
+            }
+            completion()
+        }
+        
+        database.add(operation)
     }
     
     private static func fetchRecords(with cursor: CKQueryCursor?, error: Error?, records: [CKRecord], completion: (([CKRecord]) -> Void)?) {
@@ -224,20 +332,20 @@ extension RGSharedDataManager {
             }
             queryOperation.queryCompletionBlock = { cursor, error in
                 if let error = error {
-                    print(error.localizedDescription)
+                    debugPrint(error)
                 }
                 
-                print("\(records.count)")
+                debugPrint("\(records.count)")
                 self.fetchRecords(with: cursor, error: error, records: currentRecords, completion: completion)
             }
-            publicCloudDatabase.add(queryOperation)
+            privateCloudDatabase.add(queryOperation)
         } else {
             completion?(records)
         }
     }
     
     static func createSubscription() {
-        let subscription = CKRecordZoneSubscription(zoneID: publicZone.zoneID, subscriptionID: "CachedRecordsSubscriptionID")
+        let subscription = CKRecordZoneSubscription(zoneID: customSharedZone.zoneID, subscriptionID: "cloudChangesSub")
         let notificationInfo = CKNotificationInfo()
         notificationInfo.shouldSendContentAvailable = true
         subscription.notificationInfo = notificationInfo
@@ -247,9 +355,44 @@ extension RGSharedDataManager {
             if let error = error {
                 NSLog("CloudKit ModifySubscriptions Error: \(error.localizedDescription)")
             } else {
-                UserDefaults.standard.set(true, forKey: "CachedRecordsSubscriptionID")
+                UserDefaults.standard.set(true, forKey: "cloudChangesSub")
             }
         }
         privateCloudDatabase.add(subscriptionOperation)
+    }
+    
+    static func createCustomZone(completion: (() -> Void)?) {
+        let customZone = CKRecordZone(zoneID: CKRecordZoneID(zoneName: "shared-navigate-zone", ownerName: CKCurrentUserDefaultName))
+        let createZoneOperation = CKModifyRecordZonesOperation(recordZonesToSave: [customZone], recordZoneIDsToDelete: [] )
+        
+        createZoneOperation.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
+            if (error == nil) {
+                RGSharedDataManager.customSharedZone = customZone
+                completion?()
+            } else {
+                debugPrint(error ?? "Error in create custom zone")
+            }
+        }
+        createZoneOperation.qualityOfService = .userInitiated
+        
+        RGSharedDataManager.sharedCloudDatabase.add(createZoneOperation)
+    }
+    
+    static func getCustomZone(completion: @escaping ((Bool) -> Void)) {
+        RGSharedDataManager.sharedCloudDatabase.fetchAllRecordZones { (zones, error) in
+            if let error = error {
+                debugPrint(error)
+                completion(false)
+            } else {
+                if let zones = zones {
+                    for zone in zones {
+                        if zone.zoneID.zoneName == "shared-navigate-zone" {
+                            RGSharedDataManager.customSharedZone = zone
+                            completion(true)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -84,7 +84,12 @@ class MapButtonsView: UIView {
         cameraButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         cameraButton.setTitleColor(.black, for: .normal)
         cameraButton.setBackgroundImage(UIImage(named: "ar"), for: .normal)
-        cameraButton.addTarget(self, action: #selector(MapButtonsView.cameraTaped), for: .touchUpInside)
+        
+        if MapViewController.isARSupported() {
+            cameraButton.addTarget(self, action: #selector(MapButtonsView.cameraTaped), for: .touchUpInside)
+        } else {
+            cameraButton.isEnabled = false
+        }
         
         // Add button to the buttons view
         buttonsView.addSubview(cameraButton)

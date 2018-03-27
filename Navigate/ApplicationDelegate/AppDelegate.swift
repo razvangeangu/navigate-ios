@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CloudKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        UNUserNotificationCenter.current().requestAuthorization(options:
+            [[.alert, .sound, .badge]],
+                completionHandler: { (granted, error) in
+                    if let error = error {
+                        debugPrint(error)
+                    }
+        })
+        application.registerForRemoteNotifications()
+        
+        CKContainer.default().requestApplicationPermission(.userDiscoverability) { (status, error) in
+            if let error = error {
+                debugPrint(error)
+            } else {
+                CKContainer.default().discoverAllIdentities(completionHandler: { (identities, error) in
+                    if let error = error {
+                        debugPrint(error)
+                    } else {
+                        RGSharedDataManager.identities = identities
+                    }
+                })
+            }
+        }
+        
         return true
     }
     
@@ -48,10 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dict = userInfo as! [String: NSObject]
         let notification = CKNotification(fromRemoteNotificationDictionary: dict)
         
-        if (notification.subscriptionID == "CachedRecordsSubscriptionID") {
-            RGSharedDataManager.fetchDataFromTheCloud(completion: nil)
+        if (notification.subscriptionID == "cloudChangesSub") {
+            RGSharedDataManager.fetchCloudChanges {
+                debugPrint("Finished fetching cloud changes")
+            }
             completionHandler(.newData)
         }
     }
 }
+
 

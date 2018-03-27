@@ -21,9 +21,6 @@ extension RGSharedDataManager {
         
         // Create tiles for floor
         createTiles(for: floor)
-        
-        // Reload the data in the view
-        MapViewController.reloadData()
     }
     
     /**

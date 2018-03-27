@@ -114,7 +114,7 @@ extension PersistenceService {
                 do {
                     try RGSharedDataManager.updateContext.save()
                 } catch {
-                    print("Error in saving updateContext while updating local records.")
+                    debugPrint("Error in saving updateContext while updating local records.")
                 }
             }
         }
@@ -134,7 +134,7 @@ extension PersistenceService {
                 do {
                     try RGSharedDataManager.cachedContext.save()
                 } catch {
-                    print("Error saving cached context while trying to clear cached records.")
+                    debugPrint("Error saving cached context while trying to clear cached records.")
                 }
             }
             

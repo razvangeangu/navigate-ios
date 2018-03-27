@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import CoreLocation
+import ARKit
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -33,7 +34,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var map: SKTileMapNode!
     
     // The bottom view controller
-    static let bottomSheetVC = ScrollableBottomSheetViewController()
+    static var bottomSheetVC: ScrollableBottomSheetViewController!
     
     // Map control buttons
     static var mapButtonsView: MapButtonsView!
@@ -75,12 +76,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     static var mapTileEdit: MapTileEditViewController!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let oldFrame = view.frame
-        view = SKView(frame: oldFrame)
-        view.backgroundColor = .white
+    static func isARSupported() -> Bool {
+        guard #available(iOS 11.0, *) else {
+            return false
+        }
+        return ARConfiguration.isSupported
+    }
+    
+    fileprivate func initView() {
+        let oldFrame = self.view.frame
+        self.view = SKView(frame: oldFrame)
+        self.view.backgroundColor = .white
         
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
@@ -115,29 +121,49 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         // Init the core model
-        initModel()
+        self.initModel()
         
         // Add the bottom view
-        addBottomSheetView()
+        self.addBottomSheetView()
         
         // Activate the tiles that have access points stored in core data
         MapViewController.resetTiles()
         
+        // Add the map control buttons
+        self.addMapButtonsView()
+        
+        // Add the map tile edit control buttons
+        self.addMapTileEditButton()
+        
+        // Add time and distance view
+        self.addTimeAndDistanceView()
+        
         // Set the delegate for location manager to self for the bearing data
-        locationManager.delegate = self
+        self.locationManager.delegate = self
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        RGSharedDataManager.getCustomZone { (completed) in
+            RGSharedDataManager.createSubscription()
+            
+            if completed {
+                DispatchQueue.main.async {
+                    self.initView()
+                }
+            } else {
+                RGSharedDataManager.createCustomZone {
+                    DispatchQueue.main.async {
+                        self.initView()
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Add the map control buttons
-        addMapButtonsView()
-        
-        // Add the map tile edit control buttons
-        addMapTileEditButton()
-        
-        // Add time and distance view
-        addTimeAndDistanceView()
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -215,6 +241,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Initialises the bottom view and adds it to the view.
      */
     fileprivate func addBottomSheetView() {
+        MapViewController.bottomSheetVC = ScrollableBottomSheetViewController()
         self.addChildViewController(MapViewController.bottomSheetVC)
         self.view.addSubview(MapViewController.bottomSheetVC.view)
         MapViewController.bottomSheetVC.didMove(toParentViewController: self)
