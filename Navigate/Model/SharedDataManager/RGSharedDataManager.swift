@@ -76,9 +76,6 @@ class RGSharedDataManager: NSObject {
     // The selected tileType
     static var tileType: CDTileType?
     
-    // The default tileTypes
-    static var defaultTileTypes: [[CDTileType]]!
-    
     /**
      Init data for when the application is open for the first time.
      
@@ -97,13 +94,13 @@ class RGSharedDataManager: NSObject {
             if numberOfFloors == 0 {
                 CloudKitManager.fetchDataFromTheCloud {
                     if let floors = getFloors(), floors.count > 0 {
-                        MapViewController.setProgress(to: 1.0)
+                        MapViewController.progressView.setProgress(to: 1.0)
                         endBackgroundTask(taskID: task)
                         
                         debugPrint("Data fetched from the cloud. Setting floor to default \(floorLevel).")
                         setFloor(level: floorLevel)
                     } else if isReachable() {
-                        MapViewController.setProgress(to: 1.0)
+                        MapViewController.progressView.setProgress(to: 1.0)
                         endBackgroundTask(taskID: task)
                         
                         // Set the app mode to dev to display log and develop app
@@ -116,11 +113,11 @@ class RGSharedDataManager: NSObject {
                         // Update UI
                         MapViewController.resetView(for: RGSharedDataManager.appMode)
                     } else {
-                        MapViewController.setProgress(to: 0)
+                        MapViewController.progressView.setProgress(to: 0)
                     }
                 }
             } else {
-                MapViewController.setProgress(to: 1.0)
+                MapViewController.progressView.setProgress(to: 1.0)
                 endBackgroundTask(taskID: task)
                 
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")

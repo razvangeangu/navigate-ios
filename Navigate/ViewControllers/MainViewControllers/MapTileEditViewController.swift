@@ -20,6 +20,7 @@ class MapTileEditViewController: UIView {
         }
     }
     
+    // The tile types to be displayed
     let tileTypes: [CDTileType] = [.door, .wall, .space, .sample]
     
     override init(frame: CGRect) {
@@ -67,7 +68,7 @@ class MapTileEditViewController: UIView {
     }
     
     /**
-     
+     A function that adds the tile types to the base view.
      */
     fileprivate func addTileTypes(tileTypes: [CDTileType]) {
         var i: Int = 0
@@ -91,6 +92,9 @@ class MapTileEditViewController: UIView {
     }
     
     /**
+     A function that is triggered when a tile type button is pressed.
+     
+     - parameter sender: The sender as an **UIButton**.
      */
     @objc func didPressTileTypeButton(_ sender: UIButton) {
         for case let v as UIButton in baseView.subviews {

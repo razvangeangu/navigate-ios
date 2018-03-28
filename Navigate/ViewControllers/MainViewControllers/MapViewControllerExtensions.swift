@@ -26,7 +26,7 @@ extension MapViewController {
     
     /**
      Handle tap for the development mode to save data for a certain tile
-     and display feedback by setting it to the color cyan.
+     and display feedback by setting it to the color type.
      
      - parameter tap: The tap gesture that has been recognised.
      */
@@ -226,6 +226,11 @@ extension MapViewController {
         }
     }
     
+    /**
+     A function to handle the rotation of the view using two fingers gesture.
+     
+     - parameter rotate: The gesture recogniser that triggers the event.
+     */
     @objc func handleRotation(rotate: UIRotationGestureRecognizer) {
         switch rotate.state {
         case .began:

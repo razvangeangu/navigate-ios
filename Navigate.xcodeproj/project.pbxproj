@@ -41,6 +41,7 @@
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
 		1868FDDE206C041E00BE73FE /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868FDDD206C041E00BE73FE /* CloudKit.framework */; };
+		1868FDE0206C1CB700BE73FE /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1868FDDF206C1CB700BE73FE /* ProgressView.swift */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
@@ -124,6 +125,7 @@
 		183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		1868FDDD206C041E00BE73FE /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		1868FDDF206C1CB700BE73FE /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				18DCD76020607CAA0003644D /* RGBackButton.swift */,
+				1868FDDF206C1CB700BE73FE /* ProgressView.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				183F1CD2206841BA00199D51 /* FloorCloudExtension.swift in Sources */,
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
+				1868FDE0206C1CB700BE73FE /* ProgressView.swift in Sources */,
 				183F1CF52068486700199D51 /* Tile+CoreDataClass.swift in Sources */,
 				183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,

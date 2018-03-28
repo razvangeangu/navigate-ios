@@ -83,13 +83,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         return ARConfiguration.isSupported
     }
     
-    // Loading view
-    static var containerProgressView: UIView!
-    static var progressView: UIProgressView!
-    static var loadingLabel: UILabel!
-    static var didFinishLoading = false
-    
-    static var sceneView: SKView!
+    // Progress view
+    static var progressView: ProgressView!
     
     fileprivate func initView() {
         let oldFrame = self.view.frame
@@ -99,7 +94,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
                 MapViewController.scene = scene
-                MapViewController.sceneView = view
                 
                 // Initialise the static map
                 MapViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
@@ -129,6 +123,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         
+        // Init the progress view
+        MapViewController.progressView = ProgressView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        
         // Init the core model
         self.initModel()
         
@@ -148,7 +145,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         self.locationManager.delegate = self
         
         // Add the progress view
-        self.addProgressView()
+        view.addSubview(MapViewController.progressView)
     }
     
     override func viewDidLoad() {
@@ -166,8 +163,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if MapViewController.didFinishLoading {
-            MapViewController.setProgress(to: 1.0)
+        if MapViewController.progressView != nil {
+            if MapViewController.progressView.didFinishLoading {
+                MapViewController.progressView.setProgress(to: 1.0)
+            }
         }
     }
     
@@ -523,6 +522,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     A function to reload the data in the bottom sheet view.
+     */
     static func reloadData() {
         DispatchQueue.main.async {
             bottomSheetVC.updatePickerData()
@@ -530,6 +532,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     A method that reloads the view asynchronously based on a record type.
+     
+     - parameter recordType: A string that represents the record type.
+     */
     static func reloadView(recordType: String) {
         if let recordType = DataClasses(rawValue: recordType) {
             DispatchQueue.main.async {
@@ -558,73 +565,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /**
-     Initialises and adds the progress view to the main view.
+     A function that gets the tile type for a specific column and row.
+     
+     - parameter column: The column of the tile.
+     - parameter row: The row of the tile.
+     
+     - Returns: The type **sample** if nothing has been found. The type otherwise.
      */
-    fileprivate func addProgressView() {
-        
-        // Initialise the container for the progress view
-        MapViewController.containerProgressView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        MapViewController.containerProgressView.backgroundColor = .clear
-        
-        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-        blurEffectView.frame = MapViewController.containerProgressView.bounds
-        blurEffectView.isUserInteractionEnabled = false
-        MapViewController.containerProgressView.insertSubview(blurEffectView, at: 0)
-        
-        // Initiliase the progress view
-        MapViewController.progressView = UIProgressView(frame: CGRect(x: 20, y: view.center.y, width: view.frame.width - 40, height: 10))
-        MapViewController.containerProgressView.isUserInteractionEnabled = false
-        MapViewController.containerProgressView.addSubview(MapViewController.progressView)
-        
-        // Adding loading label
-        MapViewController.loadingLabel = UILabel(frame: CGRect(x: MapViewController.progressView.frame.minX, y: MapViewController.progressView.frame.minY - 40, width: MapViewController.progressView.frame.width, height: 20))
-        MapViewController.loadingLabel.textAlignment = .center
-        MapViewController.loadingLabel.text = "Updating data N/A"
-        MapViewController.containerProgressView.addSubview(MapViewController.loadingLabel)
-        
-        // Hide the container
-        MapViewController.containerProgressView.isHidden = true
-        
-        // Add the progress view to the main view
-        view.addSubview(MapViewController.containerProgressView)
-    }
-    
-    static func setProgress(to value: Float) {
-        DispatchQueue.main.async {
-            if value >= 1.0 {
-                containerProgressView.isHidden = true
-                didFinishLoading = true
-                MapViewController.scene.view?.isUserInteractionEnabled = true
-            } else {
-                containerProgressView.isHidden = false
-                MapViewController.scene.view?.isUserInteractionEnabled = false
-                progressView.setProgress(value, animated: true)
-                loadingLabel.text = "Updating data \(Int(progressView.progress * 100))%"
-                
-                if !isReachable() {
-                    if loadingLabel != nil {
-                        loadingLabel.text = "Internet is needed to download the data."
-                    }
-                }
-            }
-        }
-    }
-    
-    static func addToProgress(value: Float) {
-        DispatchQueue.main.async {
-            if value >= 1.0 {
-                containerProgressView.isHidden = true
-                didFinishLoading = true
-                MapViewController.scene.view?.isUserInteractionEnabled = true
-            } else {
-                containerProgressView.isHidden = false
-                MapViewController.scene.view?.isUserInteractionEnabled = false
-                progressView.setProgress(progressView.progress + value, animated: true)
-                loadingLabel.text = "Updating data \(Int(progressView.progress * 100))%"
-            }
-        }
-    }
-    
     static func getTileType(column: Int, row: Int) -> CDTileType {
         var type = CDTileType.sample
         
@@ -635,21 +582,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         return type
-    }
-    
-    fileprivate static func saveTileTypes() {
-        var tileTypesToSave = [[CDTileType]]()
-        
-        for row in 0...map.numberOfRows {
-            for column in 0...map.numberOfColumns {
-                if RGSharedDataManager.appMode == .dev {
-                    let tileType = getTileType(column: column, row: row)
-                    tileTypesToSave[row][column] = tileType
-                }
-            }
-        }
-        
-        RGSharedDataManager.defaultTileTypes = tileTypesToSave
     }
 }
 

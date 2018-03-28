@@ -28,7 +28,7 @@ extension CloudKitManager {
                 updateLocalRecords(changedRecords: records, deletedRecordIDs: nil)
                 
                 // Update progress view
-                MapViewController.addToProgress(value: 1/4)
+                MapViewController.progressView.addToProgress(value: 1/4)
                 
                 completion?(records.count > 0)
             })
@@ -60,7 +60,7 @@ extension CloudKitManager {
                 
                 // Update progress view
                 let progress = Float(0.001)
-                MapViewController.addToProgress(value: progress)
+                MapViewController.progressView.addToProgress(value: progress)
                 
                 debugPrint("Fetched: \(records.count)")
                 self.fetchRecords(with: cursor, error: error, records: currentRecords, completion: completion)

@@ -252,7 +252,7 @@ class CloudKitManager {
     
     static func fetchDataFromTheCloud(completion: (() -> Void)?) {
         
-        MapViewController.setProgress(to: 0)
+        MapViewController.progressView.setProgress(to: 0)
         query(recordType: DataClasses.floor.rawValue) { (_) in
             query(recordType: DataClasses.room.rawValue) { (_) in
                 query(recordType: DataClasses.tile.rawValue) { (completed) in
