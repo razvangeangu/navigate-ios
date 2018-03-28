@@ -36,7 +36,7 @@ extension RGSharedDataManager {
     }
     
     /**
-     A method to get the APs from the external device and save them to the context.
+     A method to get the APs from the external device and without saving them to the context.
      
      - Returns: An **NSSet?** containing the APs.
      */
@@ -64,6 +64,15 @@ extension RGSharedDataManager {
         return accessPoints
     }
     
+    /**
+     A method that creates an Access Point without adding it to the local/cloud database.
+     
+     - parameter address: The unique address of the Access Point (UUID) as String.
+     - parameter strength: The strength of the Access Point at the moment of recognition.
+     - parameter tile: The tile of the Access Point.
+     
+     - Returns: An **AccessPoint** object.
+     */
     static func createAccessPoint(address: String, strength: Int64, tile: Tile) -> AccessPoint {
         // Create a new access point
         let accessPoint = AccessPoint(context: PersistenceService.viewContext)

@@ -112,16 +112,6 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNS-uf-VI0">
-                                <rect key="frame" x="120" y="507" width="134" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="2gF-KQ-cey"/>
-                                </constraints>
-                                <state key="normal" title="Update Data Online"/>
-                                <connections>
-                                    <action selector="didPressUpdateDataButton:" destination="72v-sM-bGh" eventType="touchUpInside" id="IRX-YZ-5Ku"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i5W-9V-idR">
                                 <rect key="frame" x="292" y="261.66666666666669" width="67" height="30"/>
                                 <state key="normal" title="Add Floor"/>
@@ -138,10 +128,8 @@
                             <constraint firstItem="riz-r2-jLr" firstAttribute="trailing" secondItem="i5W-9V-idR" secondAttribute="trailing" constant="16" id="CDS-J4-Ksz"/>
                             <constraint firstItem="tHg-cH-kO0" firstAttribute="leading" secondItem="Psx-Ku-cRh" secondAttribute="trailing" constant="8" id="ELb-LL-IVn"/>
                             <constraint firstItem="NDM-bg-Jlh" firstAttribute="leading" secondItem="riz-r2-jLr" secondAttribute="leading" constant="16" id="LLg-TG-UMR"/>
-                            <constraint firstItem="xNS-uf-VI0" firstAttribute="centerX" secondItem="XSg-hz-WW0" secondAttribute="centerX" id="LlM-ms-xEs"/>
                             <constraint firstItem="riz-r2-jLr" firstAttribute="trailing" secondItem="RIL-tQ-yZU" secondAttribute="trailing" constant="320" id="M9w-J6-PaA"/>
                             <constraint firstItem="dt7-7t-WbS" firstAttribute="top" secondItem="RIL-tQ-yZU" secondAttribute="bottom" constant="8" id="SZa-yy-Faq"/>
-                            <constraint firstItem="xNS-uf-VI0" firstAttribute="top" secondItem="riz-r2-jLr" secondAttribute="top" constant="463" id="VHf-pd-d3W"/>
                             <constraint firstItem="riz-r2-jLr" firstAttribute="trailing" secondItem="i5W-9V-idR" secondAttribute="trailing" constant="16" id="Wrv-Xn-MjK"/>
                             <constraint firstItem="zDq-xJ-pb2" firstAttribute="top" secondItem="kLi-oB-Jw9" secondAttribute="bottom" constant="8" id="ZNB-O1-p3W"/>
                             <constraint firstItem="RIL-tQ-yZU" firstAttribute="leading" secondItem="riz-r2-jLr" secondAttribute="leading" constant="16" id="bk7-Wk-3Xi"/>
@@ -173,7 +161,6 @@
                         <outlet property="loadFloorMapButton" destination="tHg-cH-kO0" id="kHf-HA-Hzq"/>
                         <outlet property="roomNameTextField" destination="kLi-oB-Jw9" id="vcV-Fl-Hfo"/>
                         <outlet property="selectedFloorLabel" destination="NDM-bg-Jlh" id="LcL-9m-HYw"/>
-                        <outlet property="updateDataOnlineButton" destination="xNS-uf-VI0" id="1tz-1X-wuy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2RD-7f-SHV" userLabel="First Responder" sceneMemberID="firstResponder"/>

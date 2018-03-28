@@ -11,7 +11,9 @@ import CoreData
 extension RGSharedDataManager {
     
     /**
-     Sets the current floor
+     Sets the current floor to the selected level.
+     
+     - parameter level: The level as an **Int** of the floor to be selected.
      */
     static func setFloor(level: Int) {
         guard let floor = getFloor(level: level) else { return }

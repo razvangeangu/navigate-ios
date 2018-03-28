@@ -28,8 +28,25 @@ extension RGSharedDataManager {
         }
         
         // If the tile needs to be overwritten
-        if tileType == .sample {
-            resetTile(column: column, row: row)
+        if tileType == .sample || tileType == .wall || tileType == .door {
+            resetTile(column: column, row: row, newType: tileType)
+            return true
+        }
+        
+        if tileType != .wall {
+            // If external device is not connected then do not try to execute tap functions
+            if !BLEService.isConnected {
+                MapViewController.devLog(data: "The external device must be connected")
+                return false
+            }
+            
+            // If there is no selected room
+            guard let _ = RGSharedDataManager.selectedRoom else {
+                
+                // Give feedback to the admin
+                MapViewController.devLog(data: "A room must to be selected")
+                return false
+            }
         }
         
         // Get the APs from the BLE service
@@ -144,18 +161,29 @@ extension RGSharedDataManager {
         return adjacentTiles
     }
     
-    static func resetTile(column: Int, row: Int) {
+    /**
+     A function to reset the tile. It removes the current record and
+     updates with a new one.
+     
+     - parameter column: The column of the tile *(y index of the tile in database)*
+     - parameter row: The row of the tile *(x index of the tile in database)*
+     - parameter newType: The new type for the updated tile record.
+     */
+    static func resetTile(column: Int, row: Int, newType: CDTileType) {
         
         // Remove tile from Core Data
         guard let tileToRemove = getTile(col: column, row: row) else { return }
-        PersistenceService.viewContext.delete(tileToRemove)
+        PersistenceService.viewContext.perform {
+            PersistenceService.viewContext.delete(tileToRemove)
+        }
         
         // Create a new tile
         let tile = Tile(context: PersistenceService.viewContext)
         tile.prepareForCloudKit()
         tile.row = Int16(row)
         tile.col = Int16(column)
-        tile.type = CDTileType.sample.rawValue
+        tile.type = newType.rawValue
+        tile.room = getRoom(name: "SAMPLE", floor: floor)
         tile.lastUpdate = NSDate()
         
         floor.addToTiles(tile)

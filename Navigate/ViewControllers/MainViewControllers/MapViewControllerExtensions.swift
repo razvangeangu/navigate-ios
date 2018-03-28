@@ -34,25 +34,11 @@ extension MapViewController {
         if RGSharedDataManager.appMode == .dev {
             if tap.state != .ended { return }
         
-            // If external device is not connected then do not try to execute tap functions
-            if !BLEService.isConnected {
-                MapViewController.devLog(data: "The external device must be connected")
-                return
-            }
-        
             // Get the row and column of the taped square/tile
             let tapLocation = tap.location(in: view)
         
             // Only activate gesture if bottomSheetVC is closed
             if tapLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
-                return
-            }
-            
-            // If there is no selected room
-            guard let _ = RGSharedDataManager.selectedRoom else {
-                
-                // Give feedback to the admin
-                MapViewController.devLog(data: "A room must to be selected")
                 return
             }
         

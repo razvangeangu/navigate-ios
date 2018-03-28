@@ -45,8 +45,10 @@ class RGLocalisation: NSObject {
      A function that detects the location of the iOS device
      by checking the strength of the APs around the device
      and the one saved in the database.
+     
+     - parameter floor: The floor to scan the location for.
      */
-    static func detectLocation() {
+    static func detectLocation(floor: Floor, completion: (((Int, Int), [[Int]]) -> Void)?) {
         guard let currentAccessPoints = RGSharedDataManager.getAccessPoints() else {
             currentLocation = (-1, -1)
             return
@@ -55,57 +57,80 @@ class RGLocalisation: NSObject {
         DispatchQueue.global(qos: .background).async {
             // A 2D array that holds the data of the APs
             var matrix = [[Int]](repeating: [Int](repeating: 0, count: RGSharedDataManager.numberOfColumns), count: RGSharedDataManager.numberOfRows)
-    
-            if let floor = RGSharedDataManager.floor {
                 
-                if let tiles = floor.tiles {
-                
-                    // Loop through all the tiles
-                    for case let tile as Tile in tiles {
+            if let tiles = floor.tiles {
+            
+                // Loop through all the tiles
+                for case let tile as Tile in tiles {
+                    
+                    // If tile contains APs
+                    if let accessPoints = tile.accessPoints {
                         
-                        // If tile contains APs
-                        if let accessPoints = tile.accessPoints {
+                        // Loop through all the APs from the each tile
+                        for case let accessPoint as AccessPoint in accessPoints {
                             
-                            // Loop through all the APs from the each tile
-                            for case let accessPoint as AccessPoint in accessPoints {
+                            // Loop thorugh all the APs from the current scan
+                            for currentAccessPoint in currentAccessPoints {
                                 
-                                // Loop thorugh all the APs from the current scan
-                                for currentAccessPoint in currentAccessPoints {
+                                // Compare their unique id
+                                if accessPoint.uuid == currentAccessPoint.uuid {
                                     
-                                    // Compare their unique id
-                                    if accessPoint.uuid == currentAccessPoint.uuid {
-                                        
-                                        // Compare their strength
-                                        if accessPoint.strength > currentAccessPoint.strength - 5 {
-                                            if accessPoint.strength < currentAccessPoint.strength + 5 {
-                                                
-                                                // Increase the similarity value of the AP / Tile
-                                                matrix[Int(tile.row)][Int(tile.col)] += 1
-                                            }
+                                    // Compare their strength
+                                    if accessPoint.strength > currentAccessPoint.strength - 5 {
+                                        if accessPoint.strength < currentAccessPoint.strength + 5 {
+                                            
+                                            // Increase the similarity value of the AP / Tile
+                                            matrix[Int(tile.row)][Int(tile.col)] += 1
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    
-                    // Current location local value to find the maximum in the matrix
-                    var currentLocation = self.currentLocation
-                    var max = 0
-                    
-                    // Loop through all the tiles
-                    for i in 0...RGSharedDataManager.numberOfRows - 1 {
-                        for j in 0...RGSharedDataManager.numberOfColumns - 1 {
-                            
-                            // Find maximum and save it
-                            if matrix[i][j] > max {
-                                currentLocation = (i, j)
-                                max = matrix[i][j]
-                            }
+                }
+                
+                // Current location local value to find the maximum in the matrix
+                var currentLocation = self.currentLocation
+                var max = 0
+                
+                // Loop through all the tiles
+                for i in 0...RGSharedDataManager.numberOfRows - 1 {
+                    for j in 0...RGSharedDataManager.numberOfColumns - 1 {
+                        
+                        // Find maximum and save it
+                        if matrix[i][j] > max {
+                            currentLocation = (i, j)
+                            max = matrix[i][j]
                         }
                     }
-                    
-                    self.currentLocation = currentLocation
+                }
+                
+                self.currentLocation = currentLocation
+                
+                completion?(currentLocation, matrix)
+            }
+        }
+    }
+    
+    /**
+     A function that detects the floor level by comparing the number of access points identified on each floor.
+     
+     - parameter completion: Returns an **Int** number representing the floor level.
+     */
+    static func getFloorLevel(completion: ((_ level: Int?) -> Void)?) {
+        var level: Int?
+        var maxNumberOfAPs = Int.min
+        
+        guard let floors = RGSharedDataManager.getFloors() else { return }
+        for i in 0..<floors.count {
+            detectLocation(floor: floors[i]) { (location, matrix) in
+                if matrix[location.0][location.1] > maxNumberOfAPs {
+                    maxNumberOfAPs = matrix[location.0][location.1]
+                    level = Int(floors[i].level)
+                }
+                
+                if floors[i].level == floors.last!.level {
+                    completion?(level)
                 }
             }
         }

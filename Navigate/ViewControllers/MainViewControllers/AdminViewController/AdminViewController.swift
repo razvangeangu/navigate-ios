@@ -243,13 +243,6 @@ class AdminViewController: UIViewController {
             }
         }
     }
-    
-    /**
-     Updates the data of the map to the online server.
-     */
-    @IBAction func didPressUpdateDataButton(_ sender: Any) {
-        
-    }
 }
 
 extension AdminViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

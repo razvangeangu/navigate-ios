@@ -292,7 +292,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      
      */
     fileprivate func addTimeAndDistanceView() {
-        MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top, width: 120, height: 50))
+        MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top > 0 ? view.safeAreaInsets.top : 40, width: 120, height: 50))
         view.insertSubview(MapViewController.mapTimeAndDistanceView, at: 0)
         
         MapViewController.mapTimeAndDistanceView.isHidden = true

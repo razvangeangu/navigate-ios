@@ -12,14 +12,23 @@ import CoreData
 class PersistenceService {
     private init() { }
     
+    /**
+     The view context that holds the core data.
+     */
     static var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
+    /**
+     The cache context that holds the core data objects that have not been yet updated.
+     */
     static var cacheContext: NSManagedObjectContext {
         return persistentContainer.newBackgroundContext()
     }
     
+    /**
+     The update context that holds the core data objects to be inserted in the background to the *viewContext*.
+     */
     static var updateContext: NSManagedObjectContext {
         let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         _updateContext.parent = self.viewContext
@@ -54,6 +63,9 @@ class PersistenceService {
     
     // MARK: - Core Data Saving support
     
+    /**
+     A method that saves the view context if it has changes and uploads the changed objects to the cloud.
+     */
     static func saveViewContext() {
         let insertedObjects = viewContext.insertedObjects
         let modifiedObjects = viewContext.updatedObjects
@@ -72,6 +84,9 @@ class PersistenceService {
         }
     }
     
+    /**
+     A method that saves the update context if it has changes.
+     */
     static func saveUpdateContext() {
         if CloudKitManager.updateContext.hasChanges {
             do {
@@ -82,6 +97,9 @@ class PersistenceService {
         }
     }
     
+    /**
+     A method that saves the cache context if it has changes.
+     */
     static func saveCacheContext() {
         if CloudKitManager.cacheContext.hasChanges {
             do {

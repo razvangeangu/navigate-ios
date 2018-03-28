@@ -66,12 +66,12 @@ class RGSharedDataManager: NSObject {
     // Detect location on changing value of the json
     static var jsonData: Any! {
         didSet {        
-            RGLocalisation.detectLocation()
+            RGLocalisation.detectLocation(floor: RGSharedDataManager.floor, completion: nil)
         }
     }
     
     // The tile size in meters
-    static var tileLength: Float = 3
+    static var tileLength: Float = 1.5
     
     // The selected tileType
     static var tileType: CDTileType?
@@ -86,6 +86,7 @@ class RGSharedDataManager: NSObject {
      - parameter mapImage: The image of the map for the floor level.
      */
     static func initData(floorLevel: Int, mapImage: NSData) {
+        // Begin background task to fetch the data even if app exits
         let task = beginBackgroundTask()
         
         do {
