@@ -76,6 +76,9 @@ class RGSharedDataManager: NSObject {
     // The selected tileType
     static var tileType: CDTileType?
     
+    // The default tileTypes
+    static var defaultTileTypes: [[CDTileType]]!
+    
     /**
      Init data for when the application is open for the first time.
      

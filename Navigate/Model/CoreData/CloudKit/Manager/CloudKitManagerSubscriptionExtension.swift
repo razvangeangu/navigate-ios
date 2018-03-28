@@ -29,7 +29,7 @@ extension CloudKitManager {
                     subscription.notificationInfo = notificationInfo
                     
                     self.publicCloudDatabase.save(subscription, completionHandler: { (subscription, error) in
-                        completion(error == nil)
+                        completion(error == nil || subscription != nil)
                     })
                 }
             }

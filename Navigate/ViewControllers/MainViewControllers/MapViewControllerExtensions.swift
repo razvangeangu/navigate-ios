@@ -94,6 +94,11 @@ extension MapViewController {
             // Detect the location from the view in the scene
             let location = MapViewController.scene.convertPoint(fromView: tapLocation)
             
+            if location.x > MapViewController.backgroundNode.frame.maxX || location.x < MapViewController.backgroundNode.frame.minX || location.y > MapViewController.backgroundNode.frame.maxY || location.y < MapViewController.backgroundNode.frame.minY {
+                MapViewController.prodLog("Could not find path to location.")
+                return
+            }
+            
             // Row and Column for the tapped location
             let column = MapViewController.map.tileColumnIndex(fromPosition: location)
             let row = MapViewController.map.tileRowIndex(fromPosition: location)

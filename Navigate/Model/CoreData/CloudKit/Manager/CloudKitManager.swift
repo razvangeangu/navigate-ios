@@ -25,6 +25,8 @@ class CloudKitManager {
      */
     static func uploadChangedObjects(savedIDs: [NSManagedObjectID], deletedIDs: [CKRecordID]?) {
         
+        let task = beginBackgroundTask()
+        
         // Create var for the saved objects as cloud managed objects
         var savedObjects = [CKRecord]()
         
@@ -146,6 +148,7 @@ class CloudKitManager {
                 
                 operation.completionBlock = {
                     debugPrint("Finished uploading changed objects to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
+                    endBackgroundTask(taskID: task)
                 }
                 
                 operation.qualityOfService = .userInitiated

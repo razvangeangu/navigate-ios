@@ -25,7 +25,6 @@
 		1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */; };
 		183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */; };
 		18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtonsView.swift */; };
-		183F1C8920682D3C00199D51 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183F1C8820682D3C00199D51 /* CloudKit.framework */; };
 		183F1C8E2068386100199D51 /* CloudKitManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */; };
 		183F1CD2206841BA00199D51 /* FloorCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */; };
 		183F1CD42068420600199D51 /* TileCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CD32068420600199D51 /* TileCloudExtension.swift */; };
@@ -41,6 +40,7 @@
 		183F1CF82068486700199D51 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
+		1868FDDE206C041E00BE73FE /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868FDDD206C041E00BE73FE /* CloudKit.framework */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
@@ -109,7 +109,6 @@
 		1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerExtensions.swift; sourceTree = "<group>"; };
 		183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsViewExtensions.swift; sourceTree = "<group>"; };
 		18363B6E205C383700FC17F4 /* MapButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsView.swift; sourceTree = "<group>"; };
-		183F1C8820682D3C00199D51 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagedObject.swift; sourceTree = "<group>"; };
 		183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorCloudExtension.swift; sourceTree = "<group>"; };
 		183F1CD32068420600199D51 /* TileCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileCloudExtension.swift; sourceTree = "<group>"; };
@@ -124,6 +123,7 @@
 		183F1CEF2068486700199D51 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
+		1868FDDD206C041E00BE73FE /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */,
-				183F1C8920682D3C00199D51 /* CloudKit.framework in Frameworks */,
+				1868FDDE206C041E00BE73FE /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +262,7 @@
 		1825192D1FAF45750005F5F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				183F1C8820682D3C00199D51 /* CloudKit.framework */,
+				1868FDDD206C041E00BE73FE /* CloudKit.framework */,
 				187E32972024940C0053853D /* CoreData.framework */,
 			);
 			name = Frameworks;

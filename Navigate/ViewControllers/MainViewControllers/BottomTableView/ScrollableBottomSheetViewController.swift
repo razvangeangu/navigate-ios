@@ -214,9 +214,13 @@ class ScrollableBottomSheetViewController: UIViewController {
     */
     func updateTableData() {
         if let rooms = RGSharedDataManager.getRooms() {
-            tableViewData = rooms.map({ (room) -> String in
+            var roomsNames = rooms.map({ (room) -> String in
                 return room.name!
             })
+            if let indexOfSample = roomsNames.index(of: "SAMPLE") {
+                roomsNames.remove(at: indexOfSample)
+            }
+            tableViewData = roomsNames
         }
     }
 }

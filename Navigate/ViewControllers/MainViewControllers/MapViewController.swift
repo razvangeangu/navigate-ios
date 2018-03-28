@@ -25,10 +25,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     var initialRotation: CGFloat = 0.0
     
     // Limits for the map
-    let minWidth: CGFloat = 300
-    let minHeight: CGFloat = 533
-    let maxWidth: CGFloat = 1400
-    let maxHeight: CGFloat = 4000
+    let minWidth: CGFloat = 600
+    let minHeight: CGFloat = 1066
+    let maxWidth: CGFloat = 2800
+    let maxHeight: CGFloat = 8000
     
     // Map node
     static var map: SKTileMapNode!
@@ -89,6 +89,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var loadingLabel: UILabel!
     static var didFinishLoading = false
     
+    static var sceneView: SKView!
+    
     fileprivate func initView() {
         let oldFrame = self.view.frame
         self.view = SKView(frame: oldFrame)
@@ -97,6 +99,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         if let view = self.view as! SKView? {
             if let scene = SKScene(fileNamed: "MapTilemapScene") {
                 MapViewController.scene = scene
+                MapViewController.sceneView = view
                 
                 // Initialise the static map
                 MapViewController.map = scene.childNode(withName: "tileMap") as? SKTileMapNode
@@ -132,9 +135,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Add the bottom view
         self.addBottomSheetView()
         
-        // Activate the tiles that have access points stored in core data
-        MapViewController.resetTiles()
-        
         // Add the map control buttons
         self.addMapButtonsView()
         
@@ -155,7 +155,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         
         CloudKitManager.subscribeToChanges { (success) in
-            // print(success)
+            print("\(success ? "Succssefully" : "Failure") subscribed to changes")
         }
         
         DispatchQueue.main.async {
@@ -215,6 +215,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Initiliase data model in CoreData
         let mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
         RGSharedDataManager.initData(floorLevel: 6, mapImage: mapImage!)
+        
+        // Reset view for app mode
+        MapViewController.resetView(for: RGSharedDataManager.appMode)
         
         // Init the navigation model
         MapViewController.navigation = RGNavigation()
@@ -620,6 +623,33 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 loadingLabel.text = "Updating data \(Int(progressView.progress * 100))%"
             }
         }
+    }
+    
+    static func getTileType(column: Int, row: Int) -> CDTileType {
+        var type = CDTileType.sample
+        
+        if let tileGroup = MapViewController.map.tileGroup(atColumn: column, row: row) {
+            if let tileType = CDTileType(rawValue: tileGroup.name!) {
+                type = tileType
+            }
+        }
+        
+        return type
+    }
+    
+    fileprivate static func saveTileTypes() {
+        var tileTypesToSave = [[CDTileType]]()
+        
+        for row in 0...map.numberOfRows {
+            for column in 0...map.numberOfColumns {
+                if RGSharedDataManager.appMode == .dev {
+                    let tileType = getTileType(column: column, row: row)
+                    tileTypesToSave[row][column] = tileType
+                }
+            }
+        }
+        
+        RGSharedDataManager.defaultTileTypes = tileTypesToSave
     }
 }
 

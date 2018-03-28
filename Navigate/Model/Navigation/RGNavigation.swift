@@ -36,7 +36,18 @@ class RGNavigation: NSObject, PathfinderDataSource {
     }
     
     static func moveTo(fromTile: Tile, toTile: Tile) {
-        RGNavigation.shortestPath = RGNavigation.pathFinder.shortestPath(fromTile: fromTile, toTile: toTile)
+        DispatchQueue.main.async {
+            var actualTile = toTile
+            if toTile.type == CDTileType.wall.rawValue {
+                if let accessibleTile = RGSharedDataManager.getAdjacentTiles(column: Int(actualTile.col), row: Int(actualTile.row)).first(where: { $0.type != CDTileType.wall.rawValue }) {
+                    actualTile = accessibleTile
+                } else {
+                    MapViewController.prodLog("Cannot find path to destination.")
+                }
+            } else {
+                RGNavigation.shortestPath = RGNavigation.pathFinder.shortestPath(fromTile: fromTile, toTile: actualTile)
+            }
+        }
     }
     
     static func getShortestPath(fromTile: Tile, toTile: Tile) -> [Tile]? {

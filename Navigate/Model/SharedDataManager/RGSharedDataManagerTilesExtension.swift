@@ -169,7 +169,7 @@ extension RGSharedDataManager {
      
      - parameter floor: The current floor to create tiles for.
      */
-    static func createTiles(for floor: Floor) {        
+    static func createTiles(for floor: Floor) {
         if addRoom(name: "SAMPLE") {
             guard let room = getRoom(name: "SAMPLE", floor: floor) else { return }
             
@@ -182,7 +182,13 @@ extension RGSharedDataManager {
                     // Set the location for the tile
                     tile.row = Int16(i)
                     tile.col = Int16(j)
-                    tile.type = CDTileType.sample.rawValue
+                    
+                    if floor.level == Int16(6) && RGSharedDataManager.appMode == .dev {
+                        tile.type = MapViewController.getTileType(column: j, row: i).rawValue
+                    } else {
+                        tile.type = CDTileType.sample.rawValue
+                    }
+                    
                     tile.lastUpdate = NSDate()
                     
                     // Add room to tile
