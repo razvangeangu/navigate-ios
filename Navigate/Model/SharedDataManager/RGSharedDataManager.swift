@@ -83,17 +83,25 @@ class RGSharedDataManager: NSObject {
      - parameter mapImage: The image of the map for the floor level.
      */
     static func initData(floorLevel: Int, mapImage: NSData) {
+        let task = beginBackgroundTask()
+        
         do {
             // Get number of floors from CoreData
             let numberOfFloors = try PersistenceService.viewContext.count(for: NSFetchRequest(entityName: "Floor"))
             
             // If there are no floors, create the initial one
             if numberOfFloors == 0 {
-                fetchDataFromTheCloud {
+                CloudKitManager.fetchDataFromTheCloud {
                     if let floors = getFloors(), floors.count > 0 {
-                        debugPrint("Data already created. Setting floor to default \(floorLevel).")
+                        MapViewController.setProgress(to: 1.0)
+                        endBackgroundTask(taskID: task)
+                        
+                        debugPrint("Data fetched from the cloud. Setting floor to default \(floorLevel).")
                         setFloor(level: floorLevel)
-                    } else {
+                    } else if isReachable() {
+                        MapViewController.setProgress(to: 1.0)
+                        endBackgroundTask(taskID: task)
+                        
                         // Set the app mode to dev to display log and develop app
                         RGSharedDataManager.appMode = .dev
                         
@@ -103,43 +111,19 @@ class RGSharedDataManager: NSObject {
                         
                         // Update UI
                         MapViewController.resetView(for: RGSharedDataManager.appMode)
+                    } else {
+                        MapViewController.setProgress(to: 0)
                     }
                 }
             } else {
+                MapViewController.setProgress(to: 1.0)
+                endBackgroundTask(taskID: task)
+                
                 debugPrint("Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
             }
         } catch {
             debugPrint("Error in Floor Count fetchRequest")
         }
-    }
-    
-    static func fetchDataFromTheCloud(completion: (() -> Void)?) {
-        let recordTypes = ["Floor", "Room", "Tile", "AccessPoint", "CachedRecords"]
-        
-        // Floor
-        query(recordType: recordTypes[0]) { (_) in
-            
-            // Room
-            query(recordType: recordTypes[1]) { (_) in
-
-                // Tile
-                query(recordType: recordTypes[2]) { (completed) in
-                    
-                    // AccessPoint
-                    query(recordType: recordTypes[3]) { (completed) in
-
-                        // CachedRecords
-                        query(recordType: recordTypes[4]) { (completed) in
-                            completion?()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    static func fetchCloudChanges(completion: @escaping () -> Void) {
-        RGSharedDataManager.fetchDatabaseChanges(database: RGSharedDataManager.sharedCloudDatabase, completion: completion)
     }
 }

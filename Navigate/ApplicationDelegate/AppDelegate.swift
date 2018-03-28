@@ -21,26 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().requestAuthorization(options:
             [[.alert, .sound, .badge]],
-                completionHandler: { (granted, error) in
-                    if let error = error {
-                        debugPrint(error)
-                    }
+            completionHandler: { (granted, error) in
+                if let error = error {
+                    debugPrint(error)
+                }
         })
         application.registerForRemoteNotifications()
-        
-        CKContainer.default().requestApplicationPermission(.userDiscoverability) { (status, error) in
-            if let error = error {
-                debugPrint(error)
-            } else {
-                CKContainer.default().discoverAllIdentities(completionHandler: { (identities, error) in
-                    if let error = error {
-                        debugPrint(error)
-                    } else {
-                        RGSharedDataManager.identities = identities
-                    }
-                })
-            }
-        }
         
         return true
     }
@@ -71,11 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let dict = userInfo as! [String: NSObject]
-        let notification = CKNotification(fromRemoteNotificationDictionary: dict)
+        let notification = CKQueryNotification(fromRemoteNotificationDictionary: dict)
         
-        if (notification.subscriptionID == "cloudChangesSub") {
-            RGSharedDataManager.fetchCloudChanges {
-                debugPrint("Finished fetching cloud changes")
+        if let recordID = notification.recordID {
+            CloudKitManager.updateLocalRecord(from: recordID, reason: notification.queryNotificationReason)
+            if let dotIndex = recordID.recordName.index(of: ".") {
+                let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
+                MapViewController.reloadView(recordType: recordType)
             }
             completionHandler(.newData)
         }

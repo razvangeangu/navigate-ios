@@ -20,10 +20,18 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>wifi</string>
+		<string>bluetooth-le</string>
+		<string>location-services</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>This application will use the camera for Augmented Reality.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This application will use location for the bearing angle.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application will use the bluetooth low energy to scan for Wi-Fi Access Points.</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -59,5 +67,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application will use the photo library to select the map.</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 </dict>
 </plist>

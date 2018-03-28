@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class AdminViewController: UIViewController {
     
@@ -23,8 +24,11 @@ class AdminViewController: UIViewController {
     // Image Picker Controller
     let imagePicker = UIImagePickerController()
     
-    // Boolean to check if image has been picked
-    var imagePicked = false
+    // Picked image from the photo library
+    var pickedImage: UIImage?
+    
+    // Boolean to check if image can be picked
+    var shouldOpenPhotoLibrary = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +42,29 @@ class AdminViewController: UIViewController {
         
         // Display data for the label
         selectedFloorLabel.text = "Selected floor: \(RGSharedDataManager.floor.level)"
+        
+        // Get permission for gallery
+        requestPermissionForPhotoGallery()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         // Close keyboard if touches the view
         view.endEditing(true)
+    }
+    
+    /**
+     Requests authorisation to access the photo gallery.
+     */
+    fileprivate func requestPermissionForPhotoGallery() {
+        imagePicker.sourceType = .photoLibrary
+        
+        PHPhotoLibrary.requestAuthorization({
+            (newStatus) in
+            if newStatus == PHAuthorizationStatus.authorized {
+                self.shouldOpenPhotoLibrary = true
+            }
+        })
     }
     
     /**
@@ -92,8 +113,8 @@ class AdminViewController: UIViewController {
     @IBAction func didPressAddFloor(_ sender: Any) {
         if let floorLevelText = floorLevelTextField.text {
             if let floorLevel = Int(floorLevelText) {
-                if imagePicked {
-                    if let imageData = UIImagePNGRepresentation(floorMapImageView.image!) as NSData? {
+                if let pickedImage = pickedImage {
+                    if let imageData = UIImagePNGRepresentation(pickedImage) as NSData? {
                         
                         // Add floor
                         if RGSharedDataManager.addFloor(level: floorLevel, mapImage: imageData) {
@@ -106,7 +127,7 @@ class AdminViewController: UIViewController {
                                 self.floorLevelTextField.text = ""
                                 self.floorMapImageView.contentMode = .scaleAspectFit
                                 self.floorMapImageView.image = UIImage(named: "addimage")
-                                self.imagePicked = false
+                                self.pickedImage = nil
                             })
                         } else {
 
@@ -127,7 +148,7 @@ class AdminViewController: UIViewController {
                                                 self.floorLevelTextField.text = ""
                                                 self.floorMapImageView.contentMode = .scaleAspectFit
                                                 self.floorMapImageView.image = UIImage(named: "addimage")
-                                                self.imagePicked = false
+                                                self.pickedImage = nil
                                             })
                                         } else {
                                             self.presentAlert(title: "Error", message: "Cannot add floor.", completion: nil)
@@ -213,8 +234,14 @@ class AdminViewController: UIViewController {
      Shows image picker to select image for the floor map.
      */
     @IBAction func didPressLoadFloorMap(_ sender: Any) {
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
+        if shouldOpenPhotoLibrary {
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            presentAlert(title: "Error", message: "Access to the photo gallery is required.") {
+                self.requestPermissionForPhotoGallery()
+                self.didPressLoadFloorMap(sender)
+            }
+        }
     }
     
     /**
@@ -237,8 +264,8 @@ extension AdminViewController: UIImagePickerControllerDelegate, UINavigationCont
             // Set the image
             floorMapImageView.image = pickedImage
             
-            // Announce controllers
-            imagePicked = true
+            // Set the picked image
+            self.pickedImage = pickedImage
         }
         
         // Dismiss the image picker controller

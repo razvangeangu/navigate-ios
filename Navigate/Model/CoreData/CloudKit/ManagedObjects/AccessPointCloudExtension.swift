@@ -34,10 +34,10 @@ extension AccessPoint: CloudKitManagedObject {
         
         if let tileReference = record["tileReference"] as? CKReference {
             let tileName = tileReference.recordID.recordName 
-            if let _tile = PersistenceService.object(in: RGSharedDataManager.updateContext, recordName: tileName) as? Tile {
+            if let _tile = CloudKitManager.object(in: CloudKitManager.updateContext, recordName: tileName) as? Tile {
                 tile = _tile
             } else {
-                if let _newTile = NSEntityDescription.insertNewObject(forEntityName: "Tile", into: RGSharedDataManager.updateContext) as? Tile {
+                if let _newTile = NSEntityDescription.insertNewObject(forEntityName: "Tile", into: CloudKitManager.updateContext) as? Tile {
                     _newTile.recordName = tileName
                     tile = _newTile
                 }

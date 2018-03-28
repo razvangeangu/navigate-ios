@@ -63,12 +63,32 @@ class PersistenceService {
             do {
                 try viewContext.save()
             } catch {
-                MapViewController.devLog(data: "Could not save context to CoreData")
+                MapViewController.devLog(data: "Could not view save context in CoreData")
             }
             
             let insertedObjectIDs = insertedObjects.map { $0.objectID }
             let modifiedObjectIDs = modifiedObjects.map { $0.objectID }
-            RGSharedDataManager.uploadChangedObjects(savedIDs: insertedObjectIDs + modifiedObjectIDs, deletedIDs: deletedRecordIDs)
+            CloudKitManager.uploadChangedObjects(savedIDs: insertedObjectIDs + modifiedObjectIDs, deletedIDs: deletedRecordIDs)
+        }
+    }
+    
+    static func saveUpdateContext() {
+        if CloudKitManager.updateContext.hasChanges {
+            do {
+                try CloudKitManager.updateContext.save()
+            } catch {
+                MapViewController.devLog(data: "Could not save update context in CoreData")
+            }
+        }
+    }
+    
+    static func saveCacheContext() {
+        if CloudKitManager.cacheContext.hasChanges {
+            do {
+                try CloudKitManager.cacheContext.save()
+            } catch {
+                MapViewController.devLog(data: "Could not save cache context in CoreData")
+            }
         }
     }
 }

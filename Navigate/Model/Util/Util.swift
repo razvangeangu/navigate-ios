@@ -8,12 +8,14 @@
 
 import Foundation
 import UIKit
+import SystemConfiguration
 
 enum DataClasses: String {
-    case Tile = "Tile"
-    case AccessPoint = "AccessPoint"
-    case Floor = "Floor"
-    case Room = "Room"
+    case tile = "Tile"
+    case accessPoint = "AccessPoint"
+    case floor = "Floor"
+    case room = "Room"
+    case cachedRecords = "CachedRecords"
 }
 
 extension Float {
@@ -188,4 +190,29 @@ extension Array {
             Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
         }
     }
+}
+
+// https://stackoverflow.com/questions/31604428/download-in-background-in-swift
+func beginBackgroundTask() -> UIBackgroundTaskIdentifier {
+    return UIApplication.shared.beginBackgroundTask(expirationHandler: {})
+}
+
+func endBackgroundTask(taskID: UIBackgroundTaskIdentifier) {
+    UIApplication.shared.endBackgroundTask(taskID)
+}
+
+// https://dzone.com/articles/network-reachability-with-swift-1
+func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
+    let isReachable = flags.contains(.reachable)
+    let needsConnection = flags.contains(.connectionRequired)
+    let canConnectAutomatically = flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic)
+    let canConnectWithoutUserInteraction = canConnectAutomatically && !flags.contains(.interventionRequired)
+    return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
+}
+
+func isReachable() -> Bool {
+    guard let reachability = SCNetworkReachabilityCreateWithName(nil, "www.google.com") else { return false }
+    var flags = SCNetworkReachabilityFlags()
+    SCNetworkReachabilityGetFlags(reachability, &flags)
+    return isNetworkReachable(with: flags)
 }

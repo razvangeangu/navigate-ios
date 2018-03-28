@@ -83,6 +83,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         return ARConfiguration.isSupported
     }
     
+    // Loading view
+    static var containerProgressView: UIView!
+    static var progressView: UIProgressView!
+    static var loadingLabel: UILabel!
+    static var didFinishLoading = false
+    
     fileprivate func initView() {
         let oldFrame = self.view.frame
         self.view = SKView(frame: oldFrame)
@@ -140,30 +146,29 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Set the delegate for location manager to self for the bearing data
         self.locationManager.delegate = self
+        
+        // Add the progress view
+        self.addProgressView()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        RGSharedDataManager.getCustomZone { (completed) in
-            RGSharedDataManager.createSubscription()
-            
-            if completed {
-                DispatchQueue.main.async {
-                    self.initView()
-                }
-            } else {
-                RGSharedDataManager.createCustomZone {
-                    DispatchQueue.main.async {
-                        self.initView()
-                    }
-                }
-            }
+        CloudKitManager.subscribeToChanges { (success) in
+            // print(success)
+        }
+        
+        DispatchQueue.main.async {
+            self.initView()
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if MapViewController.didFinishLoading {
+            MapViewController.setProgress(to: 1.0)
+        }
     }
     
     override func prefersHomeIndicatorAutoHidden() -> Bool {
@@ -259,7 +264,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addMapButtonsView() {
         // Add the control buttons
-        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.safeAreaLayoutGuide.layoutFrame.width - 40 - 20, y: view.safeAreaLayoutGuide.layoutFrame.minY, width: 40, height: 131))
+        MapViewController.mapButtonsView = MapButtonsView(frame: CGRect(x: view.safeAreaLayoutGuide.layoutFrame.width - 40 - 20, y: view.safeAreaLayoutGuide.layoutFrame.minY > 0 ? view.safeAreaLayoutGuide.layoutFrame.minY : 40, width: 40, height: 131))
         MapViewController.mapButtonsView.backgroundColor = .clear
         MapViewController.mapButtonsView.parentVC = self
         self.view.addSubview(MapViewController.mapButtonsView)
@@ -519,6 +524,101 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         DispatchQueue.main.async {
             bottomSheetVC.updatePickerData()
             bottomSheetVC.updateTableData()
+        }
+    }
+    
+    static func reloadView(recordType: String) {
+        if let recordType = DataClasses(rawValue: recordType) {
+            DispatchQueue.main.async {
+                switch recordType {
+                case .floor:
+                    do {
+                        
+                    }
+                case .room:
+                    do {
+                        reloadData()
+                    }
+                case .accessPoint:
+                    do {
+                        resetTiles()
+                    }
+                case .tile:
+                    do {
+                        resetTiles()
+                    }
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    /**
+     Initialises and adds the progress view to the main view.
+     */
+    fileprivate func addProgressView() {
+        
+        // Initialise the container for the progress view
+        MapViewController.containerProgressView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        MapViewController.containerProgressView.backgroundColor = .clear
+        
+        let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurEffectView.frame = MapViewController.containerProgressView.bounds
+        blurEffectView.isUserInteractionEnabled = false
+        MapViewController.containerProgressView.insertSubview(blurEffectView, at: 0)
+        
+        // Initiliase the progress view
+        MapViewController.progressView = UIProgressView(frame: CGRect(x: 20, y: view.center.y, width: view.frame.width - 40, height: 10))
+        MapViewController.containerProgressView.isUserInteractionEnabled = false
+        MapViewController.containerProgressView.addSubview(MapViewController.progressView)
+        
+        // Adding loading label
+        MapViewController.loadingLabel = UILabel(frame: CGRect(x: MapViewController.progressView.frame.minX, y: MapViewController.progressView.frame.minY - 40, width: MapViewController.progressView.frame.width, height: 20))
+        MapViewController.loadingLabel.textAlignment = .center
+        MapViewController.loadingLabel.text = "Updating data N/A"
+        MapViewController.containerProgressView.addSubview(MapViewController.loadingLabel)
+        
+        // Hide the container
+        MapViewController.containerProgressView.isHidden = true
+        
+        // Add the progress view to the main view
+        view.addSubview(MapViewController.containerProgressView)
+    }
+    
+    static func setProgress(to value: Float) {
+        DispatchQueue.main.async {
+            if value >= 1.0 {
+                containerProgressView.isHidden = true
+                didFinishLoading = true
+                MapViewController.scene.view?.isUserInteractionEnabled = true
+            } else {
+                containerProgressView.isHidden = false
+                MapViewController.scene.view?.isUserInteractionEnabled = false
+                progressView.setProgress(value, animated: true)
+                loadingLabel.text = "Updating data \(Int(progressView.progress * 100))%"
+                
+                if !isReachable() {
+                    if loadingLabel != nil {
+                        loadingLabel.text = "Internet is needed to download the data."
+                    }
+                }
+            }
+        }
+    }
+    
+    static func addToProgress(value: Float) {
+        DispatchQueue.main.async {
+            if value >= 1.0 {
+                containerProgressView.isHidden = true
+                didFinishLoading = true
+                MapViewController.scene.view?.isUserInteractionEnabled = true
+            } else {
+                containerProgressView.isHidden = false
+                MapViewController.scene.view?.isUserInteractionEnabled = false
+                progressView.setProgress(progressView.progress + value, animated: true)
+                loadingLabel.text = "Updating data \(Int(progressView.progress * 100))%"
+            }
         }
     }
 }

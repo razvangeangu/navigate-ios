@@ -26,7 +26,6 @@
 		183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */; };
 		18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18363B6E205C383700FC17F4 /* MapButtonsView.swift */; };
 		183F1C8920682D3C00199D51 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183F1C8820682D3C00199D51 /* CloudKit.framework */; };
-		183F1C8B20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1C8A20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift */; };
 		183F1C8E2068386100199D51 /* CloudKitManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */; };
 		183F1CD2206841BA00199D51 /* FloorCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */; };
 		183F1CD42068420600199D51 /* TileCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CD32068420600199D51 /* TileCloudExtension.swift */; };
@@ -40,13 +39,16 @@
 		183F1CF62068486700199D51 /* Tile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CEE2068486700199D51 /* Tile+CoreDataProperties.swift */; };
 		183F1CF72068486700199D51 /* Floor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CEF2068486700199D51 /* Floor+CoreDataClass.swift */; };
 		183F1CF82068486700199D51 /* Floor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */; };
-		183F1CFC20688D7300199D51 /* PersistenceServiceCloudExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */; };
 		184C7A4F2052FF4800962828 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187E32972024940C0053853D /* CoreData.framework */; };
 		18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1858761F205D5CAC008CF624 /* AdminViewController.swift */; };
 		187E329A2024953D0053853D /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E32992024953D0053853D /* PersistenceService.swift */; };
 		189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189EFFE620288D2E00E37729 /* navigate-data.xcdatamodeld */; };
 		18A2642C202B544E002EE7E9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A2642B202B544E002EE7E9 /* Util.swift */; };
 		18AE77722066B29A008E0EC9 /* MapTimeAndDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */; };
+		18B42E4E206B0F5C00FFB587 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B42E4D206B0F5C00FFB587 /* CloudKitManager.swift */; };
+		18B42E51206B114100FFB587 /* CloudKitManagerSubscriptionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B42E50206B114100FFB587 /* CloudKitManagerSubscriptionExtension.swift */; };
+		18B42E53206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B42E52206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift */; };
+		18B42E55206B126800FFB587 /* CloudKitManagerQueryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B42E54206B126800FFB587 /* CloudKitManagerQueryExtension.swift */; };
 		18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */ = {isa = PBXBuildFile; fileRef = 18B93D972052AD7A00AD8B31 /* MapTileset.sks */; };
 		18C735632056F06500B292B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18C735622056F06500B292B1 /* Assets.xcassets */; };
 		18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C735662057164200B292B1 /* RGSharedDataManager.swift */; };
@@ -108,7 +110,6 @@
 		183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsViewExtensions.swift; sourceTree = "<group>"; };
 		18363B6E205C383700FC17F4 /* MapButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsView.swift; sourceTree = "<group>"; };
 		183F1C8820682D3C00199D51 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		183F1C8A20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerCloudExtension.swift; sourceTree = "<group>"; };
 		183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagedObject.swift; sourceTree = "<group>"; };
 		183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorCloudExtension.swift; sourceTree = "<group>"; };
 		183F1CD32068420600199D51 /* TileCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileCloudExtension.swift; sourceTree = "<group>"; };
@@ -122,13 +123,16 @@
 		183F1CEE2068486700199D51 /* Tile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		183F1CEF2068486700199D51 /* Floor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		183F1CF02068486700199D51 /* Floor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Floor+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceCloudExtension.swift; sourceTree = "<group>"; };
 		1858761F205D5CAC008CF624 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		187E32972024940C0053853D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187E32992024953D0053853D /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		189EFFE720288D2E00E37729 /* navigate-data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "navigate-data.xcdatamodel"; sourceTree = "<group>"; };
 		18A2642B202B544E002EE7E9 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTimeAndDistanceView.swift; sourceTree = "<group>"; };
+		18B42E4D206B0F5C00FFB587 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		18B42E50206B114100FFB587 /* CloudKitManagerSubscriptionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagerSubscriptionExtension.swift; sourceTree = "<group>"; };
+		18B42E52206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagerObjectsExtension.swift; sourceTree = "<group>"; };
+		18B42E54206B126800FFB587 /* CloudKitManagerQueryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManagerQueryExtension.swift; sourceTree = "<group>"; };
 		18B93D972052AD7A00AD8B31 /* MapTileset.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTileset.sks; sourceTree = "<group>"; };
 		18C735622056F06500B292B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18C735662057164200B292B1 /* RGSharedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManager.swift; sourceTree = "<group>"; };
@@ -245,9 +249,8 @@
 		1825192C1FAF45650005F5F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				183F1C8C2068385500199D51 /* CloudKit */,
-				18DCD756206069D40003644D /* SharedDataManager */,
 				18309F6120291EF8009F5CDD /* PiConnection */,
+				18DCD756206069D40003644D /* SharedDataManager */,
 				18309F5D20291EC2009F5CDD /* CoreData */,
 				183346712061FB6D001EA340 /* Localisation */,
 				1816BE38205EDC1B0057957F /* Navigation */,
@@ -269,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				187E32992024953D0053853D /* PersistenceService.swift */,
-				183F1CFB20688D7300199D51 /* PersistenceServiceCloudExtension.swift */,
+				183F1C8C2068385500199D51 /* CloudKit */,
 				18309F6020291EE7009F5CDD /* Models */,
 				18309F5E20291ED1009F5CDD /* ClassAndProperties */,
 			);
@@ -342,12 +345,11 @@
 		183346722061FBA3001EA340 /* MainViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				18B42E58206B272D00FFB587 /* MapButtonsView */,
 				18DFE2232062EAE700B42175 /* AdminViewController */,
 				18D5771E205C0211001C4B1C /* BottomTableView */,
 				18309F6220291F30009F5CDD /* MapViewController.swift */,
 				1830E3EE205717DE00F39ABA /* MapViewControllerExtensions.swift */,
-				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
-				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
 				18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */,
 				18AE77712066B29A008E0EC9 /* MapTimeAndDistanceView.swift */,
 			);
@@ -374,11 +376,8 @@
 		183F1C8C2068385500199D51 /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
-				183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */,
-				183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */,
-				183F1CD32068420600199D51 /* TileCloudExtension.swift */,
-				183F1CD52068433700199D51 /* RoomCloudExtension.swift */,
-				183F1CD72068434100199D51 /* AccessPointCloudExtension.swift */,
+				18B42E4F206B112100FFB587 /* Manager */,
+				18B42E56206B166700FFB587 /* ManagedObjects */,
 			);
 			path = CloudKit;
 			sourceTree = "<group>";
@@ -392,6 +391,46 @@
 				183346722061FBA3001EA340 /* MainViewControllers */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		18B42E4F206B112100FFB587 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				18B42E4D206B0F5C00FFB587 /* CloudKitManager.swift */,
+				18B42E52206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift */,
+				18B42E54206B126800FFB587 /* CloudKitManagerQueryExtension.swift */,
+				18B42E50206B114100FFB587 /* CloudKitManagerSubscriptionExtension.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		18B42E56206B166700FFB587 /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				18B42E57206B168600FFB587 /* Protocol */,
+				183F1CD1206841BA00199D51 /* FloorCloudExtension.swift */,
+				183F1CD32068420600199D51 /* TileCloudExtension.swift */,
+				183F1CD52068433700199D51 /* RoomCloudExtension.swift */,
+				183F1CD72068434100199D51 /* AccessPointCloudExtension.swift */,
+			);
+			path = ManagedObjects;
+			sourceTree = "<group>";
+		};
+		18B42E57206B168600FFB587 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				183F1C8D2068386100199D51 /* CloudKitManagedObject.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		18B42E58206B272D00FFB587 /* MapButtonsView */ = {
+			isa = PBXGroup;
+			children = (
+				18363B6E205C383700FC17F4 /* MapButtonsView.swift */,
+				183346742061FC86001EA340 /* MapButtonsViewExtensions.swift */,
+			);
+			path = MapButtonsView;
 			sourceTree = "<group>";
 		};
 		18D5771E205C0211001C4B1C /* BottomTableView */ = {
@@ -412,7 +451,6 @@
 				18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */,
 				18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */,
 				18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */,
-				183F1C8A20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift */,
 			);
 			path = SharedDataManager;
 			sourceTree = "<group>";
@@ -589,6 +627,7 @@
 				187E329A2024953D0053853D /* PersistenceService.swift in Sources */,
 				18DCD75A20606A220003644D /* RGSharedDataManagerRoomsExtension.swift in Sources */,
 				183F1CF42068486700199D51 /* Room+CoreDataProperties.swift in Sources */,
+				18B42E51206B114100FFB587 /* CloudKitManagerSubscriptionExtension.swift in Sources */,
 				18D57728205C02C3001C4B1C /* ScrollableBottomSheetViewControllerExtensions.swift in Sources */,
 				18309F5C20291983009F5CDD /* BLEServiceProperties.swift in Sources */,
 				18309F5A202918BE009F5CDD /* BLEService.swift in Sources */,
@@ -604,9 +643,7 @@
 				183F1CD2206841BA00199D51 /* FloorCloudExtension.swift in Sources */,
 				18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */,
 				18C735672057164200B292B1 /* RGSharedDataManager.swift in Sources */,
-				183F1CFC20688D7300199D51 /* PersistenceServiceCloudExtension.swift in Sources */,
 				183F1CF52068486700199D51 /* Tile+CoreDataClass.swift in Sources */,
-				183F1C8B20682EB000199D51 /* RGSharedDataManagerCloudExtension.swift in Sources */,
 				183346752061FC86001EA340 /* MapButtonsViewExtensions.swift in Sources */,
 				189EFFE820288D2E00E37729 /* navigate-data.xcdatamodeld in Sources */,
 				181B09842069250000201AE1 /* CachedRecords+CoreDataClass.swift in Sources */,
@@ -618,6 +655,8 @@
 				183F1CF62068486700199D51 /* Tile+CoreDataProperties.swift in Sources */,
 				18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */,
 				18DCD758206069F50003644D /* RGSharedDataManagerTilesExtension.swift in Sources */,
+				18B42E53206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift in Sources */,
+				18B42E4E206B0F5C00FFB587 /* CloudKitManager.swift in Sources */,
 				18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */,
@@ -626,6 +665,7 @@
 				183F1CF72068486700199D51 /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,
 				18363B6F205C383700FC17F4 /* MapButtonsView.swift in Sources */,
+				18B42E55206B126800FFB587 /* CloudKitManagerQueryExtension.swift in Sources */,
 				183F1CF12068486700199D51 /* AccessPoint+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

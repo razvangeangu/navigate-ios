@@ -70,6 +70,8 @@ class ScrollableBottomSheetViewController: UIViewController {
     var partialView: CGFloat {
         return UIScreen.main.bounds.height - 100
     }
+    
+    private var viewDidInit = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,13 +104,15 @@ class ScrollableBottomSheetViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if view.superview != nil {
+        if view.superview != nil && !viewDidInit {
             // Animate the view from the bottom
             UIView.animate(withDuration: 0.5, animations: { [weak self] in
                 let frame = self?.view.frame
                 let yComponent = self?.partialView
                 self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height - 100)
             })
+            
+            viewDidInit = true
         }
     }
     

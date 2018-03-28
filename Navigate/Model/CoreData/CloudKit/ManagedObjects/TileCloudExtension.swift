@@ -40,10 +40,10 @@ extension Tile: CloudKitManagedObject {
         
         if let floorReference = record["floorReference"] as? CKReference {
             let floorName = floorReference.recordID.recordName
-            if let _floor = PersistenceService.object(in: RGSharedDataManager.updateContext, recordName: floorName) as? Floor {
+            if let _floor = CloudKitManager.object(in: CloudKitManager.updateContext, recordName: floorName) as? Floor {
                 floor = _floor
             } else {
-                if let _newFloor = NSEntityDescription.insertNewObject(forEntityName: "Floor", into: RGSharedDataManager.updateContext) as? Floor {
+                if let _newFloor = NSEntityDescription.insertNewObject(forEntityName: "Floor", into: CloudKitManager.updateContext) as? Floor {
                     _newFloor.recordName = floorName
                     floor = _newFloor
                 }
@@ -52,10 +52,10 @@ extension Tile: CloudKitManagedObject {
         
         if let roomReference = record["roomReference"] as? CKReference {
             let roomName = roomReference.recordID.recordName
-            if let _room = PersistenceService.object(in: RGSharedDataManager.updateContext, recordName: roomName) as? Room {
+            if let _room = CloudKitManager.object(in: CloudKitManager.updateContext, recordName: roomName) as? Room {
                 room = _room
             } else {
-                if let _newRoom = NSEntityDescription.insertNewObject(forEntityName: "Room", into: RGSharedDataManager.updateContext) as? Room {
+                if let _newRoom = NSEntityDescription.insertNewObject(forEntityName: "Room", into: CloudKitManager.updateContext) as? Room {
                     _newRoom.recordName = roomName
                     room = _newRoom
                 }
