@@ -36,6 +36,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     internal var tableViewData = [String]() {
         // Reload the data of the view when set
         didSet {
+            tableViewData.sort()
             searchBar(searchBar, textDidChange: searchBar.text ?? "")
             tableView.reloadSections([0], with: .fade)
         }

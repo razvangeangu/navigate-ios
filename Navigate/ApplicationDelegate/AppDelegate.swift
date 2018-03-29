@@ -28,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         application.registerForRemoteNotifications()
         
-        CloudKitManager.subscribeToChanges { (_) in }
-        
         return true
     }
     
@@ -63,10 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let recordID = notification.recordID {
             CloudKitManager.updateLocalRecord(from: recordID, reason: notification.queryNotificationReason)
-            if let dotIndex = recordID.recordName.index(of: ".") {
-                let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
-                MapViewController.reloadView(recordType: recordType)
-            }
             completionHandler(.newData)
         }
     }

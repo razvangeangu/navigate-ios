@@ -21,14 +21,14 @@ extension CloudKitManager {
                 if error == nil && subscription != nil {
                     completion(true)
                 } else {
-                    let subscription = CKQuerySubscription(recordType: recordType, predicate: NSPredicate(value: true), options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion])
+                    let subscription = CKQuerySubscription(recordType: recordType, predicate: NSPredicate(value: true), subscriptionID: subscriptionID, options: [.firesOnRecordCreation, .firesOnRecordUpdate, .firesOnRecordDeletion])
                     
                     let notificationInfo = CKNotificationInfo()
                     notificationInfo.shouldBadge = false
                     notificationInfo.shouldSendContentAvailable = true
                     subscription.notificationInfo = notificationInfo
                     
-                    self.publicCloudDatabase.save(subscription, completionHandler: { (subscription, error) in
+                    publicCloudDatabase.save(subscription, completionHandler: { (subscription, error) in
                         completion(error == nil || subscription != nil)
                     })
                 }

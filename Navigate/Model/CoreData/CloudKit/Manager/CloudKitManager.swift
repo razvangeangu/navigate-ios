@@ -226,6 +226,11 @@ class CloudKitManager {
                             updateObject(for: [record])
                             
                             PersistenceService.saveUpdateContext()
+                            
+                            if let dotIndex = recordID.recordName.index(of: ".") {
+                                let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
+                                MapViewController.reloadView(recordType: recordType)
+                            }
                         }
                     }
                 }
@@ -235,6 +240,11 @@ class CloudKitManager {
                 deleteObject(recordNames: [recordID.recordName])
                 
                 PersistenceService.saveUpdateContext()
+                
+                if let dotIndex = recordID.recordName.index(of: ".") {
+                    let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
+                    MapViewController.reloadView(recordType: recordType)
+                }
             }
         }
     }

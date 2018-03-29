@@ -169,6 +169,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        CloudKitManager.subscribeToChanges { (_) in }
+        
         DispatchQueue.main.async {
             self.initView()
         }
@@ -551,10 +553,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      A function to reload the data in the bottom sheet view.
      */
     static func reloadData() {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             bottomSheetVC.updatePickerData()
             bottomSheetVC.updateTableData()
-        }
+//        }
     }
     
     /**
