@@ -65,8 +65,10 @@ class RGSharedDataManager: NSObject {
     
     // Detect location on changing value of the json
     static var jsonData: Any! {
-        didSet {        
-            RGLocalisation.detectLocation(floor: RGSharedDataManager.floor, completion: nil)
+        didSet {
+            if ProgressView.didFinishLoading {
+                RGLocalisation.detectLocation(floor: RGSharedDataManager.floor, completion: nil)
+            }
         }
     }
     
@@ -95,13 +97,16 @@ class RGSharedDataManager: NSObject {
                 CloudKitManager.fetchDataFromTheCloud {
                     if let floors = getFloors(), floors.count > 0 {
                         MapViewController.progressView.setProgress(to: 1.0)
-                        endBackgroundTask(taskID: task)
                         
                         MapViewController.devLog(data: "Data fetched from the cloud. Setting floor to default \(floorLevel).")
                         setFloor(level: floorLevel)
+                        
+                        // Update UI
+                        MapViewController.resetView(for: RGSharedDataManager.appMode)
+                        
+                        endBackgroundTask(taskID: task)
                     } else if isReachable() {
                         MapViewController.progressView.setProgress(to: 1.0)
-                        endBackgroundTask(taskID: task)
                         
                         // Set the app mode to dev to display log and develop app
                         RGSharedDataManager.appMode = .dev
@@ -112,16 +117,22 @@ class RGSharedDataManager: NSObject {
                         
                         // Update UI
                         MapViewController.resetView(for: RGSharedDataManager.appMode)
+                        
+                        endBackgroundTask(taskID: task)
                     } else {
                         MapViewController.progressView.setProgress(to: 0)
                     }
                 }
             } else {
                 MapViewController.progressView.setProgress(to: 1.0)
-                endBackgroundTask(taskID: task)
                 
                 MapViewController.devLog(data: "Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
+                
+                // Update UI
+                MapViewController.resetView(for: RGSharedDataManager.appMode)
+                
+                endBackgroundTask(taskID: task)
             }
         } catch {
             MapViewController.devLog(data: "Error in Floor Count fetchRequest")

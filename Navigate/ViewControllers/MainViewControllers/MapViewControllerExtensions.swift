@@ -44,6 +44,14 @@ extension MapViewController {
         
             // Detect the location from the view in the scene
             let location = MapViewController.scene.convertPoint(fromView: tapLocation)
+            
+            // Check if location is in limits
+            if location.x > MapViewController.backgroundNode.frame.maxX || location.x < MapViewController.backgroundNode.frame.minX || location.y > MapViewController.backgroundNode.frame.maxY || location.y < MapViewController.backgroundNode.frame.minY {
+                MapViewController.prodLog("Taped location not on the map.")
+                MapViewController.bottomSheetVC.removeLoadingAnimation()
+                RGNavigation.previousDestinationTile = RGNavigation.destinationTile
+                return
+            }
         
             // Row and Column for the tapped location
             let column = MapViewController.map.tileColumnIndex(fromPosition: location)
@@ -82,6 +90,7 @@ extension MapViewController {
             // Detect the location from the view in the scene
             let location = MapViewController.scene.convertPoint(fromView: tapLocation)
             
+            // Check if location is in limits
             if location.x > MapViewController.backgroundNode.frame.maxX || location.x < MapViewController.backgroundNode.frame.minX || location.y > MapViewController.backgroundNode.frame.maxY || location.y < MapViewController.backgroundNode.frame.minY {
                 MapViewController.prodLog("Could not find path to location.")
                 MapViewController.bottomSheetVC.removeLoadingAnimation()

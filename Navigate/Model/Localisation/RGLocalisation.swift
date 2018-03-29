@@ -57,7 +57,7 @@ class RGLocalisation: NSObject {
             return
         }
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // A 2D array that holds the data of the APs
             var matrix = [[Int]](repeating: [Int](repeating: 0, count: RGSharedDataManager.numberOfColumns), count: RGSharedDataManager.numberOfRows)
                 

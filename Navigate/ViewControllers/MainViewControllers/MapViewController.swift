@@ -178,7 +178,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidAppear(animated)
         
         if MapViewController.progressView != nil {
-            if MapViewController.progressView.didFinishLoading {
+            if ProgressView.didFinishLoading {
                 MapViewController.progressView.setProgress(to: 1.0)
             }
         }
@@ -228,9 +228,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         // Initiliase data model in CoreData
         let mapImage = UIImagePNGRepresentation(UIImage(named: "bh_6th")!) as NSData?
         RGSharedDataManager.initData(floorLevel: 6, mapImage: mapImage!)
-        
-        // Reset view for app mode
-        MapViewController.resetView(for: RGSharedDataManager.appMode)
         
         // Init the navigation model
         MapViewController.navigation = RGNavigation()

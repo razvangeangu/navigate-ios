@@ -13,7 +13,7 @@ class ProgressView: UIView {
     private var containerProgressView: UIView!
     private var progressView: UIProgressView!
     private var loadingLabel: UILabel!
-    var didFinishLoading = false
+    static var didFinishLoading = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,7 +65,7 @@ class ProgressView: UIView {
         DispatchQueue.main.async {
             if value >= 1.0 {
                 self.isHidden = true
-                self.didFinishLoading = true
+                ProgressView.didFinishLoading = true
                 MapViewController.scene.view?.isUserInteractionEnabled = true
             } else {
                 self.isHidden = false
@@ -91,7 +91,7 @@ class ProgressView: UIView {
         DispatchQueue.main.async {
             if value >= 1.0 {
                 self.isHidden = true
-                self.didFinishLoading = true
+                ProgressView.didFinishLoading = true
                 MapViewController.scene.view?.isUserInteractionEnabled = true
             } else {
                 self.isHidden = false

@@ -38,7 +38,6 @@ extension CloudKitManager {
             MapViewController.devLog(data: "Finished query for \(recordType)")
         }
         
-        queryOperation.queuePriority = .veryHigh
         queryOperation.resultsLimit = 500
         queryOperation.qualityOfService = .userInitiated
         
@@ -66,7 +65,6 @@ extension CloudKitManager {
                 self.fetchRecords(with: cursor, error: error, records: currentRecords, completion: completion)
             }
             
-            queryOperation.queuePriority = .veryHigh
             queryOperation.resultsLimit = 500
             queryOperation.qualityOfService = .userInitiated
             publicCloudDatabase.add(queryOperation)

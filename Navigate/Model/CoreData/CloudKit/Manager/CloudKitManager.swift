@@ -148,7 +148,9 @@ class CloudKitManager {
                 
                 operation.completionBlock = {
                     MapViewController.devLog(data: "Finished uploading changed objects to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
-                    endBackgroundTask(taskID: task)
+                    if operation.name == String(recordsChunks.count) {
+                        endBackgroundTask(taskID: task)
+                    }
                 }
                 
                 operation.qualityOfService = .userInitiated
@@ -253,11 +255,13 @@ class CloudKitManager {
     static func fetchDataFromTheCloud(completion: (() -> Void)?) {
         
         MapViewController.progressView.setProgress(to: 0)
-        query(recordType: DataClasses.floor.rawValue) { (_) in
-            query(recordType: DataClasses.room.rawValue) { (_) in
-                query(recordType: DataClasses.tile.rawValue) { (completed) in
-                    query(recordType: DataClasses.accessPoint.rawValue) { (completed) in
-                        completion?()
+        DispatchQueue.global(qos: .userInteractive).async {
+            query(recordType: DataClasses.floor.rawValue) { (_) in
+                query(recordType: DataClasses.room.rawValue) { (_) in
+                    query(recordType: DataClasses.tile.rawValue) { (completed) in
+                        query(recordType: DataClasses.accessPoint.rawValue) { (completed) in
+                            completion?()
+                        }
                     }
                 }
             }
