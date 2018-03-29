@@ -28,8 +28,23 @@ extension RGSharedDataManager {
         }
         
         // If the tile needs to be overwritten
-        if tileType == .sample || tileType == .wall || tileType == .door {
-            resetTile(column: column, row: row, newType: tileType)
+        if tileType == .sample || tileType == .wall {
+            let newRoom = getRoom(name: "SAMPLE", floor: floor)
+            resetTile(column: column, row: row, newType: tileType, newRoom: newRoom!)
+            return true
+        }
+        
+        if tileType == .door {
+            // If there is no selected room
+            guard let selectedRoom = RGSharedDataManager.selectedRoom, selectedRoom.count > 0 else {
+                
+                // Give feedback to the admin
+                MapViewController.devLog(data: "A room must to be selected")
+                return false
+            }
+            
+            let newRoom = getRoom(name: selectedRoom, floor: floor)
+            resetTile(column: column, row: row, newType: tileType, newRoom: newRoom!)
             return true
         }
         
@@ -41,7 +56,7 @@ extension RGSharedDataManager {
             }
             
             // If there is no selected room
-            guard let _ = RGSharedDataManager.selectedRoom else {
+            guard let room = RGSharedDataManager.selectedRoom, room.count > 0 else {
                 
                 // Give feedback to the admin
                 MapViewController.devLog(data: "A room must to be selected")
@@ -169,7 +184,7 @@ extension RGSharedDataManager {
      - parameter row: The row of the tile *(x index of the tile in database)*
      - parameter newType: The new type for the updated tile record.
      */
-    static func resetTile(column: Int, row: Int, newType: CDTileType) {
+    static func resetTile(column: Int, row: Int, newType: CDTileType, newRoom: Room) {
         
         // Remove tile from Core Data
         guard let tileToRemove = getTile(col: column, row: row) else { return }
@@ -183,7 +198,10 @@ extension RGSharedDataManager {
         tile.row = Int16(row)
         tile.col = Int16(column)
         tile.type = newType.rawValue
-        tile.room = getRoom(name: "SAMPLE", floor: floor)
+        newRoom.addToTiles(tile)
+        
+        // Set last update
+        newRoom.lastUpdate = NSDate()
         tile.lastUpdate = NSDate()
         
         floor.addToTiles(tile)

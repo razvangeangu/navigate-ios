@@ -73,7 +73,7 @@ extension RGSharedDataManager {
                 }
             }
         } catch {
-            debugPrint("Error in Floor fetchRequest")
+            MapViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return nil
@@ -92,7 +92,7 @@ extension RGSharedDataManager {
             // Get all the floors from CoreData
             floors = try PersistenceService.viewContext.fetch(fetchRequest) as [Floor]
         } catch {
-            debugPrint("Error in Floor fetchRequest")
+            MapViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return floors

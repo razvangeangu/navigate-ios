@@ -186,7 +186,7 @@ class ScrollableBottomSheetViewController: UIViewController {
         // set style for room button
         addButton = UIButton(frame: CGRect(x: (parent?.view!.frame.width)! - 48 - searchBarLeadingConstraint.constant / 2, y: 24, width: 48, height: 48))
         addButton.setTitle("+", for: .normal)
-        addButton.setTitleColor(.init(red: 25, green: 118, blue: 210, a: 1.0), for: .normal)
+        addButton.setTitleColor(UIColor.rgBlue, for: .normal)
         addButton.titleLabel?.font = addButton.titleLabel?.font.withSize(30)
         addButton.addTarget(self, action: #selector(ScrollableBottomSheetViewController.addButtonTaped), for: .touchUpInside)
     }
@@ -222,5 +222,20 @@ class ScrollableBottomSheetViewController: UIViewController {
             }
             tableViewData = roomsNames
         }
+    }
+    
+    func addLoadingAnimation() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.7, delay: 0, options: [.repeat, .allowUserInteraction, .autoreverse], animations: {
+                self.dragIndicatorView.backgroundColor = UIColor.rgBlue
+            }, completion: nil)
+        }
+    }
+    
+    func removeLoadingAnimation() {
+        self.dragIndicatorView.layer.removeAllAnimations()
+        UIView.animate(withDuration: 1.0, delay: 0, options: [.allowUserInteraction], animations: {
+            self.dragIndicatorView.backgroundColor = UIColor.init(red: 214, green: 214, blue: 214, a: 1.0)
+        }, completion: nil)
     }
 }

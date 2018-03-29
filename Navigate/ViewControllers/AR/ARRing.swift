@@ -22,7 +22,7 @@ class ARRing: SCNNode {
         self.physicsBody?.isAffectedByGravity = false
         
         self.opacity = 0.5
-        ring.firstMaterial?.diffuse.contents = UIColor.init(red: 25, green: 118, blue: 210, a: 1.0)
+        ring.firstMaterial?.diffuse.contents = UIColor.rgBlue
     }
     
     required init?(coder aDecoder: NSCoder) {

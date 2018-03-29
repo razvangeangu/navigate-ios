@@ -11,14 +11,15 @@ import Foundation
 // https://www.raywenderlich.com/105437/implement-pathfinding-swift
 class RGNavigation: NSObject, PathfinderDataSource {
     private static let pathFinder = AStarPathfinder()
-    static var shortestPath: [Tile]?
-    static var destinationTile: Tile? {
+    static var shortestPath: [Tile]? {
         didSet {
-            if destinationTile == nil {
-                MapViewController.resetView(for: RGSharedDataManager.appMode)
+            if shortestPath != nil && shortestPath!.count > 0 {
+                MapViewController.shouldShowPath = true
+                MapViewController.showCurrentPath()
             }
         }
     }
+    static var destinationTile: Tile?
     
     override init() {
         super.init()

@@ -62,6 +62,8 @@ extension MapViewController {
                 MapViewController.setTileColor(column: column, row: row, type: RGSharedDataManager.tileType!)
             }
         } else if RGSharedDataManager.appMode == .prod {
+            MapViewController.bottomSheetVC.addLoadingAnimation()
+            
             if tap.state != .ended { return }
             
             // If external device is not connected then do not try to execute tap functions

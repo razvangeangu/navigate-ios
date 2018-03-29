@@ -19,7 +19,7 @@ class RGLocalisation: NSObject {
                 if currentLocation != (-1, -1) {
                     
                     // Show debugging log
-                    MapViewController.devLog(data: "Found Location: \(currentLocation)")
+                    // MapViewController.devLog(data: "Found Location: \(currentLocation)")
                     
                     // Save the current location for future references
                     self.previousLocation = self.currentLocation
@@ -31,6 +31,7 @@ class RGLocalisation: NSObject {
                     if let destination = RGNavigation.destinationTile {
                         MapViewController.shouldShowPath = true
                         MapViewController.showPath(to: destination)
+                        RGNavigation.destinationTile = nil
                     }
                 } else {
                     MapViewController.removeLocationNode()

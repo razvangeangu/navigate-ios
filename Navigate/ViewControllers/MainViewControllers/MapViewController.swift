@@ -57,9 +57,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 MapViewController.mapTimeAndDistanceView.isHidden = false
             } else {
                 MapViewController.mapTimeAndDistanceView.isHidden = true
-                
-                // Stop showing the path
-                RGNavigation.destinationTile = nil
+                MapViewController.resetView(for: RGSharedDataManager.appMode)
             }
         }
     }
@@ -398,7 +396,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         if RGSharedDataManager.appMode == .dev {
             let date = Date()
             let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm:ss.SSSS"
+            formatter.dateFormat = "HH:mm:ss"
             
             debugPrint("\(formatter.string(from: date)) \(data)")
             prodLog("\(formatter.string(from: date)) \(data)")
@@ -411,7 +409,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter data: String containing data to be displayed.
      */
     static func prodLog(_ data: String) {
-        ScrollableBottomSheetViewController.status = data
+        if bottomSheetVC != nil {
+            ScrollableBottomSheetViewController.status = data
+        }
     }
     
     /**
@@ -495,21 +495,26 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      - parameter to: The destination location as a **Tile**.
      */
     static func showPath(to tile: Tile) {
-        if RGSharedDataManager.appMode != .dev {
+        if RGSharedDataManager.appMode != .dev {        
             if let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) {
                 RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
             }
-            
-            guard let currentPath = RGNavigation.shortestPath else { return }
-            
-            MapViewController.mapTimeAndDistanceView.distance = Float(currentPath.count - 1) * RGSharedDataManager.tileLength
-            
-            resetTiles()
-            
-            for tile in currentPath {
-                setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
-            }
+       
+            showCurrentPath()
         }
+    }
+    
+    static func showCurrentPath() {
+        guard let currentPath = RGNavigation.shortestPath else { return }
+        MapViewController.mapTimeAndDistanceView.distance = Float(currentPath.count - 1) * RGSharedDataManager.tileLength
+        
+        resetTiles()
+        
+        for tile in currentPath {
+            setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
+        }
+        
+        bottomSheetVC.removeLoadingAnimation()
     }
     
     /**

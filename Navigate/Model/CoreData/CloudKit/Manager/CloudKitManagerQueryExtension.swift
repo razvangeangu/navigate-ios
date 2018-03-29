@@ -35,7 +35,7 @@ extension CloudKitManager {
         }
         
         queryOperation.completionBlock = {
-            debugPrint("Finished query for \(recordType)")
+            MapViewController.devLog(data: "Finished query for \(recordType)")
         }
         
         queryOperation.queuePriority = .veryHigh
@@ -55,14 +55,14 @@ extension CloudKitManager {
             }
             queryOperation.queryCompletionBlock = { cursor, error in
                 if let error = error {
-                    debugPrint(error)
+                    MapViewController.devLog(data: error.localizedDescription)
                 }
                 
                 // Update progress view
                 let progress = Float(0.001)
                 MapViewController.progressView.addToProgress(value: progress)
                 
-                debugPrint("Fetched: \(records.count)")
+                MapViewController.devLog(data: "Fetched: \(records.count)")
                 self.fetchRecords(with: cursor, error: error, records: currentRecords, completion: completion)
             }
             

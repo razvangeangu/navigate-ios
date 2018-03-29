@@ -165,6 +165,9 @@ class MapTimeAndDistanceView: UIView {
      */
     @objc func didPressClose(_ sender: Any) {
         MapViewController.shouldShowPath = false
+        MapViewController.reloadData()
+        RGSharedDataManager.selectedRoom = ""
+        MapViewController.prodLog("")
         self.isHidden = true
     }
 }

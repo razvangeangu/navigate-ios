@@ -37,7 +37,7 @@ class RGSharedDataManager: NSObject {
                 }
                 
                 if let door = closestDoor {
-                    RGNavigation.moveTo(fromTile: fromTile, toTile: door)
+                    RGNavigation.destinationTile = door
                 }
             }
         }
@@ -97,7 +97,7 @@ class RGSharedDataManager: NSObject {
                         MapViewController.progressView.setProgress(to: 1.0)
                         endBackgroundTask(taskID: task)
                         
-                        debugPrint("Data fetched from the cloud. Setting floor to default \(floorLevel).")
+                        MapViewController.devLog(data: "Data fetched from the cloud. Setting floor to default \(floorLevel).")
                         setFloor(level: floorLevel)
                     } else if isReachable() {
                         MapViewController.progressView.setProgress(to: 1.0)
@@ -120,11 +120,11 @@ class RGSharedDataManager: NSObject {
                 MapViewController.progressView.setProgress(to: 1.0)
                 endBackgroundTask(taskID: task)
                 
-                debugPrint("Data already created. Setting floor to default \(floorLevel).")
+                MapViewController.devLog(data: "Data already created. Setting floor to default \(floorLevel).")
                 setFloor(level: floorLevel)
             }
         } catch {
-            debugPrint("Error in Floor Count fetchRequest")
+            MapViewController.devLog(data: "Error in Floor Count fetchRequest")
         }
     }
 }

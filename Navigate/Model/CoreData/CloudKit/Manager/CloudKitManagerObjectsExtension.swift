@@ -23,7 +23,7 @@ extension CloudKitManager {
                     }
                 }
             } catch {
-                debugPrint("Error in Floor fetchRequest")
+                MapViewController.devLog(data: "Error in Floor fetchRequest")
             }
         }
         
@@ -45,7 +45,7 @@ extension CloudKitManager {
                 return entitiesToReturn
             }
         } catch {
-            debugPrint("Error in Floor fetchRequest")
+            MapViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return nil
@@ -64,7 +64,7 @@ extension CloudKitManager {
                 return entitiesToReturn
             }
         } catch {
-            debugPrint("Error in Floor fetchRequest")
+            MapViewController.devLog(data: "Error in Floor fetchRequest")
         }
         
         return nil

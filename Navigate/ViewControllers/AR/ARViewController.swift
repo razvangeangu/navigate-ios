@@ -183,7 +183,7 @@ extension ARViewController: ARSessionDelegate {
             turn()
         }
         
-        if xs != nil && zs != nil && !xs.isEmpty && !zs.isEmpty && pos != xs.count {
+        if xs != nil && zs != nil && !xs.isEmpty && !zs.isEmpty && pos < xs.count {
             if isInLimits(nodePosition: nodePosition, cameraPosition: cameraPosition, offset: 0.5) {
                 
                 // Give haptic feedback to the user
@@ -194,6 +194,11 @@ extension ARViewController: ARSessionDelegate {
                 
                 let currentTile = RGNavigation.shortestPath?.reversed()[pos]
                 RGLocalisation.currentLocation = (Int(currentTile!.col), Int(currentTile!.row))
+            }
+        } else if pos == xs.count {
+            removeRing()
+            self.presentAlert(title: "Success", message: "Arrived at the destination") {
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }

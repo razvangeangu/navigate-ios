@@ -216,3 +216,7 @@ func isReachable() -> Bool {
     SCNetworkReachabilityGetFlags(reachability, &flags)
     return isNetworkReachable(with: flags)
 }
+
+extension UIColor {
+    static var rgBlue = UIColor.init(red: 25, green: 118, blue: 210, a: 1.0)
+}

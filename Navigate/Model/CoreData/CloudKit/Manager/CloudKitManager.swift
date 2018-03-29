@@ -88,7 +88,7 @@ class CloudKitManager {
                     if let error = error as? CKError {
                         
                         if error.code == .limitExceeded {
-                            debugPrint("Modify limit exceeded")
+                            MapViewController.devLog(data: "Modify limit exceeded")
                             
                             // If app had partial failure, update the cached records to overwrite the changes
                         } else if error.code == .partialFailure {
@@ -136,18 +136,18 @@ class CloudKitManager {
                                     })
                                 }
                             } catch {
-                                debugPrint("Error in fetchRequest for CachedRecords.")
+                                MapViewController.devLog(data: "Error in fetchRequest for CachedRecords.")
                             }
                         } else if error.code == .invalidArguments {
-                            debugPrint("Invalid arguments provided for \(String(describing: records))")
+                            MapViewController.devLog(data: "Invalid arguments provided for \(String(describing: records))")
                         } else {
-                            debugPrint(error)
+                            MapViewController.devLog(data: error.localizedDescription)
                         }
                     }
                 }
                 
                 operation.completionBlock = {
-                    debugPrint("Finished uploading changed objects to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
+                    MapViewController.devLog(data: "Finished uploading changed objects to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
                     endBackgroundTask(taskID: task)
                 }
                 
@@ -169,22 +169,22 @@ class CloudKitManager {
                 
                 operation.perRecordCompletionBlock = { record, error in
                     if let error = error as? CKError {
-                        debugPrint(error)
+                        MapViewController.devLog(data: error.localizedDescription)
                     }
                 }
                 
                 operation.modifyRecordsCompletionBlock = { record, recordID, error in
                     if let error = error as? CKError {
                         if error.code == CKError.limitExceeded {
-                            debugPrint("Modify limit exceeded.")
+                            MapViewController.devLog(data: "Modify limit exceeded.")
                         } else {
-                            debugPrint(error)
+                            MapViewController.devLog(data: error.localizedDescription)
                         }
                     }
                 }
                 
                 operation.completionBlock = {
-                    debugPrint("Finished uploading cached records to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
+                    MapViewController.devLog(data: "Finished uploading cached records to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
                 }
                 
                 operation.qualityOfService = .userInitiated
@@ -217,7 +217,7 @@ class CloudKitManager {
         if reason == .recordCreated || reason == .recordUpdated {
             publicCloudDatabase.fetch(withRecordID: recordID) { (record, error) in
                 if let _ = error {
-                    debugPrint("Error while fetching in updateLocalRecord.")
+                    MapViewController.devLog(data: "Error while fetching in updateLocalRecord.")
                 } else {
                     if let record = record {
                         updateContext.perform {
