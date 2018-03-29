@@ -32,6 +32,8 @@ class RGLocalisation: NSObject {
                         MapViewController.shouldShowPath = true
                         MapViewController.showPath(to: destination)
                         RGNavigation.destinationTile = nil
+                    } else if let previousDestination = RGNavigation.previousDestinationTile, MapViewController.shouldShowPath {
+                        MapViewController.showPath(to: previousDestination)
                     }
                 } else {
                     MapViewController.removeLocationNode()

@@ -190,7 +190,9 @@ extension ARViewController: ARSessionDelegate {
                 generator.impactOccurred()
                 
                 moveRing(to: SCNVector3(x: cameraPosition.x + xs[pos], y: 0, z: cameraPosition.z + zs[pos]))
-                pos += 1
+                
+                // To move 3m because tile size is 1.5m
+                pos += 2
                 
                 let currentTile = RGNavigation.shortestPath?.reversed()[pos]
                 RGLocalisation.currentLocation = (Int(currentTile!.col), Int(currentTile!.row))

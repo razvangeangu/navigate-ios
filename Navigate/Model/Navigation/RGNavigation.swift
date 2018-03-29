@@ -19,7 +19,12 @@ class RGNavigation: NSObject, PathfinderDataSource {
             }
         }
     }
-    static var destinationTile: Tile?
+    static var destinationTile: Tile? {
+        willSet {
+            previousDestinationTile = destinationTile
+        }
+    }
+    static var previousDestinationTile: Tile?
     
     override init() {
         super.init()

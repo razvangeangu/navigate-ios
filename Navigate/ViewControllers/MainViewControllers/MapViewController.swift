@@ -459,6 +459,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 do {
                     resetTiles()
                     bottomSheetVC.addDevButton()
+                    ScrollableBottomSheetViewController.status = "Switched to dev mode"
+                    
                     if MapViewController.mapTileEdit != nil {
                         MapViewController.mapTileEdit.isHidden = false
                     }
@@ -467,6 +469,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                 do{
                     resetTiles()
                     bottomSheetVC.removeDevButton()
+                    ScrollableBottomSheetViewController.status = ""
                     
                     if MapViewController.mapTileEdit != nil {
                         MapViewController.mapTileEdit.isHidden = true
