@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         application.registerForRemoteNotifications()
         
+        CloudKitManager.subscribeToChanges { (_) in }
+        
         return true
     }
     

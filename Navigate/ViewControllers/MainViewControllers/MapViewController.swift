@@ -54,10 +54,30 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     static var shouldShowPath = false {
         didSet {
             if shouldShowPath {
-                MapViewController.mapTimeAndDistanceView.isHidden = false
+                
+                if MapViewController.mapTimeAndDistanceView.isHidden {
+                    UIView.animate(withDuration: 0.2, delay: 0, options: [.allowUserInteraction], animations: {
+                        let frame = MapViewController.mapTimeAndDistanceView.frame
+                        MapViewController.mapTimeAndDistanceView.frame = CGRect(x: frame.minX, y: frame.minY + 100, width: frame.width, height: frame.height)
+                        
+                        MapViewController.mapTimeAndDistanceView.isHidden = false
+                        MapViewController.mapTimeAndDistanceView.alpha = 1
+                    }, completion: nil)
+                }
             } else {
-                MapViewController.mapTimeAndDistanceView.isHidden = true
-                MapViewController.resetView(for: RGSharedDataManager.appMode)
+                
+                if !MapViewController.mapTimeAndDistanceView.isHidden {
+                    UIView.animate(withDuration: 0.2, delay: 0, options: [.allowUserInteraction], animations: {
+                        MapViewController.mapTimeAndDistanceView.alpha = 0
+                
+                        let frame = MapViewController.mapTimeAndDistanceView.frame
+                        MapViewController.mapTimeAndDistanceView.frame = CGRect(x: frame.minX, y: frame.minY - 100, width: frame.width, height: frame.height)
+                    }, completion: { (_) in
+                        MapViewController.mapTimeAndDistanceView.isHidden = true
+                    })
+                
+                    MapViewController.resetView(for: RGSharedDataManager.appMode)
+                }
             }
         }
     }
@@ -149,13 +169,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CloudKitManager.subscribeToChanges { (success) in
-            print("\(success ? "Succssefully" : "Failure") subscribed to changes")
-        }
-        
-        DispatchQueue.main.async {
-            self.initView()
-        }
+        self.initView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -277,7 +291,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     fileprivate func addMapTileEditButton() {
         // Add MapTileEdit
-        MapViewController.mapTileEdit = MapTileEditViewController(frame: CGRect(x: MapViewController.mapButtonsView.frame.minX, y: MapViewController.mapButtonsView.frame.maxY, width: 40, height: 40))
+        MapViewController.mapTileEdit = MapTileEditViewController(frame: CGRect(x: MapViewController.mapButtonsView.frame.minX - 50, y: MapViewController.mapButtonsView.frame.maxY, width: 40, height: 40))
         view.insertSubview(MapViewController.mapTileEdit, at: 0)
         
         if RGSharedDataManager.appMode == .prod {
@@ -289,9 +303,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      
      */
     fileprivate func addTimeAndDistanceView() {
-        MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top > 0 ? view.safeAreaInsets.top : 40, width: 120, height: 50))
+        MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top > 0 ? view.safeAreaInsets.top - 100 : 40 - 100, width: 120, height: 50))
         view.insertSubview(MapViewController.mapTimeAndDistanceView, at: 0)
         
+        MapViewController.mapTimeAndDistanceView.alpha = 0
         MapViewController.mapTimeAndDistanceView.isHidden = true
     }
     

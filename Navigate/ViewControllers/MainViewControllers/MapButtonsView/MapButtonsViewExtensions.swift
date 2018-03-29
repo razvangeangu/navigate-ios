@@ -67,10 +67,9 @@ extension MapButtonsView {
                 
                 // Display the heading view
                 UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
-                    self.headingView.alpha = 1
-                }) { _ in
                     self.headingView.isHidden = false
-                }
+                    self.headingView.alpha = 1
+                })
             }
             
         // Disable events and reset camera node

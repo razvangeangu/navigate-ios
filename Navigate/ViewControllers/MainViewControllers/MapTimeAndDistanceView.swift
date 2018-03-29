@@ -168,6 +168,5 @@ class MapTimeAndDistanceView: UIView {
         MapViewController.reloadData()
         RGSharedDataManager.selectedRoom = ""
         MapViewController.prodLog("")
-        self.isHidden = true
     }
 }

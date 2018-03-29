@@ -106,7 +106,7 @@ class ScrollableBottomSheetViewController: UIViewController {
         
         if view.superview != nil && !viewDidInit {
             // Animate the view from the bottom
-            UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 let frame = self?.view.frame
                 let yComponent = self?.partialView
                 self?.view.frame = CGRect(x: 0, y: yComponent!, width: frame!.width, height: frame!.height - 100)

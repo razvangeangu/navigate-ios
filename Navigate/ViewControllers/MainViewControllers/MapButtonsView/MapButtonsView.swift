@@ -29,7 +29,9 @@ class MapButtonsView: UIView {
     var locationNumberOfTouches = 0
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: CGRect(x: frame.minX + 50, y: frame.minY, width: frame.width, height: frame.height))
+        
+        self.alpha = 0
         
         // Add shadow to the view
         backgroundColor = UIColor.clear
@@ -51,6 +53,17 @@ class MapButtonsView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+            let frame = self.frame
+            self.frame = CGRect(x: frame.minX - 50, y: frame.minY, width: frame.width, height: frame.height)
+            
+            self.alpha = 1.0
+        }, completion: nil)
     }
     
     /**
