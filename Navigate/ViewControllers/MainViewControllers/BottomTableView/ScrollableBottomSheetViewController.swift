@@ -233,7 +233,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     }
     
     func removeLoadingAnimation() {
-        self.dragIndicatorView.layer.removeAllAnimations()
+        dragIndicatorView.layer.removeAllAnimations()
         UIView.animate(withDuration: 1.0, delay: 0, options: [.allowUserInteraction], animations: {
             self.dragIndicatorView.backgroundColor = UIColor.init(red: 214, green: 214, blue: 214, a: 1.0)
         }, completion: nil)

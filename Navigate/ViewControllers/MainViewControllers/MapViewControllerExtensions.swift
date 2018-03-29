@@ -84,6 +84,8 @@ extension MapViewController {
             
             if location.x > MapViewController.backgroundNode.frame.maxX || location.x < MapViewController.backgroundNode.frame.minX || location.y > MapViewController.backgroundNode.frame.maxY || location.y < MapViewController.backgroundNode.frame.minY {
                 MapViewController.prodLog("Could not find path to location.")
+                MapViewController.bottomSheetVC.removeLoadingAnimation()
+                RGNavigation.previousDestinationTile = RGNavigation.destinationTile
                 return
             }
             

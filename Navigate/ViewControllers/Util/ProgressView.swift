@@ -32,7 +32,6 @@ class ProgressView: UIView {
         
         // Initialise the container for the progress view
         containerProgressView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-        // containerProgressView.backgroundColor = .clear
         
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurEffectView.frame = containerProgressView.bounds

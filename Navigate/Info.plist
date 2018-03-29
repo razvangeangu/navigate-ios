@@ -18,20 +18,18 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>wifi</string>
-		<string>bluetooth-le</string>
-		<string>location-services</string>
-	</array>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This application will use the bluetooth low energy to scan for Wi-Fi Access Points.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application will use the camera for Augmented Reality.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This application will use location for the bearing angle.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This application will use the bluetooth low energy to scan for Wi-Fi Access Points.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application will use the photo library to select the map.</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -52,13 +50,19 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>UIStatusBarHidden</key>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>wifi</string>
+		<string>bluetooth-le</string>
+		<string>location-services</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -67,9 +71,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This application will use the photo library to select the map.</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 </dict>
 </plist>

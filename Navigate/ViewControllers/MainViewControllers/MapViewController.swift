@@ -163,13 +163,15 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         self.locationManager.delegate = self
         
         // Add the progress view
-        view.addSubview(MapViewController.progressView)
+        self.view.addSubview(MapViewController.progressView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.initView()
+        DispatchQueue.main.async {
+            self.initView()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -523,16 +525,19 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     static func showCurrentPath() {
-        guard let currentPath = RGNavigation.shortestPath else { return }
-        MapViewController.mapTimeAndDistanceView.distance = Float(currentPath.count - 1) * RGSharedDataManager.tileLength
-        
-        resetTiles()
-        
-        for tile in currentPath {
-            setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
+        if shouldShowPath {
+            guard let currentPath = RGNavigation.shortestPath else { return }
+            MapViewController.mapTimeAndDistanceView.distance = Float(currentPath.count - 1) * RGSharedDataManager.tileLength
+            
+            resetTiles()
+            
+            for tile in currentPath {
+                setTileColor(column: Int(tile.col), row: Int(tile.row), type: .navigation)
+            }
+            
+            bottomSheetVC.removeLoadingAnimation()
+            RGNavigation.previousDestinationTile = RGNavigation.destinationTile
         }
-        
-        bottomSheetVC.removeLoadingAnimation()
     }
     
     /**

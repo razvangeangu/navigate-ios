@@ -13,8 +13,7 @@ class RGNavigation: NSObject, PathfinderDataSource {
     private static let pathFinder = AStarPathfinder()
     static var shortestPath: [Tile]? {
         didSet {
-            if shortestPath != nil && shortestPath!.count > 0 {
-                MapViewController.shouldShowPath = true
+            if shortestPath != nil && shortestPath!.count > 0 && previousDestinationTile != destinationTile {
                 MapViewController.showCurrentPath()
             }
         }
