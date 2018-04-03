@@ -64,6 +64,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                         MapViewController.mapTimeAndDistanceView.alpha = 1
                     }, completion: nil)
                 }
+                
+                if let mapButtonsView = mapButtonsView {
+                    mapButtonsView.cameraButton.isEnabled = true
+                }
             } else {
                 
                 if !MapViewController.mapTimeAndDistanceView.isHidden {
@@ -77,6 +81,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                     })
                 
                     MapViewController.resetView(for: RGSharedDataManager.appMode)
+                }
+                
+                if let mapButtonsView = mapButtonsView {
+                    mapButtonsView.cameraButton.isEnabled = false
                 }
             }
         }
