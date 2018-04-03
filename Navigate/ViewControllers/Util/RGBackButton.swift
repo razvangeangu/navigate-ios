@@ -27,10 +27,16 @@ class RGBackButton: UIView {
         super.init(coder: aDecoder)
     }
     
+    /**
+     A function that adds the target to the back button.
+     */
     func addTarget(_ target: Any?, action: Selector, for controlEvent: UIControlEvents) {
         backButton.addTarget(target, action: action, for: controlEvent)
     }
     
+    /**
+     A function to add shadow to the main view.
+     */
     fileprivate func addShadow() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0.5, height: 2)
@@ -38,12 +44,18 @@ class RGBackButton: UIView {
         layer.shadowRadius = 5.0
     }
     
+    /**
+     A function to add round corners to the container view.
+     */
     fileprivate func addRoundCorners() {
         self.containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
         self.containerView.layer.cornerRadius = 20
         self.containerView.layer.masksToBounds = true
     }
     
+    /**
+     A function that creates a blurred background and adds it to the container view.
+     */
     fileprivate func addBlurBackground() {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         blurEffectView.frame = self.bounds
@@ -51,6 +63,9 @@ class RGBackButton: UIView {
         self.containerView.insertSubview(blurEffectView, at: 0)
     }
     
+    /**
+     A function to add a back button to the container view.
+     */
     fileprivate func addBackButton() {
         backButton = UIButton(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
         backButton.setTitle("X", for: .normal)

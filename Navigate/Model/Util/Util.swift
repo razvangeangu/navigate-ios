@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
+/**
+ An enum describing the names of the classes from Core Data
+ */
 enum DataClasses: String {
     case tile = "Tile"
     case accessPoint = "AccessPoint"
@@ -22,6 +25,9 @@ extension Float {
     static var humanWalkingSpeed: Float = 1.39
 }
 
+/**
+ An enum that represents the geographical cardinal points.
+ */
 enum RGCardinals: Float {
     case north = 0
     case east = 90
@@ -29,6 +35,9 @@ enum RGCardinals: Float {
     case west = 270
 }
 
+/**
+ An enum describing the turns of the device.
+ */
 enum RGTurn {
     case front
     case back
@@ -210,6 +219,11 @@ func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
     return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
 }
 
+/**
+ A function that tests connectivity to the internet by processing a request to www.google.com.
+ 
+ - Returns: A **Bool** value that is **true** if Internet connectivity has been found. False **otherwise**.
+ */
 func isReachable() -> Bool {
     guard let reachability = SCNetworkReachabilityCreateWithName(nil, "www.google.com") else { return false }
     var flags = SCNetworkReachabilityFlags()

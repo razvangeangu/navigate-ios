@@ -57,6 +57,7 @@ class RGLocalisation: NSObject {
             return
         }
         
+        // Background queue
         DispatchQueue.global(qos: .userInteractive).async {
             // A 2D array that holds the data of the APs
             var matrix = [[Int]](repeating: [Int](repeating: 0, count: RGSharedDataManager.numberOfColumns), count: RGSharedDataManager.numberOfRows)
@@ -121,18 +122,30 @@ class RGLocalisation: NSObject {
      - parameter completion: Returns an **Int** number representing the floor level.
      */
     static func getFloorLevel(completion: ((_ level: Int?) -> Void)?) {
+        
+        // Create the level variable
         var level: Int?
         var maxNumberOfAPs = Int.min
         
+        // Get all the floors
         guard let floors = RGSharedDataManager.getFloors() else { return }
+        
+        // For each floor found
         for i in 0..<floors.count {
+            
+            // Detect the location
             detectLocation(floor: floors[i]) { (location, matrix) in
+                
+                // Check the maximum number of identified Access Points
                 if matrix[location.0][location.1] > maxNumberOfAPs {
                     maxNumberOfAPs = matrix[location.0][location.1]
                     level = Int(floors[i].level)
                 }
                 
+                // If checked all the levels
                 if floors[i].level == floors.last!.level {
+                    
+                    // Call optional completion with the found level
                     completion?(level)
                 }
             }

@@ -69,6 +69,8 @@ class MapTileEditViewController: UIView {
     
     /**
      A function that adds the tile types to the base view.
+     
+     - parameter tileTypes: A sequence of **CDTileType** elements to add to the view as a button.
      */
     fileprivate func addTileTypes(tileTypes: [CDTileType]) {
         var i: Int = 0

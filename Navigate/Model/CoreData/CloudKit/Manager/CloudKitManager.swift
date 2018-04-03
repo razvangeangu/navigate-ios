@@ -18,13 +18,15 @@ class CloudKitManager {
     static var updateContext = PersistenceService.updateContext
     
     /**
+     A function that updates the changed objects in the cloud.
+     This application runs in background.
      
-     
-     - parameter savedIDs:
-     - parameter deletedIDs:
+     - parameter savedIDs: The IDs of the managedObjects to be updated.
+     - parameter deletedIDs: The IDs of the managedObjects to be deleted.
      */
     static func uploadChangedObjects(savedIDs: [NSManagedObjectID], deletedIDs: [CKRecordID]?) {
         
+        // Start the background task
         let task = beginBackgroundTask()
         
         // Create var for the saved objects as cloud managed objects
@@ -146,13 +148,17 @@ class CloudKitManager {
                     }
                 }
                 
+                // Completion block for the UI.
                 operation.completionBlock = {
                     MapViewController.devLog(data: "Finished uploading changed objects to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
                     if operation.name == String(recordsChunks.count) {
+                        
+                        // End the background task when uploading finished
                         endBackgroundTask(taskID: task)
                     }
                 }
                 
+                // Set the quality of service
                 operation.qualityOfService = .userInitiated
                 
                 // Add operation to the public database
@@ -161,20 +167,41 @@ class CloudKitManager {
         }
     }
     
+    /**
+     A function to upload the cached records that failed to save or delete due to unforseen
+     network circumstances or unexpected crashes.
+     
+     - parameter recordsToSave: A sequence of records to be saved in the cloud.
+     - parameter recordIDsToDelete: A sequence of IDs of managedObjects to be deleted from the cloud.
+     */
     static func uploadCachedRecords(recordsToSave: [CKRecord], recordIDsToDelete: [CKRecordID]) {
+        
+        // Split the records in chunks
         let recordsChunks = recordsToSave.chunks(400)
+        
+        // For each record chunk
         for records in recordsChunks {
+            
+            // Run async
             DispatchQueue.main.async {
+                
+                // Create a modify operation
                 let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: recordsChunks.index(of: records) == recordsChunks.startIndex ? recordIDsToDelete : nil)
+                
+                // Save the name for UI purposes
                 operation.name = "\(String(describing: recordsChunks.index(of: records)?.advanced(by: 1)))"
+                
+                // Update all keys
                 operation.savePolicy = .allKeys
                 
+                // Completion block to debug errors
                 operation.perRecordCompletionBlock = { record, error in
                     if let error = error as? CKError {
                         MapViewController.devLog(data: error.localizedDescription)
                     }
                 }
                 
+                // Completion block to debug errors
                 operation.modifyRecordsCompletionBlock = { record, recordID, error in
                     if let error = error as? CKError {
                         if error.code == CKError.limitExceeded {
@@ -185,48 +212,88 @@ class CloudKitManager {
                     }
                 }
                 
+                // Completion block for UI feedback
                 operation.completionBlock = {
                     MapViewController.devLog(data: "Finished uploading cached records to the cloud. (\(operation.name ?? "")/\(recordsChunks.count))")
                 }
                 
+                // Set the quality of service
                 operation.qualityOfService = .userInitiated
                 
+                // Add the operation to the public database
                 publicCloudDatabase.add(operation)
             }
         }
     }
     
+    /**
+     A function to clear the cached records from the cache context of the local database.
+     
+     - parameter recordNames: The names of the records that are cached for updating the cloud.
+     - parameter completion: A completion block that returns the objectIDs of the cached objects.
+     */
     static func clearCachedRecords(recordNames: [String], completion: (([NSManagedObjectID]) -> Void)?) {
+        
+        // Perform action on the cache context
         cacheContext.perform {
+            
+            // For each record name
             for recordName in recordNames {
+                
+                // If the cached record exists in the cached context
                 if let objects = objects(entityName: "CachedRecords", in: cacheContext, withRecordName: recordName) {
+                    
+                    // For each object
                     for object in objects {
+                        
+                        // Delete the object
                         cacheContext.delete(object as! NSManagedObject)
                     }
                 }
             }
             
+            // Save the cache context
             PersistenceService.saveCacheContext()
             
             let cachedRecords = objects(entityName: "CachedRecords", in: cacheContext)
             if let objects = cachedRecords, objects.count > 0 {
+                
+                // Completion with the object IDs of the cached objects.
                 completion?(objects.map({ $0.objectID }))
             }
         }
     }
     
+    /**
+     A function to update the local records from the cloud.
+     
+     - parameter from recordID: The record ID to be updated.
+     - parameter reason: The reason this record should be updated based on the notification.
+     */
     static func updateLocalRecord(from recordID: CKRecordID, reason: CKQueryNotificationReason) {
+        
+        // If the reason was created or updated
         if reason == .recordCreated || reason == .recordUpdated {
+            
+            // Fetch the record from the cloud
             publicCloudDatabase.fetch(withRecordID: recordID) { (record, error) in
                 if let _ = error {
                     MapViewController.devLog(data: "Error while fetching in updateLocalRecord.")
                 } else {
+                    
+                    // If record has been found
                     if let record = record {
+                        
+                        // Update the object in the update context of the local database
                         updateContext.perform {
+                            
+                            // Update the object locally
                             updateObject(for: [record])
                             
+                            // Save the update context which commits the changes to the view context
                             PersistenceService.saveUpdateContext()
                             
+                            // Reload all views for the record type
                             if let dotIndex = recordID.recordName.index(of: ".") {
                                 let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
                                 MapViewController.reloadView(recordType: recordType)
@@ -235,12 +302,20 @@ class CloudKitManager {
                     }
                 }
             }
+            
+        // If the reason is that the record was deleted
         } else if reason == .recordDeleted {
+            
+            // Update the object in the update context of the local database
             updateContext.perform {
+                
+                // Delete the object based on its' record name
                 deleteObject(recordNames: [recordID.recordName])
                 
+                // Save the update context in the local database
                 PersistenceService.saveUpdateContext()
                 
+                // Reload all views for the record type
                 if let dotIndex = recordID.recordName.index(of: ".") {
                     let recordType = String(recordID.recordName[...recordID.recordName.index(before: dotIndex)])
                     MapViewController.reloadView(recordType: recordType)
@@ -249,27 +324,57 @@ class CloudKitManager {
         }
     }
     
+    /**
+     A function to update a list of objects.
+     
+     - parameter changedRecords: A sequence of records to be updated in the local database.
+     - parameter deletedRecordIDs: A sequence of records to be deleted from the local database.
+     */
     static func updateLocalRecords(changedRecords: [CKRecord], deletedRecordIDs: [CKRecordID]?) {
+        
+        // Update the objects in the update context of the local database
         updateContext.perform {
+            
+            // Update the object
             updateObject(for: changedRecords)
             
+            // Delete the objects based on the record names
             if let deletedRecordIDs = deletedRecordIDs, deletedRecordIDs.count > 0 {
                 let deletedRecordNames = deletedRecordIDs.map { $0.recordName }
                 deleteObject(recordNames: deletedRecordNames)
             }
             
+            // Save the update context in the local database
             PersistenceService.saveUpdateContext()
         }
     }
     
+    /**
+     A function to fetch data from the cloud.
+     
+     - parameter completion: A void function that is called when all data has been fetched from the cloud.
+     */
     static func fetchDataFromTheCloud(completion: (() -> Void)?) {
         
+        // Update the view
         MapViewController.progressView.setProgress(to: 0)
+        
+        // Load in the background
         DispatchQueue.global(qos: .userInteractive).async {
+            
+            // Query the floor
             query(recordType: DataClasses.floor.rawValue) { (_) in
+                
+                // Query the room
                 query(recordType: DataClasses.room.rawValue) { (_) in
+                    
+                    // Query the tiles
                     query(recordType: DataClasses.tile.rawValue) { (completed) in
+                        
+                        // Query the access points
                         query(recordType: DataClasses.accessPoint.rawValue) { (completed) in
+                            
+                            // Call the completion block
                             completion?()
                         }
                     }

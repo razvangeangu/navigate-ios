@@ -109,6 +109,7 @@ extension ScrollableBottomSheetViewController: UIGestureRecognizerDelegate {
         let translation = recognizer.translation(in: self.view)
         let velocity = recognizer.velocity(in: self.view)
         
+        // Dismiss keyboard
         view.endEditing(true)
         
         let y = self.view.frame.minY

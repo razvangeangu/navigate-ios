@@ -119,7 +119,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     /**
      Adds the dev button **+** that performs segue to the control panel for the floor and rooms.
-    */
+     */
     func addDevButton() {
         if viewIfLoaded != nil {
             if addButton.superview == nil {
@@ -132,6 +132,9 @@ class ScrollableBottomSheetViewController: UIViewController {
         }
     }
     
+    /**
+     A function that removes the dev button from the view and fixes the constraints.
+     */
     func removeDevButton() {
         if viewIfLoaded != nil {
             if addButton.superview != nil {
@@ -143,14 +146,14 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     /**
      Performs segue to the room control view.
-    */
+     */
     @objc func addButtonTaped(_ sender: UIButton!) {
         parent?.performSegue(withIdentifier: "roomAdmin", sender: parent)
     }
     
     /**
      Initiliases the view with all the components and manipulates the style.
-    */
+     */
     fileprivate func prepareBackgroundView() {
         
         // Make all views transparent
@@ -195,7 +198,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     /**
      Updates the picker data with the data from the shared data manager and
      selects the row for the current floor level.
-    */
+     */
     func updatePickerData() {
         if let floors = RGSharedDataManager.getFloors() {
             pickerData = floors.map({ Int($0.level) })
@@ -212,7 +215,7 @@ class ScrollableBottomSheetViewController: UIViewController {
     
     /**
      Updates the table data with the data from the shared data manager.
-    */
+     */
     func updateTableData() {
         if let rooms = RGSharedDataManager.getRooms() {
             var roomsNames = rooms.map({ (room) -> String in
@@ -225,6 +228,9 @@ class ScrollableBottomSheetViewController: UIViewController {
         }
     }
     
+    /**
+     Add a loading animation to the drag indicator.
+     */
     func addLoadingAnimation() {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.7, delay: 0, options: [.repeat, .allowUserInteraction, .autoreverse], animations: {
@@ -233,6 +239,9 @@ class ScrollableBottomSheetViewController: UIViewController {
         }
     }
     
+    /**
+     Remove the loading animation from the drag indicator.
+     */
     func removeLoadingAnimation() {
         dragIndicatorView.layer.removeAllAnimations()
         UIView.animate(withDuration: 1.0, delay: 0, options: [.allowUserInteraction], animations: {

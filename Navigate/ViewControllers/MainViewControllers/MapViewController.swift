@@ -92,8 +92,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     // The navigation model
     static var navigation: RGNavigation!
     
+    // The map tile edit view
     static var mapTileEdit: MapTileEditViewController!
     
+    /**
+     A function that tests if ARKit is supported on the current device.
+     
+     - Returns: **true** if AR is supported, **false** otherwise.
+     */
     static func isARSupported() -> Bool {
         guard #available(iOS 11.0, *) else {
             return false
@@ -169,8 +175,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Subscribe to changes to the cloud
         CloudKitManager.subscribeToChanges { (_) in }
         
+        // Load view async
         DispatchQueue.main.async {
             self.initView()
         }
@@ -179,6 +187,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Remove the progress view if did finish loading
         if MapViewController.progressView != nil {
             if ProgressView.didFinishLoading {
                 MapViewController.progressView.setProgress(to: 1.0)
@@ -301,7 +310,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /**
-     
+     Initialises the time and distance view and adds it to the view.
      */
     fileprivate func addTimeAndDistanceView() {
         MapViewController.mapTimeAndDistanceView = MapTimeAndDistanceView(frame: CGRect(x: view.safeAreaInsets.left + 20, y: view.safeAreaInsets.top > 0 ? view.safeAreaInsets.top - 100 : 40 - 100, width: 120, height: 50))
@@ -312,7 +321,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     /**
-     Set tile blue as "active"
+     Set tile blue as "active".
      
      - parameter column: The column of the tile.
      - parameter row: The row of the tile.
@@ -523,6 +532,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /**
+     A function that shows the current path on the map.
+     */
     static func showCurrentPath() {
         if shouldShowPath {
             guard let currentPath = RGNavigation.shortestPath else { return }
@@ -553,10 +565,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      A function to reload the data in the bottom sheet view.
      */
     static func reloadData() {
-//        DispatchQueue.main.async {
-            bottomSheetVC.updatePickerData()
-            bottomSheetVC.updateTableData()
-//        }
+        bottomSheetVC.updatePickerData()
+        bottomSheetVC.updateTableData()
     }
     
     /**
