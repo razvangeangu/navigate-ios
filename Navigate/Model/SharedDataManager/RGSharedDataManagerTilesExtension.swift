@@ -248,4 +248,22 @@ extension RGSharedDataManager {
         
         PersistenceService.saveViewContext()
     }
+    
+    /**
+     Get the doors for the room.
+     
+     - parameter for: The room for which the doors (as **Tile**) need to be found.
+     
+     - Returns: A sequence of tiles that are of type door in the current room.
+     */
+    static func getDoors(for room: Room) -> [Tile]? {
+        var doors = [Tile]()
+        for case let tile as Tile in room.tiles! {
+            if tile.type == CDTileType.door.rawValue {
+                doors.append(tile)
+            }
+        }
+        
+        return doors
+    }
 }

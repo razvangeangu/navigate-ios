@@ -54,7 +54,7 @@ extension RGSharedDataManager {
     }
     
     /**
-     Get from CoreData and set the current floor.
+     Get from CoreData by level.
      
      - parameter level: The floor level.
      

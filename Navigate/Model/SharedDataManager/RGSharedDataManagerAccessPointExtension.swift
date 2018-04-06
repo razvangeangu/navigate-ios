@@ -1,5 +1,5 @@
 //
-//  RGSharedDataManagerBLEExtension.swift
+//  RGSharedDataManagerAccessPointExtension.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 19/03/2018.
@@ -9,31 +9,6 @@
 import Foundation
 
 extension RGSharedDataManager {
-    
-    /**
-     Write a command to the terminal of the external device.
-     
-     - parameter command: A string that represents the command to be executed by the external device.
-     */
-    static func writeToTerminal(command: String) {
-        ble.write(command: command)
-    }
-    
-    /**
-     Connect to an external device using a UUID.
-     
-     - parameter to: UUID as string.
-     */
-    static func connect(to: String) {
-        ble.connect(to: to)
-    }
-    
-    /**
-     Shutdown external device.
-     */
-    static func disconnect() {
-        RGSharedDataManager.ble.stopPi()
-    }
     
     /**
      A method to get the APs from the external device and without saving them to the context.

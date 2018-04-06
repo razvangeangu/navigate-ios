@@ -61,7 +61,7 @@
 		18DCD758206069F50003644D /* RGSharedDataManagerTilesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD757206069F50003644D /* RGSharedDataManagerTilesExtension.swift */; };
 		18DCD75A20606A220003644D /* RGSharedDataManagerRoomsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */; };
 		18DCD75C20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */; };
-		18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */; };
+		18DCD75E20606AA70003644D /* RGSharedDataManagerAccessPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD75D20606AA70003644D /* RGSharedDataManagerAccessPointExtension.swift */; };
 		18DCD76120607CAA0003644D /* RGBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCD76020607CAA0003644D /* RGBackButton.swift */; };
 		18DFE2252062EB6400B42175 /* MapTileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */; };
 		18E0E4042065442300C173AC /* ARRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E0E4032065442300C173AC /* ARRing.swift */; };
@@ -146,7 +146,7 @@
 		18DCD757206069F50003644D /* RGSharedDataManagerTilesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerTilesExtension.swift; sourceTree = "<group>"; };
 		18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerRoomsExtension.swift; sourceTree = "<group>"; };
 		18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerFloorExtension.swift; sourceTree = "<group>"; };
-		18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerBLEExtension.swift; sourceTree = "<group>"; };
+		18DCD75D20606AA70003644D /* RGSharedDataManagerAccessPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGSharedDataManagerAccessPointExtension.swift; sourceTree = "<group>"; };
 		18DCD76020607CAA0003644D /* RGBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBackButton.swift; sourceTree = "<group>"; };
 		18DFE2242062EB6400B42175 /* MapTileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTileEditViewController.swift; sourceTree = "<group>"; };
 		18E0E4032065442300C173AC /* ARRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRing.swift; sourceTree = "<group>"; };
@@ -453,7 +453,7 @@
 				18DCD757206069F50003644D /* RGSharedDataManagerTilesExtension.swift */,
 				18DCD75920606A220003644D /* RGSharedDataManagerRoomsExtension.swift */,
 				18DCD75B20606A6C0003644D /* RGSharedDataManagerFloorExtension.swift */,
-				18DCD75D20606AA70003644D /* RGSharedDataManagerBLEExtension.swift */,
+				18DCD75D20606AA70003644D /* RGSharedDataManagerAccessPointExtension.swift */,
 			);
 			path = SharedDataManager;
 			sourceTree = "<group>";
@@ -657,7 +657,7 @@
 				183F1CD82068434100199D51 /* AccessPointCloudExtension.swift in Sources */,
 				18D57725205C028C001C4B1C /* DefaultTableViewCell.swift in Sources */,
 				183F1CF62068486700199D51 /* Tile+CoreDataProperties.swift in Sources */,
-				18DCD75E20606AA70003644D /* RGSharedDataManagerBLEExtension.swift in Sources */,
+				18DCD75E20606AA70003644D /* RGSharedDataManagerAccessPointExtension.swift in Sources */,
 				18DCD758206069F50003644D /* RGSharedDataManagerTilesExtension.swift in Sources */,
 				18B42E53206B11C400FFB587 /* CloudKitManagerObjectsExtension.swift in Sources */,
 				18B42E4E206B0F5C00FFB587 /* CloudKitManager.swift in Sources */,

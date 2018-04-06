@@ -11,7 +11,7 @@ import CoreData
 extension RGSharedDataManager {
     
     /**
-     A method that adds a room to CoreData
+     A function that adds a room to CoreData
      
      - parameter name: A string that represents the name of the room
      
@@ -70,7 +70,7 @@ extension RGSharedDataManager {
     }
     
     /**
-     Get the rooms from the current floor.
+     Get the rooms for the current floor from the core data.
      
      - Returns: An array of strings that represent the rooms for the current floor.
      */
@@ -96,21 +96,5 @@ extension RGSharedDataManager {
         }
         
         return false
-    }
-    
-    /**
-     Get the doors for the room.
-     
-     - parameter for: The room for which the doors (as **Tile**) need to be fine.
-     */
-    static func getDoors(for room: Room) -> [Tile]? {
-        var doors = [Tile]()
-        for case let tile as Tile in room.tiles! {
-            if tile.type == CDTileType.door.rawValue {
-                doors.append(tile)
-            }
-        }
-        
-        return doors
     }
 }
