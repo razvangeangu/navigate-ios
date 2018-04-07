@@ -230,7 +230,7 @@ extension ARViewController: ARSessionDelegate {
                 pos += 2
                 
                 let currentTile = RGNavigation.shortestPath?.reversed()[pos]
-                RGLocalisation.currentLocation = (Int(currentTile!.col), Int(currentTile!.row))
+                RGPositioning.currentLocation = (Int(currentTile!.col), Int(currentTile!.row))
             }
         } else if pos == xs.count {
             removeRing()
@@ -246,7 +246,7 @@ extension ARViewController: ARSessionDelegate {
     fileprivate func turn() {
         
         // If the device heading is available
-        if let heading = RGLocalisation.heading {
+        if let heading = RGPositioning.heading {
             
             let headingDegrees = abs(heading.toDegrees)
             let degrees: [RGCardinals] = [RGCardinals.north, RGCardinals.east, RGCardinals.south, RGCardinals.west]

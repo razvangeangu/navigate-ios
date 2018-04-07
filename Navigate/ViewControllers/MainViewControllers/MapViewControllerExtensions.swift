@@ -85,7 +85,7 @@ extension MapViewController {
                 return
             }
             
-            if RGLocalisation.currentLocation == (-1, -1) { return }
+            if RGPositioning.currentLocation == (-1, -1) { return }
             
             // Detect the location from the view in the scene
             let location = MapViewController.scene.convertPoint(fromView: tapLocation)
@@ -276,7 +276,7 @@ extension MapViewController: CLLocationManagerDelegate {
         // Get the heading for North
         let northAngle = CGFloat(newHeading.magneticHeading.toRadians)
         
-        RGLocalisation.heading = Float(-angle)
+        RGPositioning.heading = Float(-angle)
         
         // Animate the location node
         let rotation = SKAction.rotate(toAngle: -angle, duration: 0.6, shortestUnitArc: true)

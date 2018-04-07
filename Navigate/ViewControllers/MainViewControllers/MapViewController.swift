@@ -451,7 +451,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      Centers the camera view to the current location of the device.
      */
     static func centerToLocation() {
-        let tileLocation = RGLocalisation.currentLocation
+        let tileLocation = RGPositioning.currentLocation
         
         // If no location was found stop
         if tileLocation == (-1, -1) { return }
@@ -532,7 +532,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     static func showPath(to tile: Tile) {
         if RGSharedDataManager.appMode != .dev {        
-            if let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) {
+            if let fromTile = RGSharedDataManager.getTile(col: RGPositioning.currentLocation.1, row: RGPositioning.currentLocation.0) {
                 RGNavigation.moveTo(fromTile: fromTile, toTile: tile)
             }
        

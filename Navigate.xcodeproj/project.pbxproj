@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B582057F46800BBF6C8 /* RGLocalisation.swift */; };
+		18120B592057F46800BBF6C8 /* RGPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B582057F46800BBF6C8 /* RGPositioning.swift */; };
 		18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120B5A2057F47000BBF6C8 /* RGNavigation.swift */; };
 		181B09842069250000201AE1 /* CachedRecords+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B09822069250000201AE1 /* CachedRecords+CoreDataClass.swift */; };
 		181B09852069250000201AE1 /* CachedRecords+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B09832069250000201AE1 /* CachedRecords+CoreDataProperties.swift */; };
@@ -85,7 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18120B582057F46800BBF6C8 /* RGLocalisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGLocalisation.swift; sourceTree = "<group>"; };
+		18120B582057F46800BBF6C8 /* RGPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGPositioning.swift; sourceTree = "<group>"; };
 		18120B5A2057F47000BBF6C8 /* RGNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGNavigation.swift; sourceTree = "<group>"; };
 		181B09822069250000201AE1 /* CachedRecords+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedRecords+CoreDataClass.swift"; sourceTree = "<group>"; };
 		181B09832069250000201AE1 /* CachedRecords+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedRecords+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 				18309F6120291EF8009F5CDD /* PiConnection */,
 				18DCD756206069D40003644D /* SharedDataManager */,
 				18309F5D20291EC2009F5CDD /* CoreData */,
-				183346712061FB6D001EA340 /* Localisation */,
+				183346712061FB6D001EA340 /* Positioning */,
 				1816BE38205EDC1B0057957F /* Navigation */,
 				183346702061FB60001EA340 /* Util */,
 			);
@@ -336,12 +336,12 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
-		183346712061FB6D001EA340 /* Localisation */ = {
+		183346712061FB6D001EA340 /* Positioning */ = {
 			isa = PBXGroup;
 			children = (
-				18120B582057F46800BBF6C8 /* RGLocalisation.swift */,
+				18120B582057F46800BBF6C8 /* RGPositioning.swift */,
 			);
-			path = Localisation;
+			path = Positioning;
 			sourceTree = "<group>";
 		};
 		183346722061FBA3001EA340 /* MainViewControllers */ = {
@@ -664,7 +664,7 @@
 				18587620205D5CAC008CF624 /* AdminViewController.swift in Sources */,
 				18120B5B2057F47000BBF6C8 /* RGNavigation.swift in Sources */,
 				1830E3EF205717DE00F39ABA /* MapViewControllerExtensions.swift in Sources */,
-				18120B592057F46800BBF6C8 /* RGLocalisation.swift in Sources */,
+				18120B592057F46800BBF6C8 /* RGPositioning.swift in Sources */,
 				18AE77722066B29A008E0EC9 /* MapTimeAndDistanceView.swift in Sources */,
 				183F1CF72068486700199D51 /* Floor+CoreDataClass.swift in Sources */,
 				182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */,

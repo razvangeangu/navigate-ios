@@ -23,7 +23,7 @@ class RGSharedDataManager: NSObject {
             if RGSharedDataManager.appMode == .prod {
                 guard let selectedRoomObject = RGSharedDataManager.getRoom(name: selectedRoom!, floor: RGSharedDataManager.floor) else { return }
                 guard let doors = RGSharedDataManager.getDoors(for: selectedRoomObject) else { return }
-                guard let fromTile = RGSharedDataManager.getTile(col: RGLocalisation.currentLocation.1, row: RGLocalisation.currentLocation.0) else { return }
+                guard let fromTile = RGSharedDataManager.getTile(col: RGPositioning.currentLocation.1, row: RGPositioning.currentLocation.0) else { return }
                 
                 var maxCount = Int.max
                 var closestDoor: Tile?
@@ -67,7 +67,7 @@ class RGSharedDataManager: NSObject {
     static var jsonData: Any! {
         didSet {
             if ProgressView.didFinishLoading {
-                RGLocalisation.detectLocation(floor: RGSharedDataManager.floor, completion: nil)
+                RGPositioning.detectLocation(floor: RGSharedDataManager.floor, completion: nil)
             }
         }
     }

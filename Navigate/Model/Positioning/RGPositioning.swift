@@ -1,5 +1,5 @@
 //
-//  RGLocalisation.swift
+//  RGPositioning.swift
 //  Navigate
 //
 //  Created by Răzvan-Gabriel Geangu on 13/03/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RGLocalisation: NSObject {
+class RGPositioning: NSObject {
     
     // Current location of the iOS device
     static var previousLocation = (-1, -1)
