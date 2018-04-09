@@ -13,7 +13,14 @@ extension MapButtonsView {
      Executes when the camera button is taped.
      */
     @objc func cameraTaped(_ sender: UIButton!) {
-        (parentVC as? MapViewController)?.performSegue(withIdentifier: "arvc", sender: parentVC)
+        if let parentVC = parentVC as? MapViewController {
+            if !MapViewController.shouldShowPath {
+                parentVC.presentAlert(title: "Error", message: "To enable Augmented Reality experiences, please set a destination first.", completion: nil)
+            } else {
+                parentVC.performSegue(withIdentifier: "arvc", sender: parentVC)
+            }
+        }
+            
     }
     
     /**

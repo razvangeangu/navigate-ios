@@ -70,8 +70,6 @@ extension MapViewController {
                 MapViewController.setTileColor(column: column, row: row, type: RGSharedDataManager.tileType!)
             }
         } else if RGSharedDataManager.appMode == .prod {
-            MapViewController.bottomSheetVC.addLoadingAnimation()
-            
             if tap.state != .ended { return }
             
             // If external device is not connected then do not try to execute tap functions
@@ -81,14 +79,14 @@ extension MapViewController {
             let tapLocation = tap.location(in: view)
             
             // Only activate gesture if bottomSheetVC is closed
-            if tapLocation.y > MapViewController.bottomSheetVC.view.frame.minY {
-                return
-            }
+            if tapLocation.y > MapViewController.bottomSheetVC.view.frame.minY { return }
             
             if RGPositioning.currentLocation == (-1, -1) { return }
             
             // Detect the location from the view in the scene
             let location = MapViewController.scene.convertPoint(fromView: tapLocation)
+            
+            MapViewController.bottomSheetVC.addLoadingAnimation()
             
             // Check if location is in limits
             if location.x > MapViewController.backgroundNode.frame.maxX || location.x < MapViewController.backgroundNode.frame.minX || location.y > MapViewController.backgroundNode.frame.maxY || location.y < MapViewController.backgroundNode.frame.minY {
