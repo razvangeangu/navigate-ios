@@ -100,6 +100,19 @@ class ScrollableBottomSheetViewController: UIViewController {
         
         // Prepare the view
         prepareBackgroundView()
+        
+        prepareGestures(with: panGesture)
+    }
+    
+    fileprivate func prepareGestures(with panGesture: UIPanGestureRecognizer) {
+        if let gestureRecognizers = tableView.gestureRecognizers {
+            for gesture in gestureRecognizers {
+                if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+                    panGesture.require(toFail: swipeGesture)
+                    break
+                }
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
