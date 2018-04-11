@@ -22,6 +22,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     var zs: [Float]!
     var pos: Int = 0
     
+    private var didFinishPath = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -128,7 +130,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         let stepRow = step.1
         let stepColumn = step.0
         
-        let distance = Int(RGSharedDataManager.tileLength)
+        let distance = Int(RGSharedDataManager.tileLength * 2)
 
         if stepRow == currentLocationRow - 1 {
             // back
@@ -218,24 +220,28 @@ extension ARViewController: ARSessionDelegate {
             turn()
         }
         
-        if xs != nil && zs != nil && !xs.isEmpty && !zs.isEmpty && pos < xs.count {
+        if pos < xs.count {
             if isInLimits(nodePosition: nodePosition, cameraPosition: cameraPosition, offset: 0.5) {
-                
+
                 // Give haptic feedback to the user
                 generator.impactOccurred()
-                
+
                 moveRing(to: SCNVector3(x: cameraPosition.x + xs[pos], y: 0, z: cameraPosition.z + zs[pos]))
                 
-                // To move 3m because tile size is 1.5m
+                // To move 2m because tile size is 1.5m
                 pos += 2
                 
-                let currentTile = RGNavigation.shortestPath?.reversed()[pos]
-                RGPositioning.currentLocation = (Int(currentTile!.col), Int(currentTile!.row))
+                if pos >= xs.count {
+                    didFinishPath = true
+                }
             }
-        } else if pos == xs.count {
-            removeRing()
-            self.presentAlert(title: "Success", message: "Arrived at the destination") {
-                self.dismiss(animated: true, completion: nil)
+        } else {
+            if didFinishPath {
+                removeRing()
+                self.presentAlert(title: "Success", message: "Arrived at the destination") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                didFinishPath = false
             }
         }
     }

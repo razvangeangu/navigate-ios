@@ -13,6 +13,10 @@ class RGPositioning: NSObject {
     // Current location of the iOS device
     static var previousLocation = (-1, -1)
     static var currentLocation = (-1, -1) {
+        willSet {
+            // Save the current location for future references
+            self.previousLocation = self.currentLocation
+        }
         didSet {
             DispatchQueue.main.async {
                 // If the current location is valid (not the initial value and in the bounds)
@@ -21,9 +25,6 @@ class RGPositioning: NSObject {
                     // Show debugging log
                     // MapViewController.devLog(data: "Found Location: \(currentLocation)")
                     
-                    // Save the current location for future references
-                    self.previousLocation = self.currentLocation
-                    
                     // Show the current location
                     MapViewController.showCurrentLocation(currentLocation)
                     
@@ -31,9 +32,6 @@ class RGPositioning: NSObject {
                     if let destination = RGNavigation.destinationTile {
                         MapViewController.shouldShowPath = true
                         MapViewController.showPath(to: destination)
-                        RGNavigation.destinationTile = nil
-                    } else if let previousDestination = RGNavigation.previousDestinationTile, MapViewController.shouldShowPath {
-                        MapViewController.showPath(to: previousDestination)
                     }
                 } else {
                     MapViewController.removeLocationNode()

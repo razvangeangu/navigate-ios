@@ -28,6 +28,8 @@ class MapButtonsView: UIView {
     // Number of touches for the location button
     var locationNumberOfTouches = 0
     
+    private var viewDidLoad = false
+    
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: frame.minX + 50, y: frame.minY, width: frame.width, height: frame.height))
         
@@ -54,13 +56,16 @@ class MapButtonsView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
-            let frame = self.frame
-            self.frame = CGRect(x: frame.minX - 50, y: frame.minY, width: frame.width, height: frame.height)
-            
-            self.alpha = 1.0
-        }, completion: nil)
+
+        if !viewDidLoad {
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+                let frame = self.frame
+                self.frame = CGRect(x: frame.minX - 50, y: frame.minY, width: frame.width, height: frame.height)
+                self.alpha = 1.0
+            }, completion: { (_) in
+                self.viewDidLoad = true
+            })
+        }
     }
     
     /**

@@ -20,7 +20,7 @@ class RGNavigation: NSObject, PathfinderDataSource {
         didSet {
             
             // If a path has been found
-            if shortestPath != nil && shortestPath!.count > 0 && previousDestinationTile != destinationTile {
+            if shortestPath != nil && shortestPath!.count > 0 {
                 MapViewController.showCurrentPath()
             }
         }
@@ -29,16 +29,7 @@ class RGNavigation: NSObject, PathfinderDataSource {
     /**
      The destination tile for the path finder. Sets the previous destination tile before setting this one.
      */
-    static var destinationTile: Tile? {
-        willSet {
-            previousDestinationTile = destinationTile
-        }
-    }
-    
-    /**
-     The previous destination tile.
-     */
-    static var previousDestinationTile: Tile?
+    static var destinationTile: Tile?
     
     override init() {
         super.init()

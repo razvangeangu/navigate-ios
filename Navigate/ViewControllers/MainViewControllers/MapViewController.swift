@@ -75,6 +75,8 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
                     }, completion: { (_) in
                         MapViewController.mapTimeAndDistanceView.isHidden = true
                     })
+                    
+                    RGNavigation.destinationTile = nil
                 
                     MapViewController.resetView(for: RGSharedDataManager.appMode)
                 }
@@ -547,7 +549,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
             bottomSheetVC.removeLoadingAnimation()
-            RGNavigation.previousDestinationTile = RGNavigation.destinationTile
         }
     }
     
