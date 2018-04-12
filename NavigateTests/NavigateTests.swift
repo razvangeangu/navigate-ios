@@ -91,7 +91,7 @@ class NavigateTests: XCTestCase {
         XCTAssertEqual(destination, tileForDestination)
     }
     
-    // https://stackoverflow.com/questions/24132399/how-does-one-make-random-number-between-range-for-arc4random-uniform
+    // Credits: https://stackoverflow.com/questions/24132399/how-does-one-make-random-number-between-range-for-arc4random-uniform
     public func randomNumber<T : SignedInteger>(inRange range: ClosedRange<T> = 1...6) -> T {
         let length = Int64(range.upperBound - range.lowerBound + 1)
         let value = Int64(arc4random()) % length + Int64(range.lowerBound)

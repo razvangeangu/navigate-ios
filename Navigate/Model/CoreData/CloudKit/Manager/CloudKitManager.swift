@@ -2,10 +2,10 @@
 //  CloudKitManager.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 28/03/2018.
+//  Modified by Răzvan-Gabriel Geangu on 28/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
-//  https://tongtian.wordpress.com/2017/03/04/sync-core-data-with-cloudkit-part-2/
+//  From tutorial: https://tongtian.wordpress.com/2017/03/04/sync-core-data-with-cloudkit-part-2/
 
 import Foundation
 import CoreData

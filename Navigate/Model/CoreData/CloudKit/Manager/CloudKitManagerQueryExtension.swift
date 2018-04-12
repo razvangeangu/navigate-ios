@@ -2,10 +2,10 @@
 //  CloudKitManagerQueryExtension.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 28/03/2018.
+//  Modified by Răzvan-Gabriel Geangu on 28/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
-//  https://stackoverflow.com/questions/28402846/cloudkit-fetch-all-records-with-a-certain-record-type
+//  From tutorial: https://stackoverflow.com/questions/28402846/cloudkit-fetch-all-records-with-a-certain-record-type
 
 import Foundation
 import CloudKit

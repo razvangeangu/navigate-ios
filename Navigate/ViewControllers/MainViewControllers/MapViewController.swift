@@ -11,6 +11,9 @@ import SpriteKit
 import CoreLocation
 import ARKit
 
+/**
+ This view controller is the main class of the application.
+ */
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // A container view for visual effects

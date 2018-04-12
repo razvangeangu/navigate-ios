@@ -2,10 +2,10 @@
 //  ScrollableBottomSheetViewControllerExtensions.swift
 //  Navigate
 //
-//  https://github.com/AhmedElassuty/BottomSheetController
 //  Modified by Răzvan-Gabriel Geangu on 16/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
+//  From source: https://github.com/AhmedElassuty/BottomSheetController
 
 import UIKit
 

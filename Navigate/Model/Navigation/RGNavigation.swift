@@ -2,13 +2,13 @@
 //  RGNavigation.swift
 //  Navigate
 //
-//  Created by Răzvan-Gabriel Geangu on 13/03/2018.
+//  Modified by Răzvan-Gabriel Geangu on 13/03/2018.
 //  Copyright © 2018 Răzvan-Gabriel Geangu. All rights reserved.
 //
+//  From tutorial: https://www.raywenderlich.com/105437/implement-pathfinding-swift
 
 import Foundation
 
-// https://www.raywenderlich.com/105437/implement-pathfinding-swift
 class RGNavigation: NSObject, PathfinderDataSource {
     
     private static let pathFinder = AStarPathfinder()

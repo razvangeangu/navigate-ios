@@ -188,7 +188,7 @@ func checkForSecretCommands(text: String, completion: (SecretCommands) -> Void) 
     }
 }
 
-// https://stackoverflow.com/questions/26794703/swift-integer-conversion-to-hours-minutes-seconds
+// Credits: https://stackoverflow.com/questions/26794703/swift-integer-conversion-to-hours-minutes-seconds
 func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
@@ -201,7 +201,7 @@ extension Array {
     }
 }
 
-// https://stackoverflow.com/questions/31604428/download-in-background-in-swift
+// Credits: https://stackoverflow.com/questions/31604428/download-in-background-in-swift
 func beginBackgroundTask() -> UIBackgroundTaskIdentifier {
     return UIApplication.shared.beginBackgroundTask(expirationHandler: {})
 }
@@ -210,7 +210,7 @@ func endBackgroundTask(taskID: UIBackgroundTaskIdentifier) {
     UIApplication.shared.endBackgroundTask(taskID)
 }
 
-// https://dzone.com/articles/network-reachability-with-swift-1
+// Creadits: https://dzone.com/articles/network-reachability-with-swift-1
 func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
     let isReachable = flags.contains(.reachable)
     let needsConnection = flags.contains(.connectionRequired)
