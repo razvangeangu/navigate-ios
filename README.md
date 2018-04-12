@@ -37,11 +37,12 @@ https://nodejs.org/
 
 #### iCloud configuration
 1. Register for a developer account with Apple
-2. Navigate to [iCloud Dashboard](https://icloud.developer.apple.com/dashboard/)
-3. Set the cloud container for the application
-4. Run Navigate application *(wait for cloud sync to be finished)*
-5. Make **recordName** index QUERYABLE for all Record Types *(AccessPoint, Floor, Room, Tile)*
-6. Restart Navigate application
+2. Start Xcode and configure the developer account
+3. Navigate to [iCloud Dashboard](https://icloud.developer.apple.com/dashboard/)
+4. Set the cloud container for the application
+5. Run Navigate application using Xcode *(wait for cloud sync to be finished)*
+6. Make **recordName** index QUERYABLE for all Record Types *(AccessPoint, Floor, Room, Tile)*
+7. Restart Navigate application
 
 ## How to use
 1. Start Raspberry Pi Server
