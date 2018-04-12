@@ -91,8 +91,7 @@ class RGPositioning: NSObject {
                     }
                 }
                 
-                // Current location local value to find the maximum in the matrix
-                var currentLocation = self.currentLocation
+                var currentLocation = (-1, -1)
                 var max = 0
                 
                 // Loop through all the tiles

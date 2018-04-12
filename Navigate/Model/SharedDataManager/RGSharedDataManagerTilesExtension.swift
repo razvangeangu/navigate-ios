@@ -177,34 +177,41 @@ extension RGSharedDataManager {
     }
     
     /**
-     A function to reset the tile. It removes the current record and
-     updates with a new one.
+     A function to reset the tile. It updates the current record with the new data
      
      - parameter column: The column of the tile *(y index of the tile in database)*
      - parameter row: The row of the tile *(x index of the tile in database)*
      - parameter newType: The new type for the updated tile record.
+     - parameter newRoom: The new room for the tile or the current one if it does not change.
      */
     static func resetTile(column: Int, row: Int, newType: CDTileType, newRoom: Room) {
         
-        // Remove tile from Core Data
-        guard let tileToRemove = getTile(col: column, row: row) else { return }
-        PersistenceService.viewContext.perform {
-            PersistenceService.viewContext.delete(tileToRemove)
+        // Reset tile from Core Data
+        guard let tileToReset = getTile(col: column, row: row) else { return }
+        
+        // Remove access points from the tile
+        if let accessPoints = tileToReset.accessPoints {
+            for case let accessPoint as AccessPoint in accessPoints {
+                PersistenceService.viewContext.delete(accessPoint)
+            }
         }
         
-        // Create a new tile
-        let tile = Tile(context: PersistenceService.viewContext)
-        tile.prepareForCloudKit()
-        tile.row = Int16(row)
-        tile.col = Int16(column)
-        tile.type = newType.rawValue
-        newRoom.addToTiles(tile)
+        // Reset the parameters
+        tileToReset.row = Int16(row)
+        tileToReset.col = Int16(column)
+        tileToReset.type = newType.rawValue
+        
+        // Update the room
+        if let room = tileToReset.room {
+            if room.name != newRoom.name {
+                room.removeFromTiles(tileToReset)
+                newRoom.addToTiles(tileToReset)
+                newRoom.lastUpdate = NSDate()
+            }
+        }
         
         // Set last update
-        newRoom.lastUpdate = NSDate()
-        tile.lastUpdate = NSDate()
-        
-        floor.addToTiles(tile)
+        tileToReset.lastUpdate = NSDate()
         
         // Save the context to CoreData
         PersistenceService.saveViewContext()
