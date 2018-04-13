@@ -29,20 +29,21 @@ https://nodejs.org/
 ### Installing
 #### Raspberry Pi
 1. Clone [this repository](https://github.com/razvangeangu/navigate-server) on the RPI
-2. Install Node.JS and [forever](https://github.com/foreverjs/forever)
+2. Install [Node.JS](http://blog.teamtreehouse.com/install-node-js-npm-linux) and [forever](https://github.com/foreverjs/forever)
 3. Start RPI server
 	```bash
 	./bluetooth.sh && forever start index.js
 	```
 
 #### iCloud configuration
-1. Register for a developer account with Apple
+1. [Register](https://developer.apple.com/) for a developer account with Apple
 2. Start Xcode and configure the developer account
 3. Navigate to [iCloud Dashboard](https://icloud.developer.apple.com/dashboard/)
-4. Set the cloud container for the application
-5. Run Navigate application using Xcode *(wait for cloud sync to be finished)*
-6. Make **recordName** index QUERYABLE for all Record Types *(AccessPoint, Floor, Room, Tile)*
-7. Restart Navigate application
+4. Set up the cloud container for the application; Follow steps from [this tutorial](https://www.youtube.com/watch?v=2Y45vk7d_Bg&t=2945s) from minutes 13-15 and 31-33
+5. Run Navigate application using Xcode *(wait for cloud sync to be finished, check console or devLog)*;
+6. Make sure step 4 is done for all the cloud objects.
+7. Make **recordName** index QUERYABLE for all Record Types *(AccessPoint, Floor, Room, Tile)*
+8. Restart Navigate application
 
 ## How to use
 1. Start Raspberry Pi Server
