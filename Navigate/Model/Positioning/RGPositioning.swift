@@ -78,12 +78,10 @@ class RGPositioning: NSObject {
                                 if accessPoint.uuid == currentAccessPoint.uuid {
                                     
                                     // Compare their strength
-                                    if accessPoint.strength > currentAccessPoint.strength - 5 {
-                                        if accessPoint.strength < currentAccessPoint.strength + 5 {
-                                            
-                                            // Increase the similarity value of the AP / Tile
-                                            matrix[Int(tile.row)][Int(tile.col)] += 1
-                                        }
+                                    if accessPoint.strength == currentAccessPoint.strength {
+                                        
+                                        // Increase the similarity value of the AP / Tile
+                                        matrix[Int(tile.row)][Int(tile.col)] += 1
                                     }
                                 }
                             }
