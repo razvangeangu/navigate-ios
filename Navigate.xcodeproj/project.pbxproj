@@ -13,7 +13,6 @@
 		181B09852069250000201AE1 /* CachedRecords+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B09832069250000201AE1 /* CachedRecords+CoreDataProperties.swift */; };
 		181D01022053EB13001CB8BD /* MapTilemapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 181D01002053EB13001CB8BD /* MapTilemapScene.sks */; };
 		182518FD1FAF454A0005F5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182518FC1FAF454A0005F5F6 /* AppDelegate.swift */; };
-		182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 182518FE1FAF454A0005F5F6 /* art.scnassets */; };
 		182519011FAF454A0005F5F6 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182519001FAF454A0005F5F6 /* ARViewController.swift */; };
 		182519041FAF454A0005F5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519021FAF454A0005F5F6 /* Main.storyboard */; };
 		182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 182519071FAF454A0005F5F6 /* LaunchScreen.storyboard */; };
@@ -92,7 +91,6 @@
 		181D01002053EB13001CB8BD /* MapTilemapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapTilemapScene.sks; sourceTree = "<group>"; };
 		182518F91FAF454A0005F5F6 /* Navigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182518FC1FAF454A0005F5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		182518FE1FAF454A0005F5F6 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		182519001FAF454A0005F5F6 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		182519031FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		182519081FAF454A0005F5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 				1816BE3B205EE7300057957F /* ApplicationDelegate */,
 				1825192C1FAF45650005F5F6 /* Model */,
 				185936721FBD9DA60016BF66 /* ViewControllers */,
-				182518FE1FAF454A0005F5F6 /* art.scnassets */,
 				18C735622056F06500B292B1 /* Assets.xcassets */,
 				1825190A1FAF454A0005F5F6 /* Info.plist */,
 			);
@@ -593,7 +590,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				182518FF1FAF454A0005F5F6 /* art.scnassets in Resources */,
 				18D57726205C028C001C4B1C /* DefaultTableViewCell.xib in Resources */,
 				182519091FAF454A0005F5F6 /* LaunchScreen.storyboard in Resources */,
 				18B93D982052AD7A00AD8B31 /* MapTileset.sks in Resources */,
